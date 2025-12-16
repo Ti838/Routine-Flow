@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routine Flow - Login & Signup</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/global.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--gradient-primary);
+            display: flex;
+            /* justify-content: center;  Removed to allow margin: auto on container to handle vertical centering */
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Dark mode adjustments */
+        [data-theme="dark"] body {
+            background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%);
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveBackground 20s linear infinite;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes moveBackground {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        h1 {
+            font-weight: 800;
+            margin: 0;
+            font-size: 2rem;
+            color: var(--text-dark);
+        }
+
+        p {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 20px;
+            letter-spacing: 0.5px;
+            margin: 20px 0 30px;
+        }
+
+        span {
+            font-size: 12px;
+        }
+
+        a {
+            color: var(--text-dark);
+            font-size: 14px;
+            text-decoration: none;
+            margin: 15px 0;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--primary-blue);
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+            position: relative;
+            overflow: hidden;
+            width: 900px;
+            max-width: 100%;
+            min-height: 650px;
+            margin: auto;
+            /* Center vertically and horizontally in flex column */
+        }
+
+        .form-container {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            transition: all 0.6s ease-in-out;
+            background-color: var(--white);
+            color: var(--text-dark);
+            overflow-y: auto;
+            /* Allow scrolling inside panels */
+            padding: 20px;
+        }
+
+        /* Form Styling */
+        form {
+            background-color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 50px;
+            height: 100%;
+            text-align: center;
+            min-height: 600px;
+            /* Ensure specific height for flex centering */
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-medium);
+            margin-left: 5px;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px 18px;
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: var(--font-family);
+            transition: all 0.3s;
+            background: var(--light-bg);
+            color: var(--text-dark);
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            background: var(--white);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .submit-btn {
+            border-radius: 25px;
+            border: none;
+            background: var(--gradient-primary);
+            color: #FFFFFF;
+            font-size: 13px;
+            font-weight: bold;
+            padding: 14px 45px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: transform 80ms ease-in;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .submit-btn:active {
+            transform: scale(0.95);
+        }
+
+        .submit-btn:focus {
+            outline: none;
+        }
+
+        .ghost-btn {
+            background-color: transparent;
+            border-color: #FFFFFF;
+            border: 1px solid #FFFFFF;
+            border-radius: 25px;
+            color: #FFFFFF;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 12px 45px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: transform 80ms ease-in;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .ghost-btn:active {
+            transform: scale(0.95);
+        }
+
+        .ghost-btn:focus {
+            outline: none;
+        }
+
+        /* Sign In (Login) - Left Side default */
+        .sign-in-container {
+            left: 0;
+            width: 50%;
+            z-index: 2;
+        }
+
+        /* Sign Up - Right Side default (hidden initially) */
+        .sign-up-container {
+            left: 0;
+            width: 50%;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        /* Active State - User clicked 'Sign Up' */
+        .container.right-panel-active .sign-in-container {
+            transform: translateX(100%);
+        }
+
+        .container.right-panel-active .sign-up-container {
+            transform: translateX(100%);
+            opacity: 1;
+            z-index: 5;
+            animation: show 0.6s;
+        }
+
+        @keyframes show {
+
+            0%,
+            49.99% {
+                opacity: 0;
+                z-index: 1;
+            }
+
+            50%,
+            100% {
+                opacity: 1;
+                z-index: 5;
+            }
+        }
+
+        /* Overlay */
+        .overlay-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            transition: transform 0.6s ease-in-out;
+            z-index: 100;
+        }
+
+        .container.right-panel-active .overlay-container {
+            transform: translateX(-100%);
+        }
+
+        .overlay {
+            background: var(--gradient-primary);
+            background: linear-gradient(to right, #667eea, #764ba2);
+            color: #FFFFFF;
+            position: relative;
+            left: -100%;
+            height: 100%;
+            width: 200%;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .container.right-panel-active .overlay {
+            transform: translateX(50%);
+        }
+
+        .overlay-panel {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 40px;
+            text-align: center;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .overlay-left {
+            transform: translateX(-20%);
+        }
+
+        .container.right-panel-active .overlay-left {
+            transform: translateX(0);
+        }
+
+        .overlay-right {
+            right: 0;
+            transform: translateX(0);
+        }
+
+        .container.right-panel-active .overlay-right {
+            transform: translateX(20%);
+        }
+
+        /* Flex Row for Gender/Role */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .role-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .role-option {
+            padding: 10px;
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 13px;
+            font-weight: 500;
+            background: var(--light-bg);
+            color: var(--text-dark);
+        }
+
+        .role-option:hover {
+            border-color: var(--primary-blue);
+        }
+
+        .role-option.selected {
+            border-color: var(--primary-blue);
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .role-option input {
+            display: none;
+        }
+
+        /* Alert */
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            display: none;
+            text-align: left;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .alert.error {
+            background: #fee;
+            color: #c33;
+            border-left: 4px solid #c33;
+        }
+
+        .alert.success {
+            background: #efe;
+            color: #3c3;
+            border-left: 4px solid #3c3;
+        }
+
+        .alert.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(180deg) scale(1.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                width: 100%;
+                min-height: 800px;
+                max-width: 450px;
+                border-radius: 0;
+                box-shadow: none;
+                margin: 0;
+            }
+
+            body {
+                padding: 0;
+                background: var(--white);
+            }
+
+            .form-container {
+                position: relative;
+                width: 100%;
+                height: auto;
+                left: 0 !important;
+                opacity: 1 !important;
+                transform: none !important;
+                padding: 40px 20px;
+            }
+
+            .sign-up-container {
+                display: none;
+                /* Hide via JS logic usually, but here simple CSS hide for tab */
+            }
+
+            .container.right-panel-active .sign-in-container {
+                display: none;
+            }
+
+            .container.right-panel-active .sign-up-container {
+                display: block;
+            }
+
+            .overlay-container {
+                display: none;
+            }
+
+            /* Mobile Tabs (Alternative to Overlay) */
+            .mobile-message {
+                text-align: center;
+                margin-top: 20px;
+                font-size: 14px;
+                display: block !important;
+            }
+        }
+
+        .mobile-message {
+            display: none;
+        }
+
+        /* Login Footer Specifics */
+        .main-footer.login-footer {
+            background-color: transparent;
+            border-top: none;
+            position: relative;
+            /* Changed from absolute to flow naturally */
+            width: 100%;
+            margin-top: 0;
+            padding-bottom: 20px;
+            z-index: 10;
+        }
+
+        .main-footer.login-footer p,
+        .main-footer.login-footer .developer-credit strong {
+            color: rgba(255, 255, 255, 0.8);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        /* Fix for Footer Modal (Terms) which uses .modal-header */
+        .modal-header .close-modal {
+            position: static;
+            top: auto;
+            right: auto;
+            font-size: 1.5rem;
+            /* Match global */
+        }
+
+        .close-modal:hover {
+            color: var(--carmine-red);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle floating" id="themeToggle" onclick="toggleTheme()" title="Toggle Theme">
+        <span id="themeIcon">🌙</span>
+    </button>
+
+    <!-- Home Link -->
+    <a href="index.html"
+        style="position: fixed; top: 20px; left: 20px; z-index: 1000; color: white; text-decoration: none; font-weight: bold; background: rgba(0,0,0,0.2); padding: 10px 20px; border-radius: 20px; backdrop-filter: blur(5px);">←
+        Home</a>
+
+    <div class="container" id="container">
+        <!-- Sign Up Container (Right Side Active) -->
+        <div class="form-container sign-up-container">
+            <form id="signUpForm" onsubmit="handleSignUp(event)">
+                <div style="text-align: center; margin-bottom: 10px;">
+                    <img src="favicon.png" alt="Routine Flow" style="width: 50px; height: 50px; border-radius: 10px;">
+                </div>
+                <h1>Create Account</h1>
+                <div id="signUpAlert" class="alert"></div>
+
+                <div class="input-group">
+                    <input type="text" id="name" placeholder="Full Name" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-group">
+                        <input type="email" id="email" placeholder="Email" required>
+                    </div>
+                    <div class="input-group">
+                        <select id="gender" required>
+                            <option value="" disabled selected>Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group" style="margin-bottom: 5px;">
+                    <label style="text-align:left;">I am a:</label>
+                    <div class="role-selector">
+                        <label class="role-option selected">
+                            <input type="radio" name="role" value="Student" checked
+                                onchange="toggleDepartment(this.value)">
+                            Student
+                        </label>
+                        <label class="role-option">
+                            <input type="radio" name="role" value="Teacher" onchange="toggleDepartment(this.value)">
+                            Teacher
+                        </label>
+                        <label class="role-option">
+                            <input type="radio" name="role" value="Admin" onchange="toggleDepartment(this.value)">
+                            Admin
+                        </label>
+                    </div>
+                </div>
+
+                <div class="input-group" id="deptGroup">
+                    <select id="department">
+                        <option value="">Select Department</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Password" required minlength="6">
+                </div>
+
+                <button type="submit" class="submit-btn">Sign Up</button>
+
+                <p class="mobile-message">
+                    Already have an account? <a href="#" onclick="showSignIn()">Sign In</a>
+                </p>
+            </form>
+        </div>
+
+        <!-- Sign In Container (Left Side Default) -->
+        <div class="form-container sign-in-container">
+            <form id="signInForm" onsubmit="handleSignIn(event)">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <img src="favicon.png" alt="Routine Flow"
+                        style="width: 60px; height: 60px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                </div>
+                <h1>Sign in</h1>
+                <div id="signInAlert" class="alert"></div>
+
+                <div class="input-group">
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                </div>
+                <a href="#" onclick="showForgotPasswordModal()">Forgot your password?</a>
+                <button type="submit" class="submit-btn" style="margin-top: 0;">Sign In</button>
+
+                <p class="mobile-message">
+                    Don't have an account? <a href="#" onclick="showSignUp()">Sign Up</a>
+                </p>
+            </form>
+        </div>
+
+        <!-- Overlay Container -->
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Welcome Back!</h1>
+                    <p>To keep connected with us please login with your personal info</p>
+                    <button class="ghost-btn" id="signIn" onclick="showSignIn()">Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Enter your personal details and start your journey with us</p>
+                    <button class="ghost-btn" id="signUp" onclick="showSignUp()">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeForgotPasswordModal()">&times;</span>
+            <div id="forgotPasswordStep1">
+                <h2>Reset Password</h2>
+                <p>Enter your email address to verify your account.</p>
+                <div id="resetAlert" class="alert"></div>
+                <div class="input-group" style="margin: 0 auto 15px;">
+                    <input type="email" id="resetEmail" placeholder="Enter your email" required>
+                </div>
+                <button type="button" class="submit-btn" onclick="verifyResetEmail()">Verify Email</button>
+            </div>
+
+            <div id="forgotPasswordStep2" style="display: none;">
+                <h2>New Password</h2>
+                <p>Enter your new password below.</p>
+                <div id="newPasswordAlert" class="alert"></div>
+                <div class="input-group" style="margin: 0 auto 15px;">
+                    <input type="password" id="newPassword" placeholder="New Password" required minlength="6">
+                </div>
+                <button type="button" class="submit-btn" onclick="handlePasswordReset()">Reset Password</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div id="footerContainer"></div>
+
+    <!-- JavaScript Files -->
+    <script src="js/utils.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/components.js"></script>
+
+    <script>
+        // Sliding Logic
+        const container = document.getElementById('container');
+
+        function showSignUp() {
+            container.classList.add("right-panel-active");
+        }
+
+        function showSignIn() {
+            container.classList.remove("right-panel-active");
+        }
+
+        // Role Selection
+        document.querySelectorAll('input[name="role"]').forEach(radio => {
+            radio.addEventListener('change', function () {
+                document.querySelectorAll('.role-option').forEach(opt => opt.classList.remove('selected'));
+                this.parentElement.classList.add('selected');
+            });
+        });
+
+        // Toggle Department based on Role
+        function toggleDepartment(role) {
+            const deptGroup = document.getElementById('deptGroup');
+            if (role === 'Admin') {
+                deptGroup.style.display = 'none';
+            } else {
+                deptGroup.style.display = 'block';
+            }
+        }
+
+        // Initialize Departments
+        const deptSelect = document.getElementById('department');
+        if (typeof DEFAULT_DEPARTMENTS !== 'undefined') {
+            DEFAULT_DEPARTMENTS.forEach(dept => {
+                const option = document.createElement('option');
+                option.value = dept;
+                option.textContent = dept;
+                deptSelect.appendChild(option);
+            });
+        }
+
+        // Initialize Theme & Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (typeof setTheme === 'function') {
+                setTheme(savedTheme);
+            }
+
+            toggleDepartment('Student'); // Default
+
+            // Check if already logged in
+            if (typeof isAuthenticated === 'function' && isAuthenticated()) {
+                const user = getCurrentUser();
+                redirectToDashboard(user.role);
+            }
+
+            // Inject Footer
+            if (typeof generateFooter === 'function') {
+                const footerContainer = document.getElementById('footerContainer');
+                footerContainer.innerHTML = generateFooter();
+                const footer = footerContainer.querySelector('.main-footer');
+                if (footer) {
+                    footer.classList.add('login-footer');
+                    // Remove auto-injected sidebar class if present (though it shouldn't be on login)
+                    footer.classList.remove('with-sidebar');
+                }
+            }
+        });
+
+        // Sign In Handler
+        function handleSignIn(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            const result = login(email, password);
+            const alertBox = document.getElementById('signInAlert');
+
+            if (result.success) {
+                alertBox.textContent = result.message;
+                alertBox.className = 'alert success show';
+                setTimeout(() => {
+                    redirectToDashboard(result.user.role);
+                }, 1000);
+            } else {
+                alertBox.textContent = result.message;
+                alertBox.className = 'alert error show';
+            }
+        }
+
+        // Sign Up Handler
+        function handleSignUp(event) {
+            event.preventDefault();
+
+            const selectedRole = document.querySelector('input[name="role"]:checked').value;
+            const dept = document.getElementById('department').value;
+
+            if (selectedRole !== 'Admin' && !dept) {
+                const alertBox = document.getElementById('signUpAlert');
+                alertBox.textContent = "Please select a department.";
+                alertBox.className = 'alert error show';
+                return;
+            }
+
+            const userData = {
+                userId: generateUserId(selectedRole),
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value,
+                role: selectedRole,
+                department: selectedRole === 'Admin' ? 'Administration' : dept,
+                gender: document.getElementById('gender').value
+            };
+
+            const result = signup(userData);
+            const alertBox = document.getElementById('signUpAlert');
+
+            if (result.success) {
+                alertBox.textContent = "Account created! Redirecting...";
+                alertBox.className = 'alert success show';
+                setTimeout(() => {
+                    redirectToDashboard(result.user.role);
+                }, 1500);
+            } else {
+                alertBox.textContent = result.message;
+                alertBox.className = 'alert error show';
+            }
+        }
+
+        // --- FORGOT PASSWORD LOGIC ---
+
+        function showForgotPasswordModal() {
+            document.getElementById('forgotPasswordModal').style.display = 'flex';
+            document.getElementById('forgotPasswordStep1').style.display = 'block';
+            document.getElementById('forgotPasswordStep2').style.display = 'none';
+            document.getElementById('resetEmail').value = '';
+            document.getElementById('resetAlert').style.display = 'none';
+        }
+
+        function closeForgotPasswordModal() {
+            document.getElementById('forgotPasswordModal').style.display = 'none';
+        }
+
+        let verifiedEmailForReset = '';
+
+        function verifyResetEmail() {
+            const email = document.getElementById('resetEmail').value;
+            const alertBox = document.getElementById('resetAlert');
+
+            // Check if user exists
+            const user = getUserByEmail(email);
+
+            if (user) {
+                verifiedEmailForReset = email;
+                alertBox.className = 'alert success show';
+                alertBox.textContent = 'Email verfied!';
+
+                setTimeout(() => {
+                    document.getElementById('forgotPasswordStep1').style.display = 'none';
+                    document.getElementById('forgotPasswordStep2').style.display = 'block';
+                    document.getElementById('resetAlert').style.display = 'none'; // reset alert for next step
+                }, 1000);
+            } else {
+                alertBox.className = 'alert error show';
+                alertBox.textContent = 'No account found with this email.';
+            }
+        }
+
+        function handlePasswordReset() {
+            const newPassword = document.getElementById('newPassword').value;
+            const alertBox = document.getElementById('newPasswordAlert');
+
+            const result = resetUserPassword(verifiedEmailForReset, newPassword);
+
+            if (result.success) {
+                alertBox.className = 'alert success show';
+                alertBox.textContent = result.message;
+                setTimeout(() => {
+                    closeForgotPasswordModal();
+                }, 2000);
+            } else {
+                alertBox.className = 'alert error show';
+                alertBox.textContent = result.message;
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function (event) {
+            const modal = document.getElementById('forgotPasswordModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+
+</html>

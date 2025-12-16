@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routine Flow - Smart Routine Management</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/landing.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="#" class="navbar-brand">
+                <img src="favicon.png" alt="RF" class="navbar-logo">
+                <span class="navbar-title">Routine Flow</span>
+            </a>
+            <div class="navbar-actions">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#about" class="nav-link">About</a>
+                <button id="themeToggle" class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+                    🌙
+                </button>
+                <a href="login.html" class="btn btn-primary">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="landing-hero">
+        <h1 class="landing-title">Simplify Your Academic Schedule</h1>
+        <p class="landing-subtitle">
+            A smart, role-based routine management system for educational institutions.
+            Organize, view, and manage schedules with zero confusion.
+        </p>
+        <div class="cta-buttons">
+            <a href="login.html" class="btn btn-primary btn-lg">Get Started</a>
+            <a href="#about" class="btn btn-outline btn-lg">About Us</a>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">👑</div>
+            <h3 class="feature-title">For Admins</h3>
+            <p class="feature-desc">
+                Full control over the master routine. Manage users, departments, and schedules in one centralized
+                dashboard.
+            </p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">👨‍🏫</div>
+            <h3 class="feature-title">For Teachers</h3>
+            <p class="feature-desc">
+                View your personal teaching schedule instantly. Never miss a class with real-time updates and clear
+                assignments.
+            </p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🎓</div>
+            <h3 class="feature-title">For Students</h3>
+            <p class="feature-desc">
+                Access your daily routine on the go. Filter by department and see exactly where you need to be.
+            </p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" style="padding: 4rem 2rem; background: var(--white); text-align: center;">
+        <div class="container" style="max-width: 800px;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--primary-blue);">About Routine Flow</h2>
+            <p style="font-size: 1.1rem; color: var(--text-medium); line-height: 1.8; margin-bottom: 2rem;">
+                Routine Flow is designed to eliminate the chaos of manual scheduling.
+                Born from the need to streamline academic logistics, our platform empowers educational institutions
+                to manage time efficiently. Whether you are an administrator planning the semester,
+                a teacher tracking classes, or a student checking your daily plan,
+                Routine Flow keeps everyone in sync.
+            </p>
+            <div class="grid grid-cols-3 gap-3" style="margin-top: 3rem;">
+                <div>
+                    <h3 style="color: var(--primary-dark); font-size: 2rem;">100%</h3>
+                    <p>Digital</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--primary-dark); font-size: 2rem;">0</h3>
+                    <p>Conflicts</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--primary-dark); font-size: 2rem;">24/7</h3>
+                    <p>Access</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Routine Flow. All rights reserved.</p>
+            <p class="developer-credit">Developed by <strong>Timon Biswas</strong></p>
+            <div style="margin-top: 10px;">
+                <button class="footer-link-btn" onclick="openModal('termsModal')">
+                    📜 Terms & Conditions
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Terms & Conditions Modal -->
+    <div id="termsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Terms & Conditions</h2>
+                <button class="close-modal" onclick="closeModal('termsModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <p><em>Last Updated: December 11, 2025</em></p>
+                <p
+                    style="background: rgba(255, 243, 205, 0.5); padding: 15px; border-radius: 10px; border-left: 4px solid #ffc107; margin-bottom: 20px; color: var(--text-dark);">
+                    <strong>⚠️ IMPORTANT NOTICE:</strong> This software is proprietary and confidential. All rights
+                    reserved by Timon Biswas.
+                </p>
+
+                <h3>1. Copyright & Ownership</h3>
+                <p><strong>© 2025 Timon Biswas. All Rights Reserved.</strong></p>
+                <p>Routine Flow and all associated intellectual property rights are the exclusive property of
+                    <strong>Timon Biswas</strong>.
+                </p>
+
+                <h3>2. License Grant</h3>
+                <p>You are granted a limited license for personal, non-commercial educational use only.</p>
+                <ul>
+                    <li>No commercial use.</li>
+                    <li>No redistribution or modification.</li>
+                </ul>
+
+                <h3>3. Prohibited Actions</h3>
+                <p>You may not copy, modify, reverse engineer, or distribute this software without written permission.
+                </p>
+
+                <h3>4. Contact</h3>
+                <p>For inquiries, please contact <strong>Timon Biswas</strong> at <a
+                        href="mailto:timonbiswas33@gmail.com">timonbiswas33@gmail.com</a>.</p>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <!-- Button removed by request -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Check if already logged in, but don't auto-redirect.
+        // Just let them start from here.
+    </script>
+</body>
+
+</html>

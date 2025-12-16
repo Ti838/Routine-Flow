@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today's Routine - Routine Flow</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div id="navbarContainer"></div>
+
+    <!-- Sidebar -->
+    <div id="sidebarContainer"></div>
+
+    <!-- Main Content -->
+    <main class="main-content with-sidebar animate-student-entry">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Today's Routine</h1>
+                <p class="page-description" id="todayDate"></p>
+            </div>
+        </div>
+
+        <!-- Progress for Today -->
+        <div id="todayProgress"></div>
+
+        <!-- Today's Routines -->
+        <div class="routine-list" id="routinesList">
+            <!-- Routines will be inserted here -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footerContainer"></div>
+
+    <!-- JavaScript Files -->
+    <script src="../js/utils.js"></script>
+    <script src="../js/data.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+
+    <script>
+        // Check authentication and authorization
+        requireAuth();
+        const currentUser = getCurrentUser();
+
+        if (!hasRole('Student')) {
+            alert('Access denied. Student access required.');
+            redirectToDashboard(currentUser.role);
+        }
+
+        // Load navbar and sidebar
+        document.getElementById('navbarContainer').innerHTML = generateNavbar(currentUser);
+        document.getElementById('sidebarContainer').innerHTML = generateSidebar('Student');
+        document.getElementById('footerContainer').innerHTML = generateFooter();
+        document.querySelector('.main-footer').classList.add('with-sidebar');
+        setActiveNavLink('/student/today.html');
+
+        // Set today's date
+        document.getElementById('todayDate').textContent = formatDate(getCurrentDate());
+
+        // Load today's routines
+        function loadTodayRoutines() {
+            const allRoutines = getRoutinesForStudent(currentUser.userId);
+            const todayRoutines = allRoutines.filter(r => r.date === getCurrentDate());
+
+            // Calculate today's progress
+            const completedToday = todayRoutines.filter(r =>
+                isTaskCompleted(r.id, currentUser.userId)
+            ).length;
+
+            const todayPercentage = todayRoutines.length > 0
+                ? Math.round((completedToday / todayRoutines.length) * 100)
+                : 0;
+
+            document.getElementById('todayProgress').innerHTML =
+                createProgressBar(todayPercentage, "Today's Progress");
+
+            // Display routines
+            const listDiv = document.getElementById('routinesList');
+
+            if (todayRoutines.length === 0) {
+                listDiv.innerHTML = createEmptyState(
+                    '🎉',
+                    'No Tasks Today',
+                    'You have no tasks scheduled for today. Enjoy your free time!'
+                );
+                return;
+            }
+
+            // Sort by time
+            todayRoutines.sort((a, b) => a.timeStart.localeCompare(b.timeStart));
+
+            listDiv.innerHTML = todayRoutines.map(routine =>
+                createRoutineCard(routine, false, currentUser.userId)
+            ).join('');
+        }
+
+        // Initialize
+        loadTodayRoutines();
+    </script>
+</body>
+
+</html>

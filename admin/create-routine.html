@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Master Routine - Routine Flow</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div id="navbarContainer"></div>
+
+    <!-- Sidebar -->
+    <div id="sidebarContainer"></div>
+
+    <!-- Main Content -->
+    <main class="main-content with-sidebar">
+        <!-- Header -->
+        <div class="card p-4 mb-4 border-0 shadow-sm">
+            <h1 class="mb-1">Create Master Routine Task</h1>
+            <p class="text-muted">Add a new session to the Institute's Master Routine.</p>
+        </div>
+
+        <!-- Batch Form Card -->
+        <div class="card border-0 shadow-sm p-4" style="max-width: 1000px; margin: 0 auto;">
+            <div class="mb-4">
+                <div class="row g-3">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">📅 Date</label>
+                        <input type="date" class="form-control" id="batchDate" required style="padding: 10px;">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">🏢 Department</label>
+                        <select class="form-select bg-light" id="batchDept" required style="padding: 10px;">
+                            <!-- JS Populated -->
+                        </select>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label class="form-label fw-bold">📢 Announcement / Note (Optional)</label>
+                        <textarea class="form-control" id="globalAnnouncement" rows="2"
+                            placeholder="e.g. Bring Lab Coat, Exam Day..." style="resize: none;"></textarea>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label class="form-label fw-bold">📎 Upload Routine Schedule (PDF / Image)</label>
+                        <div class="file-upload-wrapper p-3 border rounded bg-light"
+                            style="border-style: dashed !important; border-width: 2px; text-align: center;">
+                            <input type="file" class="form-control" id="globalFileInput" accept=".pdf,.jpg,.png, .jpeg">
+                            <small class="text-muted d-block mt-2">Max 500KB. Applied to all classes in this
+                                batch.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="mb-3">Classes</h4>
+            <div class="table-responsive mb-4">
+                <table class="table" id="batchTable">
+                    <thead>
+                        <tr>
+                            <th width="20%">Start Time</th>
+                            <th width="20%">End Time</th>
+                            <th width="30%">Activity / Class</th>
+                            <th width="25%">Room</th>
+                            <th width="5%"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="batchRows">
+                        <!-- Initial Row -->
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-sm btn-outline-primary" onclick="addBatchRow()">+ Add
+                    Period</button>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+                <a href="dashboard.html" class="btn btn-outline-secondary">Cancel</a>
+                <button onclick="handleBatchCreate()" class="btn btn-primary">AddTo Master Routine</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footerContainer"></div>
+
+    <!-- JavaScript Files -->
+    <script src="../js/utils.js"></script>
+    <script src="../js/data.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+
+    <script>
+        // Check Auth
+        requireAuth();
+        const currentUser = getCurrentUser();
+
+        if (!hasRole('Admin')) {
+            redirectToDashboard(currentUser.role);
+        }
+
+        // Initialize UI
+        document.getElementById('navbarContainer').innerHTML = generateNavbar(currentUser);
+        document.getElementById('sidebarContainer').innerHTML = generateSidebar('Admin');
+        document.getElementById('footerContainer').innerHTML = generateFooter();
+        document.querySelector('.main-footer').classList.add('with-sidebar');
+        // We don't have a direct Sidebar link for this, so no setActiveNavLink, or set it to Dashboard/Routines
+        setActiveNavLink('/admin/routines.html');
+
+        // Initial Data
+        // Initial Data
+        document.getElementById('batchDate').value = getCurrentDate();
+
+        const depts = getAllDepartments();
+        const deptSelect = document.getElementById('batchDept');
+        deptSelect.innerHTML = `<option value="" disabled selected>Select Department</option>` + depts.map(d =>
+            `<option value="${d}">${d}</option>`
+        ).join('');
+
+        // Batch Logic
+        let rowCount = 0;
+
+        function addBatchRow() {
+            rowCount++;
+            const tbody = document.getElementById('batchRows');
+            const row = document.createElement('tr');
+            row.id = `row-${rowCount}`;
+            row.innerHTML = `
+                <td><input type="time" class="form-control form-control-sm" name="timeStart" required></td>
+                <td><input type="time" class="form-control form-control-sm" name="timeEnd" required></td>
+                <td><input type="text" class="form-control form-control-sm" name="taskName" placeholder="Class Name" required></td>
+                <td><input type="text" class="form-control form-control-sm" name="room" placeholder="Room/Lab"></td>
+                <td>
+                    <button type="button" class="icon-btn danger" onclick="removeRow(${rowCount})">${ICONS.trash}</button>
+                </td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        function removeRow(id) {
+            const row = document.getElementById(`row-${id}`);
+            if (row) row.remove();
+        }
+
+        // Add 3 rows by default
+        addBatchRow();
+        addBatchRow();
+        addBatchRow();
+
+        async function handleBatchCreate() {
+            const date = document.getElementById('batchDate').value;
+            const dept = document.getElementById('batchDept').value;
+            const rows = document.querySelectorAll('#batchRows tr');
+            const globalFileInput = document.getElementById('globalFileInput');
+            const announcement = document.getElementById('globalAnnouncement').value.trim();
+
+            if (!date || !dept) {
+                showToast('Please select Date and Department', 'error');
+                return;
+            }
+
+            if (rows.length === 0) {
+                showToast('Add at least one class', 'error');
+                return;
+            }
+
+            // Conflict Check: Room Availability
+            // Helper to get all routines (assuming standard LS key)
+            const allRoutines = JSON.parse(localStorage.getItem('routine_flow_routines')) || [];
+            const dayRoutines = allRoutines.filter(r => r.date === date);
+
+            // Prepare Global Attachment
+            let globalAttachment = null;
+            if (globalFileInput.files.length > 0) {
+                const file = globalFileInput.files[0];
+                if (file.size > 500 * 1024) {
+                    showToast('Attachment too large (Max 500KB)', 'error');
+                    return;
+                }
+                try {
+                    const base64 = await readFileAsBase64(file);
+                    globalAttachment = { name: file.name, type: file.type, data: base64 };
+                } catch (e) {
+                    console.error(e);
+                    showToast('Error reading attachment', 'error');
+                    return;
+                }
+            }
+
+            let entries = [];
+
+            for (const row of rows) {
+                const inputs = row.querySelectorAll('input');
+                // input order: 0:start, 1:end, 2:name, 3:room
+                const start = inputs[0].value;
+                const end = inputs[1].value;
+                const name = inputs[2].value;
+                const room = inputs[3].value;
+
+                // Skip empty rows
+                if (!start && !end && !name) continue;
+
+                if (!start || !end || !name) {
+                    showToast('Please fill required fields (Time, Name)', 'error');
+                    return;
+                }
+                if (start >= end) {
+                    showToast(`End time must be after start time for "${name}"`, 'error');
+                    return;
+                }
+
+                // Check Room Conflict
+                // Only check if Room is specified
+                if (room) {
+                    const roomConflict = dayRoutines.some(existing =>
+                        existing.room === room &&
+                        ((start < existing.timeEnd && start >= existing.timeStart) ||
+                            (existing.timeStart < end && existing.timeStart >= start))
+                    );
+
+                    if (roomConflict) {
+                        showToast(`Room Clash: "${room}" is occupied at this time.`, 'error');
+                        return;
+                    }
+                }
+
+                entries.push({
+                    taskName: name,
+                    date: date,
+                    timeStart: start,
+                    timeEnd: end,
+                    department: dept,
+                    room: room,
+                    assignedStudents: [],
+                    createdBy: currentUser.userId,
+                    authorName: currentUser.name, // Admin
+                    attachment: globalAttachment,
+                    announcement: announcement || null
+                });
+            }
+
+            if (entries.length > 0) {
+                entries.forEach(r => addRoutine(r));
+                showToast(`Successfully saved ${entries.length} classes!`, 'success');
+                setTimeout(() => window.location.href = 'routines.html', 1500);
+            } else {
+                showToast('No classes to save.', 'info');
+            }
+        }
+
+        function readFileAsBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+                reader.readAsDataURL(file);
+            });
+        }
+    </script>
+</body>
+
+</html>

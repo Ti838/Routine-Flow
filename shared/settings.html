@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Routine Flow</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body>
+    <div id="navbarContainer"></div>
+    <div id="sidebarContainer"></div>
+
+    <main class="main-content with-sidebar animate-teacher-entry">
+        <!-- Page Header -->
+        <div class="card-premium mb-4"
+            style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);">
+            <div class="d-flex align-items-center">
+                <div class="mr-4"
+                    style="width: 60px; height: 60px; font-size: 28px; background: var(--white); color: #10B981; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    ⚙️
+                </div>
+                <div>
+                    <h1 class="mb-1" style="font-size: 24px; font-weight: 700; color: var(--text-dark);">Settings</h1>
+                    <p class="text-muted mb-0" style="font-size: 14px;">Customize your application experience</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Left Column: Appearances & Notifications -->
+            <div class="col-md-6 mb-4">
+
+                <!-- Appearance Card -->
+                <div class="card-premium mb-4">
+                    <div class="card-header border-bottom mb-3 pb-2">
+                        <h3 class="card-title" style="font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+                            🎨 Appearance
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <select class="form-control-premium" id="themeSelect" onchange="selectTheme(this.value)">
+                            <option value="light">☀️ Light Mode</option>
+                            <option value="dark">🌙 Dark Mode</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Notifications Card (New Feature) -->
+                <div class="card-premium">
+                    <div class="card-header border-bottom mb-3 pb-2">
+                        <h3 class="card-title" style="font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+                            🔔 Notifications
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <h6 class="mb-0 font-weight-bold">Class Reminders</h6>
+                                <small class="text-muted">Get notified 15 mins before class</small>
+                            </div>
+                            <label class="form-check-switch">
+                                <input type="checkbox" id="notifyReminders" onchange="toggleSetting('notifyReminders')">
+                                <span class="switch-slider"></span>
+                            </label>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-0 font-weight-bold">Daily Digest</h6>
+                                <small class="text-muted">Summary of tomorrow's schedule</small>
+                            </div>
+                            <label class="form-check-switch">
+                                <input type="checkbox" id="notifyDigest" onchange="toggleSetting('notifyDigest')">
+                                <span class="switch-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Security & Info -->
+            <div class="col-md-6 mb-4">
+
+                <!-- Security Card -->
+                <div class="card-premium h-100">
+                    <div class="card-header border-bottom mb-3 pb-2">
+                        <h3 class="card-title" style="font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+                            🔐 Safety & Security
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="changePasswordForm" onsubmit="handleChangePassword(event)">
+                            <div class="mb-3">
+                                <label class="form-label-premium">Current Password</label>
+                                <input type="password" class="form-control-premium" id="currentPassword" required
+                                    placeholder="••••••••">
+                            </div>
+                            <div class="row g-2 mb-3">
+                                <div class="col-6">
+                                    <label class="form-label-premium">New Password</label>
+                                    <input type="password" class="form-control-premium" id="newPassword" required
+                                        minlength="6" placeholder="New pass">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label-premium">Confirm</label>
+                                    <input type="password" class="form-control-premium" id="confirmPassword" required
+                                        minlength="6" placeholder="Confirm">
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-primary w-100">Update Password</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Full Width -->
+            <div class="col-12">
+                <div class="card-premium mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="card-title mb-1" style="font-size: 1.1rem; color: var(--danger);">🛑 Danger Zone
+                            </h3>
+                            <p class="text-muted mb-0" style="font-size: 0.85rem;">Sign out of your session on this
+                                device</p>
+                        </div>
+                        <button class="btn btn-outline-danger px-4 py-2" onclick="handleLogout()">
+                            🚪 Sign Out
+                        </button>
+                    </div>
+                </div>
+
+                <!-- App Info Removed as requested -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footerContainer"></div>
+
+    <!-- JavaScript Files -->
+    <script src="../js/utils.js"></script>
+    <script src="../js/data.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+    <script>
+        // Check authentication and authorization
+        requireAuth();
+        const currentUser = getCurrentUser();
+
+        // Load navbar and sidebar
+        document.getElementById('navbarContainer').innerHTML = generateNavbar(currentUser);
+        document.getElementById('sidebarContainer').innerHTML = generateSidebar(currentUser.role);
+        document.getElementById('footerContainer').innerHTML = generateFooter();
+        document.querySelector('.main-footer').classList.add('with-sidebar');
+        setActiveNavLink('/shared/settings.html');
+
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        // Initialize Settings
+        updateThemeUI(currentTheme);
+        loadSettings();
+
+        function loadSettings() {
+            // Load Notifications
+            document.getElementById('notifyReminders').checked = localStorage.getItem('notifyReminders') !== 'false'; // Default true
+            document.getElementById('notifyDigest').checked = localStorage.getItem('notifyDigest') === 'true'; // Default false
+        }
+
+        function toggleSetting(key) {
+            const el = document.getElementById(key);
+            localStorage.setItem(key, el.checked);
+
+            if (key === 'notifyDigest' && el.checked) {
+                showToast('Daily Digest scheduled for 8:00 PM', 'success');
+            } else if (key === 'notifyReminders') {
+                showToast(el.checked ? 'Class Reminders Enabled' : 'Class Reminders Disabled', 'info');
+            } else {
+                showToast('Setting saved', 'success');
+            }
+        }
+
+        function selectTheme(theme) {
+            setTheme(theme);
+            updateThemeUI(theme);
+            showToast(`Switched to ${theme} mode`, 'success');
+        }
+
+        function updateThemeUI(theme) {
+            // Update Dropdown
+            const select = document.getElementById('themeSelect');
+            if (select) {
+                select.value = theme;
+            }
+        }
+
+        // Legacy function placeholder if needed elsewhere (though we removed the select)
+        function changeThemeFromSettings() {
+            // ...
+        }
+
+        function handleChangePassword(event) {
+            event.preventDefault();
+            const current = document.getElementById('currentPassword').value;
+            const newPass = document.getElementById('newPassword').value;
+            const confirm = document.getElementById('confirmPassword').value;
+
+            if (newPass !== confirm) {
+                showToast('New passwords do not match', 'error');
+                return;
+            }
+
+            const result = changePassword(currentUser.userId, current, newPass);
+            if (result.success) {
+                showToast(result.message, 'success');
+                document.getElementById('changePasswordForm').reset();
+            } else {
+                showToast(result.message, 'error');
+            }
+        }
+
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                logout();
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Routine Flow</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/dashboard.css?v=2.1">
+
+    <!-- HTML2PDF Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div id="navbarContainer"></div>
+
+    <!-- Sidebar -->
+    <div id="sidebarContainer"></div>
+
+    <!-- Main Content -->
+    <!-- Main Content -->
+    <main class="main-content with-sidebar animate-student-entry">
+        <!-- Header Panel -->
+        <div class="card-premium mb-4">
+            <div class="d-flex align-items-center justify-content-between mobile-stack">
+                <div class="d-flex align-items-center mobile-stack">
+                    <div class="profile-avatar mr-4 mb-3-mobile" style="width: 80px; height: 80px; font-size: 32px;">
+                        <span id="headerAvatar">ST</span>
+                    </div>
+                    <div>
+                        <h1 class="mb-1" style="font-size: 24px;" id="headerName">Student Name</h1>
+                        <p class="text-muted mb-2" style="font-size: 14px;">
+                            ID: <span id="headerId">...</span> •
+                            Dept: <span id="headerDept">...</span> •
+                            Semester: <span id="headerSem">...</span>
+                        </p>
+                        <a href="../shared/profile.html" class="btn btn-sm btn-outline-primary">Edit Profile</a>
+                        <button class="btn btn-sm btn-primary ml-2" onclick="exportOfficialWeekly()">
+                            📅 Teacher's Routine
+                        </button>
+                    </div>
+                </div>
+                <div class="text-right mobile-left mt-3-mobile">
+                    <div class="stat-value" id="headerTime" style="font-size: 2rem;">--:--</div>
+                    <div class="text-muted" id="headerDate">...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Layout Grid -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;" class="mobile-stack">
+
+            <!-- Left Col: Today's Routine -->
+            <div class="d-flex flex-column gap-3">
+                <!-- Quick Stats Row -->
+                <div class="stats-grid" id="statsGrid" style="grid-template-columns: repeat(3, 1fr);">
+                    <!-- Stats inserted via JS -->
+                </div>
+
+                <div class="card-premium" style="min-height: 400px; padding:0;">
+                    <div class="card-header d-flex justify-content-between align-items-center"
+                        style="margin: 20px 20px 10px 20px;">
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <h3 class="card-title mb-0">📅 Today's Routine</h3>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn btn-sm btn-outline-primary" style="background:white;"
+                                onclick="exportStudentDayRoutine()">
+                                📄 Daily PDF
+                            </button>
+                            <a href="today.html" class="btn btn-sm btn-outline-primary" style="display:none;">View Full
+                                Day</a>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="routine-list" id="todayTasks" style="padding: 15px;">
+                            <!-- Today's tasks will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Col: Widgets -->
+            <div class="d-flex flex-column gap-3">
+
+                <!-- Official Routine Viewer (Read Only) -->
+                <div class="card-premium border-primary" id="officialRoutineCard"
+                    style="border-width: 0 0 0 4px; display: none;">
+                    <div class="card-header border-bottom mb-3 pb-2">
+                        <h3 class="card-title mb-0" style="color: var(--primary-blue);">📄 Official Routine</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted small mb-3">Master Routine published by Admin.</p>
+
+                        <!-- View Display -->
+                        <div id="routineViewDisplay" class="text-center p-3 mb-3 rounded"
+                            style="background: rgba(102, 126, 234, 0.05); border: 2px solid var(--primary-blue); cursor: pointer;"
+                            onclick="viewOfficialRoutine()">
+                            <span style="font-size: 2rem;" id="routineIcon">📄</span>
+                            <p class="mb-0 mt-2 font-weight-bold text-truncate" id="routineName">Routine.pdf</p>
+                            <small class="text-primary font-weight-bold">Click to View/Download</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom Routine Widget -->
+                <div class="card-premium">
+                    <div class="card-body text-center p-0">
+                        <div style="font-size: 40px; margin-bottom: 10px;">✏️</div>
+                        <h3 class="mb-2" style="font-weight:700">My Custom Routine</h3>
+                        <p class="text-muted small mb-3">Add personal activities to your schedule.</p>
+                        <a href="custom-routine.html" class="btn btn-primary btn-block">Open Builder</a>
+                    </div>
+                </div>
+
+                <!-- Weekly Widget -->
+                <div class="card-premium">
+                    <div class="card-body p-0">
+                        <h3 class="card-title mb-3">Weekly Overview</h3>
+                        <div id="weeklyMiniGrid"
+                            style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-bottom: 15px;">
+                            <!-- JS injected mini indicators -->
+                        </div>
+                        <a href="weekly.html" class="btn btn-outline-secondary btn-block">View Full Week</a>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footerContainer"></div>
+
+    <!-- JavaScript Files -->
+    <script src="../js/utils.js"></script>
+    <script src="../js/data.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+
+    <script>
+        // Check authentication and authorization
+        requireAuth();
+        const currentUser = getCurrentUser();
+
+        if (!hasRole('Student')) {
+            redirectToDashboard(currentUser.role);
+        }
+
+        // Load layouts
+        document.getElementById('navbarContainer').innerHTML = generateNavbar(currentUser);
+        document.getElementById('sidebarContainer').innerHTML = generateSidebar('Student');
+        document.getElementById('footerContainer').innerHTML = generateFooter();
+        document.querySelector('.main-footer').classList.add('with-sidebar');
+        setActiveNavLink('/student/dashboard.html');
+
+        // Populate Header Panel
+        document.getElementById('headerAvatar').textContent = getInitials(currentUser.name);
+        document.getElementById('headerName').textContent = currentUser.name;
+        document.getElementById('headerId').textContent = currentUser.userId || 'N/A';
+        document.getElementById('headerDept').textContent = currentUser.department || 'General';
+        document.getElementById('headerSem').textContent = 'Fall 2025'; // Static or from user data if added
+
+        // Clock
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('headerTime').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('headerDate').textContent = now.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' });
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Load Statistics Widget
+        function loadStats() {
+            const allRoutines = getRoutinesForStudent(currentUser.userId);
+            const completions = getAllCompletions().filter(c => c.studentId === currentUser.userId);
+            const percentage = getStudentCompletionPercentage(currentUser.userId);
+
+            document.getElementById('statsGrid').innerHTML = `
+                ${createStatsCard('📝', allRoutines.length, 'Total Tasks')}
+                ${createStatsCard('✅', completions.length, 'Completed')}
+                ${createStatsCard(ICONS.dashboard, percentage + '%', 'Progress')}
+            `;
+        }
+
+        // Load Mini Weekly Grid
+        function loadWeeklyGrid() {
+            const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+            const container = document.getElementById('weeklyMiniGrid');
+            const allRoutines = getRoutinesForStudent(currentUser.userId);
+
+            // Just a visual representation
+            container.innerHTML = days.map(day => {
+                // Find if there are tasks for this day (simplified check against date strings would need improved logic, using random activity for demo)
+                const hasTask = Math.random() > 0.3;
+                const color = hasTask ? 'var(--primary-blue)' : '#eee';
+                return `<div style="height: 30px; background: ${color}; border-radius: 4px;" title="${day}"></div>`;
+            }).join('');
+        }
+
+        // Load today's tasks
+        function loadTodayTasks() {
+            const routines = getRoutinesForStudent(currentUser.userId);
+            const customRoutines = getCustomRoutines(currentUser.userId);
+            const todayDate = getCurrentDate();
+
+            const todayMaster = routines.filter(r => r.date === todayDate);
+            const todayCustom = customRoutines.filter(r => r.date === todayDate);
+            const allToday = [...todayMaster, ...todayCustom];
+
+            const listDiv = document.getElementById('todayTasks');
+
+            if (allToday.length === 0) {
+                listDiv.innerHTML = createEmptyState(
+                    '☕',
+                    'No Tasks Today',
+                    'Enjoy your free time!',
+                    { label: 'Add Activity', onClick: "window.location.href='custom-routine.html'" }
+                );
+                return;
+            }
+
+            // Sort by time
+            allToday.sort((a, b) => a.timeStart.localeCompare(b.timeStart));
+
+            listDiv.innerHTML = allToday.map(routine => {
+                // Use standard card but simpler
+                const isCustom = routine.type === 'custom';
+                return `
+                <div class="task-card ${isCustom ? 'custom-event-card' : ''}" style="margin-bottom: 10px; padding: 10px; border: 1px solid #eee; border-radius: 8px; border-left: 4px solid ${isCustom ? '#10b981' : 'var(--primary-blue)'};">
+                    <div class="d-flex justify-content-between">
+                        <strong>${routine.taskName || routine.subject}</strong>
+                        <span class="badge badge-light">${formatTime(routine.timeStart)}</span>
+                    </div>
+                    <small class="text-muted">${routine.room || routine.location || 'No Location'}</small>
+                    ${routine.announcement ? `<div style="margin-top:5px; font-size:12px; color:#856404; background:#fff3cd; padding:2px 5px; border-radius:4px;">📢 ${routine.announcement}</div>` : ''}
+                </div>
+               `;
+            }).join('');
+        }
+
+        // --- PDF EXPORT FUNCTION (Professional Table Layout) ---
+        function exportStudentDayRoutine() {
+            // 1. Data
+            const routines = getRoutinesForStudent(currentUser.userId);
+            const customRoutines = getCustomRoutines(currentUser.userId);
+            const todayDate = getCurrentDate();
+
+            const todayMaster = routines.filter(r => r.date === todayDate);
+            const todayCustom = customRoutines.filter(r => r.date === todayDate);
+            const allToday = [...todayMaster, ...todayCustom];
+            allToday.sort((a, b) => a.timeStart.localeCompare(b.timeStart));
+
+            // 2. Container
+            const pdfContainer = document.createElement('div');
+            pdfContainer.style.width = '100%';
+            pdfContainer.style.background = '#fff';
+            pdfContainer.style.color = '#000';
+            pdfContainer.style.padding = '20px';
+            pdfContainer.style.fontFamily = 'Arial, sans-serif';
+
+            // 3. Header (Table for robust alignment)
+            const dateStr = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+            pdfContainer.innerHTML = `
+                <table style="width: 100%; border-bottom: 2px solid #667eea; margin-bottom: 20px; padding-bottom: 10px;">
+                    <tr>
+                        <td style="vertical-align: middle; width: 60px;">
+                            <img src="../favicon.png" style="width: 50px; height: 50px;">
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            <h1 style="margin: 0; color: #667eea; font-size: 24px; line-height: 1.2;">Routine Flow</h1>
+                            <p style="margin: 0; color: #666; font-size: 14px;">Daily Student Schedule</p>
+                        </td>
+                        <td style="vertical-align: middle; text-align: right; font-size: 12px; line-height: 1.5;">
+                            <div><strong>Name:</strong> ${currentUser.name}</div>
+                            <div><strong>Date:</strong> ${dateStr}</div>
+                            <div><strong>ID:</strong> ${currentUser.userId}</div>
+                        </td>
+                    </tr>
+                </table>
+                <h3 style="margin-top: 20px; color: #333; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Today's Classes</h3>
+            `;
+
+            // 4. Table
+            if (allToday.length > 0) {
+                const table = document.createElement('table');
+                table.style.width = '100%';
+                table.style.borderCollapse = 'collapse';
+                table.style.marginBottom = '20px';
+                table.innerHTML = `
+                    <thead>
+                        <tr style="background-color: #f8f9fa;">
+                            <th style="border: 1px solid #ddd; padding: 10px; text-align: left; width: 20%;">Time</th>
+                            <th style="border: 1px solid #ddd; padding: 10px; text-align: left; width: 40%;">Activity / Class</th>
+                            <th style="border: 1px solid #ddd; padding: 10px; text-align: left; width: 40%;">Location / Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${allToday.map(r => `
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 10px; font-size: 13px;">
+                                    ${formatTime(r.timeStart)}
+                                </td>
+                                <td style="border: 1px solid #ddd; padding: 10px; font-weight: bold; font-size: 13px;">
+                                    ${r.taskName || r.subject} ${r.type === 'custom' ? '<span style="font-size:10px; color:#10b981;">(Custom)</span>' : ''}
+                                </td>
+                                <td style="border: 1px solid #ddd; padding: 10px; font-size: 13px;">
+                                    ${r.room || r.location || 'N/A'}
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                `;
+                pdfContainer.appendChild(table);
+            } else {
+                pdfContainer.innerHTML += '<p style="text-align:center; margin-top:50px;">No activities scheduled for today.</p>';
+            }
+
+            // 5. Generate
+            const opt = {
+                margin: [15, 15],
+                filename: `Student_Schedule_${todayDate}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(pdfContainer).save().then(() => {
+                showToast('Schedule downloaded successfully.', 'success');
+            });
+        }
+
+        // --- EXPORT OFFICIAL WEEKLY (Data-driven) ---
+        function exportOfficialWeekly() {
+            // 1. Data
+            const allRoutines = getRoutinesForStudent(currentUser.userId);
+            // Filter out custom routines
+            const officialRoutines = allRoutines.filter(r => r.type !== 'custom');
+
+            // 2. Container
+            const pdfContainer = document.createElement('div');
+            pdfContainer.style.width = '100%';
+            pdfContainer.style.background = '#fff';
+            pdfContainer.style.color = '#000';
+            pdfContainer.style.padding = '20px';
+            pdfContainer.style.fontFamily = 'Arial, sans-serif';
+
+            // 3. Header
+            const dateStr = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+            pdfContainer.innerHTML = `
+                <table style="width: 100%; border-bottom: 2px solid #667eea; margin-bottom: 20px; padding-bottom: 10px;">
+                    <tr>
+                        <td style="vertical-align: middle; width: 60px;">
+                            <img src="../favicon.png" style="width: 50px; height: 50px;">
+                        </td>
+                        <td style="vertical-align: middle; text-align: left;">
+                            <h1 style="margin: 0; color: #667eea; font-size: 24px; line-height: 1.2;">Routine Flow</h1>
+                            <p style="margin: 0; color: #666; font-size: 14px;">Official Class Schedule</p>
+                        </td>
+                        <td style="vertical-align: middle; text-align: right; font-size: 12px; line-height: 1.5;">
+                            <div><strong>Name:</strong> ${currentUser.name}</div>
+                            <div><strong>Date:</strong> ${dateStr}</div>
+                            <div><strong>ID:</strong> ${currentUser.userId}</div>
+                        </td>
+                    </tr>
+                </table>
+            `;
+
+
+            if (officialRoutines.length === 0) {
+                pdfContainer.innerHTML += '<p style="text-align:center; margin-top:50px;">No official routine found.</p>';
+            } else {
+                // Sort by Date then Time
+                officialRoutines.sort((a, b) => {
+                    if (a.date !== b.date) return a.date.localeCompare(b.date);
+                    return a.timeStart.localeCompare(b.timeStart);
+                });
+
+                let currentDate = '';
+                let currentTable = null;
+
+                officialRoutines.forEach(r => {
+                    if (r.date !== currentDate) {
+                        currentDate = r.date;
+                        // Format date header
+                        const dayDate = new Date(currentDate);
+                        const dayStr = dayDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+
+                        // Add Header
+                        const dayHeader = document.createElement('div');
+                        dayHeader.innerHTML = `<h3 style="margin-top: 20px; color: #333; border-bottom: 1px solid #ddd; padding-bottom: 5px;">${dayStr}</h3>`;
+                        pdfContainer.appendChild(dayHeader);
+
+                        // Start Table
+                        currentTable = document.createElement('table');
+                        currentTable.style.width = '100%';
+                        currentTable.style.borderCollapse = 'collapse';
+                        currentTable.style.marginBottom = '20px';
+                        currentTable.innerHTML = `
+                            <thead>
+                                <tr style="background-color: #f8f9fa;">
+                                    <th style="border: 1px solid #ddd; padding: 10px; text-align: left; width: 25%;">Time</th>
+                                    <th style="border: 1px solid #ddd; padding: 10px; text-align: left; width: 45%;">Activity</th>
+                                    <th style="border: 1px solid #ddd; padding: 10px; text-align: left; width: 30%;">Details</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        `;
+                        pdfContainer.appendChild(currentTable);
+                    }
+
+                    // Add Row
+                    const tbody = currentTable.querySelector('tbody');
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td style="border: 1px solid #ddd; padding: 10px; font-size: 13px;">${formatTime(r.timeStart)}</td>
+                        <td style="border: 1px solid #ddd; padding: 10px; font-weight: bold; font-size: 13px;">${r.taskName || r.subject}</td>
+                        <td style="border: 1px solid #ddd; padding: 10px; font-size: 13px;">${r.room || r.location || 'N/A'}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
+            // 5. Generate
+            const opt = {
+                margin: [15, 15],
+                filename: `Official_Schedule_${dateStr}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(pdfContainer).save().then(() => {
+                showToast('Official schedule downloaded.', 'success');
+            });
+        }
+
+        // --- NOTIFICATION SYSTEM (Local) ---
+        function checkNewRoutines() {
+            // Count official routines for this student's department
+            const deptRoutines = getRoutinesByDepartment(currentUser.department);
+            // Filter custom ones just in case getRoutinesByDepartment returns mixed? 
+            // Usually it returns from 'routines' array which is official.
+            const currentCount = deptRoutines.length;
+
+            // Get last seen count
+            const key = `notif_count_${currentUser.userId}`;
+            const lastCount = parseInt(localStorage.getItem(key) || '0');
+
+            // If new routines exist
+            if (currentCount > lastCount) {
+                // Show notification in Bell Center
+                const diff = currentCount - lastCount;
+                updateNotificationUI(diff, `New routine schedule (${diff}) uploaded!`);
+
+                showToast(`🔔 New ${currentUser.department} routines available!`, 'info');
+
+                localStorage.setItem(key, currentCount);
+            } else {
+                // Initial set if undefined (first login)
+                if (!localStorage.getItem(key)) {
+                    localStorage.setItem(key, currentCount);
+                }
+            }
+        }
+
+        // Initialize
+        setTimeout(checkNewRoutines, 500);
+
+        // Initialize Official Routine
+        initOfficialRoutine();
+
+        function initOfficialRoutine() {
+            const savedRoutine = localStorage.getItem('full_routine_file');
+            const card = document.getElementById('officialRoutineCard');
+            const display = document.getElementById('routineViewDisplay');
+
+            card.style.display = 'block'; // Always show
+
+            if (savedRoutine) {
+                const data = JSON.parse(savedRoutine);
+                document.getElementById('routineName').textContent = data.name;
+                document.getElementById('routineIcon').textContent = data.type.startsWith('image/') ? '🖼️' : '📄';
+                display.style.cursor = 'pointer';
+                display.onclick = viewOfficialRoutine;
+                display.querySelector('small').textContent = 'Click to View/Download';
+                display.style.opacity = '1';
+            } else {
+                // Placeholder State
+                document.getElementById('routineName').innerText = 'No routine uploaded';
+                document.getElementById('routineIcon').innerText = '⏳';
+                display.style.cursor = 'default';
+                display.onclick = null;
+                display.querySelector('small').textContent = 'Waiting for Admin...';
+                display.style.opacity = '0.6';
+            }
+        }
+
+        function viewOfficialRoutine() {
+            const savedRoutine = localStorage.getItem('full_routine_file');
+            if (!savedRoutine) return;
+
+            const data = JSON.parse(savedRoutine);
+            const win = window.open();
+            if (data.type.startsWith('image/')) {
+                win.document.write('<img src="' + data.data + '" style="max-width:100%">');
+            } else {
+                win.document.write('<iframe src="' + data.data + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
+            }
+        }
+
+        loadStats();
+        loadWeeklyGrid();
+        loadTodayTasks();
+    </script>
+</body>
+
+</html>

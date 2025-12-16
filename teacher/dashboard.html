@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - Routine Flow</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/dashboard.css?v=2.1">
+    <!-- HTML2PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div id="navbarContainer"></div>
+
+    <!-- Sidebar -->
+    <div id="sidebarContainer"></div>
+
+    <!-- Main Content -->
+    <main class="main-content with-sidebar animate-teacher-entry">
+        <!-- Header Panel -->
+        <div class="card-premium mb-4">
+            <div class="d-flex align-items-center justify-content-between mobile-stack">
+                <div class="d-flex align-items-center mobile-stack">
+                    <div class="profile-avatar mr-4 mb-3-mobile"
+                        style="width: 80px; height: 80px; font-size: 32px; background: var(--primary-blue); color: var(--white); box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);">
+                        <span id="headerAvatar">TC</span>
+                    </div>
+                    <div>
+                        <h1 class="mb-1" style="font-size: 24px; font-weight: 700;" id="headerName">Teacher User</h1>
+                        <p class="text-muted mb-2" style="font-size: 14px;">
+                            <span id="headerDept">Department</span> • Faculty Member
+                        </p>
+                        <span class="badge badge-primary px-3 py-1" style="border-radius: 20px;">Active Session</span>
+                    </div>
+                </div>
+                <div class="text-right mobile-left mt-3-mobile">
+                    <button class="btn btn-outline-primary mr-2" onclick="exportTeacherRoutine()">Download
+                        Schedule</button>
+                    <a href="create-routine.html" class="btn btn-primary shadow-sm">+ Create Class</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Layout Grid -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;" class="mobile-stack">
+
+            <!-- Left Col: Schedule & Stats -->
+            <div class="d-flex flex-column gap-3">
+                <!-- Quick Stats Row -->
+                <div class="stats-grid" id="statsGrid" style="grid-template-columns: repeat(3, 1fr);">
+                    <!-- Stats inserted via JS -->
+                </div>
+
+                <!-- Today's Schedule -->
+                <div class="card-premium" style="min-height: 400px; padding: 0;">
+                    <div class="card-header d-flex justify-content-between align-items-center"
+                        style="margin: 20px 20px 10px 20px; padding-bottom: 10px;">
+                        <div>
+                            <h3 class="card-title mb-0">📅 Today's Classes</h3>
+                            <p class="text-muted small mb-0 mt-1" id="todayDateStr">Date</p>
+                        </div>
+                        <a href="schedule.html" class="btn btn-sm btn-outline-primary">View Calendar</a>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table-premium mb-0">
+                                <thead>
+                                    <tr>
+                                        <th style="padding-left: 25px;">Time</th>
+                                        <th>Activity</th>
+                                        <th>Room</th>
+                                        <th>Status</th>
+                                        <th style="text-align: right; padding-right: 25px;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="todayClassesTable">
+                                    <!-- JS populated -->
+                                    <tr>
+                                        <td colspan="5" class="text-center p-4">Loading...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Col: Notices & upcoming -->
+            <div class="d-flex flex-column gap-3">
+
+
+
+                <!-- Official Routine Viewer (Read Only) -->
+                <div class="card-premium border-primary" id="officialRoutineCard"
+                    style="border-width: 0 0 0 4px; display: none;">
+                    <div class="card-header border-bottom mb-3 pb-2">
+                        <h3 class="card-title mb-0" style="color: var(--primary-blue);">📄 Official Routine</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted small mb-3">Master Routine published by Admin.</p>
+
+                        <!-- View Display -->
+                        <div id="routineViewDisplay" class="text-center p-3 mb-3 rounded"
+                            style="background: rgba(102, 126, 234, 0.05); border: 2px solid var(--primary-blue); cursor: pointer;"
+                            onclick="viewOfficialRoutine()">
+                            <span style="font-size: 2rem;" id="routineIcon">📄</span>
+                            <p class="mb-0 mt-2 font-weight-bold text-truncate" id="routineName">Routine.pdf</p>
+                            <small class="text-primary font-weight-bold">Click to View/Download</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notices -->
+                <div class="card-premium">
+                    <div class="card-header">
+                        <h3 class="card-title mb-0">📢 Notices</h3>
+                    </div>
+                    <div class="card-body p-4 text-center">
+                        <div style="font-size: 2rem; margin-bottom: 10px; opacity: 0.5;">📭</div>
+                        <p class="text-muted mb-0">No new announcements at this time.</p>
+                    </div>
+                </div>
+
+
+                <!-- Next Class Widget -->
+                <div class="card border-0 shadow-sm bg-gradient-primary text-white"
+                    style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <div class="card-body">
+                        <h3 class="card-title mb-3" style="color: white;">Next Up</h3>
+                        <div id="nextClassWidget">
+                            <p class="mb-0" style="opacity: 0.8;">No more classes today.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footerContainer"></div>
+
+    <!-- Hidden Upload Input for Dashboard -->
+    <input type="file" id="dashboardUploadInput" style="display:none" onchange="handleDashboardUpload(event)">
+
+    <!-- JavaScript Files -->
+    <script src="../js/utils.js"></script>
+    <script src="../js/data.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+
+    <script>
+        // Check Auth
+        requireAuth();
+        // ... (rest of code)
+    </script>
+    <!-- (Inside loadDashboardData HTML string map) -->
+    <td style="padding: 15px; text-align: right;">
+        <button class="icon-btn small text-primary" onclick="triggerUpload('${r.id}')" title="Attach PDF/Image"
+            style="background:none; border:none; cursor:pointer; font-size: 1.2rem; margin-right: 5px;">📎</button>
+        <button class="icon-btn small" onclick="editRoutine('${r.id}')" title="Edit"
+            style="background:none; border:none; cursor:pointer; font-size: 1.2rem;">✏️</button>
+        <button class="icon-btn small text-danger" onclick="deleteRoutineConfirm('${r.id}')" title="Delete"
+            style="background:none; border:none; cursor:pointer; font-size: 1.2rem;">🗑️</button>
+    </td>
+
+    <script>
+        // Check Auth
+        requireAuth();
+        const currentUser = getCurrentUser();
+
+        if (!hasRole('Teacher')) {
+            alert('Access denied.');
+            redirectToDashboard(currentUser.role);
+        }
+
+        // Initialize UI
+        document.getElementById('navbarContainer').innerHTML = generateNavbar(currentUser);
+        document.getElementById('sidebarContainer').innerHTML = generateSidebar('Teacher');
+        document.getElementById('footerContainer').innerHTML = generateFooter();
+        document.querySelector('.main-footer').classList.add('with-sidebar');
+        setActiveNavLink('dashboard.html');
+
+        // Header Data
+        const headerAvatar = document.getElementById('headerAvatar');
+        const headerName = document.getElementById('headerName');
+        const headerDept = document.getElementById('headerDept');
+
+        headerName.textContent = currentUser.name;
+        headerDept.textContent = currentUser.department;
+
+        if (currentUser.profileImage) {
+            // Replace text avatar with image
+            const avatarContainer = headerAvatar.parentElement;
+            avatarContainer.style.background = 'transparent';
+            avatarContainer.style.boxShadow = 'none';
+            avatarContainer.style.overflow = 'hidden'; // Ensure rounded corners clip content
+            avatarContainer.style.borderRadius = '50%'; // Force on container
+            headerAvatar.innerHTML = `<img src="${currentUser.profileImage}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block;">`;
+        } else {
+            headerAvatar.textContent = getInitials(currentUser.name);
+        }
+
+        // Date
+        const todayStr = getCurrentDate();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('todayDateStr').textContent = new Date().toLocaleDateString('en-US', options);
+
+
+
+        // Initialize Official Routine
+        initOfficialRoutine();
+
+        function initOfficialRoutine() {
+            const savedRoutine = localStorage.getItem('full_routine_file');
+            const card = document.getElementById('officialRoutineCard');
+            const display = document.getElementById('routineViewDisplay');
+
+            card.style.display = 'block'; // Always show
+
+            if (savedRoutine) {
+                const data = JSON.parse(savedRoutine);
+                document.getElementById('routineName').textContent = data.name;
+                document.getElementById('routineIcon').textContent = data.type.startsWith('image/') ? '🖼️' : '📄';
+                display.style.cursor = 'pointer';
+                display.onclick = viewOfficialRoutine;
+                display.querySelector('small').textContent = 'Click to View/Download';
+                display.style.opacity = '1';
+            } else {
+                // Placeholder State
+                document.getElementById('routineName').innerText = 'No routine uploaded';
+                document.getElementById('routineIcon').innerText = '⏳';
+                display.style.cursor = 'default';
+                display.onclick = null;
+                display.querySelector('small').textContent = 'Waiting for Admin...';
+                display.style.opacity = '0.6';
+            }
+        }
+
+        function viewOfficialRoutine() {
+            const savedRoutine = localStorage.getItem('full_routine_file');
+            if (!savedRoutine) return;
+
+            const data = JSON.parse(savedRoutine);
+            const win = window.open();
+            if (data.type.startsWith('image/')) {
+                win.document.write('<img src="' + data.data + '" style="max-width:100%">');
+            } else {
+                // For PDF, we can use an iframe or just navigate
+                win.document.write('<iframe src="' + data.data + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
+            }
+        }
+
+        function loadDashboardData() {
+            // Stats
+            const myRoutines = getRoutinesByTeacher(currentUser.userId);
+            const deptStudents = getUsersByDepartment(currentUser.department).filter(u => u.role === 'Student').length;
+            const weekRoutines = myRoutines.filter(r => {
+                // Simple check if in current week (approx) or total active
+                return true;
+            }).length;
+
+            document.getElementById('statsGrid').innerHTML = `
+                ${createStatsCard('📅', myRoutines.length, 'Total Classes')}
+                ${createStatsCard('👨‍🎓', deptStudents, 'Students')}
+                ${createStatsCard('🏫', currentUser.department, 'Department')}
+            `;
+
+            // Today's Classes Table
+            const todayRoutines = myRoutines.filter(r => r.date === todayStr);
+            todayRoutines.sort((a, b) => a.timeStart.localeCompare(b.timeStart));
+
+            const tbody = document.getElementById('todayClassesTable');
+
+            if (todayRoutines.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center p-5 text-muted">
+                    <div style="font-size: 24px; margin-bottom: 10px;">☕</div>
+                    No classes scheduled for today.
+                    </td></tr>`;
+            } else {
+                tbody.innerHTML = todayRoutines.map(r => `
+                    <tr>
+                        <td style="padding: 15px;">
+                            <div class="font-weight-bold" style="color:var(--text-dark)">${formatTime(r.timeStart)}</div>
+                            <small class="text-muted">to ${formatTime(r.timeEnd)}</small>
+                        </td>
+                        <td style="padding: 15px;">
+                            <div class="font-weight-bold" style="color:var(--primary-blue)">${r.taskName}</div>
+                            ${r.announcement ? `<small class="text-muted d-block">📢 ${r.announcement}</small>` : ''}
+                             ${r.attachment ? `<div class="mt-1"><span class="badge badge-light border" style="cursor:help" title="${r.attachment.name}">📎 Attached File</span></div>` : ''}
+                        </td>
+                        <td style="padding: 15px;">
+                            <span class="badge badge-light border">${r.room || 'Room TBA'}</span>
+                        </td>
+                        <td style="padding: 15px;">
+                            <span class="badge badge-success">Scheduled</span>
+                        </td>
+                        <td style="padding: 15px; text-align: right;">
+                            <button class="icon-btn small text-primary" onclick="triggerUpload('${r.id}')" title="Attach PDF/Image" style="background:none; border:none; cursor:pointer; font-size: 1.2rem; margin-right: 5px;">📎</button>
+                            <button class="icon-btn small" onclick="editRoutine('${r.id}')" title="Edit" style="background:none; border:none; cursor:pointer; font-size: 1.2rem;">✏️</button>
+                            <button class="icon-btn small text-danger" onclick="deleteRoutineConfirm('${r.id}')" title="Delete" style="background:none; border:none; cursor:pointer; font-size: 1.2rem;">🗑️</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            // Next Class Widget
+            const now = new Date();
+            const currentHm = now.getHours() + ':' + now.getMinutes();
+            // Find first routine today that hasn't started yet
+            const nextClass = todayRoutines.find(r => r.timeStart > currentHm); // Simple string compare works for HH:MM 24h
+
+            const nextWidget = document.getElementById('nextClassWidget');
+            if (nextClass) {
+                nextWidget.innerHTML = `
+                    <h4 style="color: white; font-weight: 700; margin-bottom: 5px;">${nextClass.taskName}</h4>
+                    <p class="mb-2" style="font-size: 14px; opacity: 0.9;">${formatTime(nextClass.timeStart)} • ${nextClass.room || 'TBA'}</p>
+                    <div style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 4px; display: inline-block; font-size: 12px;">
+                        Starts in a while
+                    </div>
+                `;
+            } else if (todayRoutines.length > 0) {
+                nextWidget.innerHTML = `<p class="mb-0" style="font-size: 16px; font-weight: 500;">All classes completed! 🎉</p>`;
+            } else {
+                nextWidget.innerHTML = `<p class="mb-0">No classes today.</p>`;
+            }
+        }
+
+        // --- Quick Upload Feature ---
+        let currentUploadId = null;
+
+        function triggerUpload(id) {
+            currentUploadId = id;
+            document.getElementById('dashboardUploadInput').click();
+        }
+
+        function handleDashboardUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (file.size > 2097152) { // 2MB
+                showToast('File too large. Max 2MB.', 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const attachment = {
+                    name: file.name,
+                    type: file.type,
+                    data: e.target.result
+                };
+
+                updateRoutine(currentUploadId, { attachment: attachment });
+                showToast('File attached successfully!', 'success');
+                loadDashboardData(); // Refresh UI
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Export Wrapper
+        function exportTeacherRoutine() {
+            window.location.href = 'schedule.html';
+        }
+
+        // Edit Routine
+        function editRoutine(id) {
+            window.location.href = `create-routine.html?edit=${id}`;
+        }
+
+        // Delete Routine
+        function deleteRoutineConfirm(id) {
+            if (confirm('Are you sure you want to cancel this class?')) {
+                deleteRoutine(id); // from data.js
+                showToast('Class cancelled successfully', 'success');
+                loadDashboardData(); // Refresh UI
+            }
+        }
+
+        loadDashboardData();
+
+    </script>
+</body>
+
+</html>

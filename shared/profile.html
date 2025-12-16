@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Routine Flow</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../css/global.css?v=2.2">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/dashboard.css?v=2.2">
+</head>
+
+<body>
+    <div id="navbarContainer"></div>
+    <div id="sidebarContainer"></div>
+
+    <main class="main-content with-sidebar animate-teacher-entry">
+        <!-- Page Header -->
+        <h2 class="mb-4" style="font-weight: 700; color: var(--text-dark);">My Profile</h2>
+
+        <div class="row g-4">
+
+            <!-- Left Column: Identity Card -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card-premium text-center h-100 pb-5">
+                    <div class="card-body">
+                        <div class="profile-image-container position-relative mx-auto mb-4"
+                            style="width: 140px; height: 140px;">
+                            <img id="profileImagePreview" src="../favicon.png" alt="Profile"
+                                style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 4px solid var(--bg-secondary); box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+
+                            <label for="profileImageInput" id="cameraIcon" class="position-absolute shadow-sm"
+                                style="display: none; bottom: 5px; right: 5px; background: var(--primary-blue); color: white; border-radius: 50%; width: 36px; height: 36px; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s;">
+                                📷
+                            </label>
+                            <input type="file" id="profileImageInput" accept="image/*" style="display: none;"
+                                onchange="handleImagePreview(event)">
+                        </div>
+
+                        <h3 id="viewName" class="mb-1" style="font-weight: 700;">User Name</h3>
+                        <p id="viewRole" class="text-primary font-weight-bold mb-3">Role</p>
+
+                        <div class="d-flex justify-content-center mb-4">
+                            <span class="badge badge-primary bg-soft px-3 py-2 border-0 text-primary"
+                                style="font-size: 0.9rem;">
+                                🏢 <span id="viewDept">Department</span>
+                            </span>
+                        </div>
+
+                        <div class="border-top pt-4 text-left">
+                            <div class="d-flex align-items-center mb-3">
+                                <span
+                                    style="font-size: 1.2rem; margin-right: 12px; width: 30px; text-align:center;">🆔</span>
+                                <div>
+                                    <small class="text-muted d-block"
+                                        style="font-size: 0.75rem; text-transform: uppercase;">User ID</small>
+                                    <span id="viewUserId" style="font-weight: 500;">-</span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <span id="viewGenderIcon"
+                                    style="font-size: 1.2rem; margin-right: 12px; width: 30px; text-align:center;">⚧</span>
+                                <div>
+                                    <small class="text-muted d-block"
+                                        style="font-size: 0.75rem; text-transform: uppercase;">Gender</small>
+                                    <span id="viewGender" style="font-weight: 500;">-</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Stats & Edit Form -->
+            <div class="col-md-8 col-lg-9">
+
+                <!-- Stats Row (Moved here) -->
+                <div class="mb-4" id="statsCard" style="display: none;">
+                    <div class="stats-grid" id="statsGrid"
+                        style="grid-template-columns: repeat(3, 1fr) !important; gap: 15px;">
+                        <!-- JS Inserted -->
+                    </div>
+                </div>
+
+                <!-- Edit Form Card -->
+                <div class="card-premium">
+                    <div class="card-header d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+                        <h4 class="card-title mb-0">Personal Information</h4>
+                        <div id="actionButtons">
+                            <button type="button" class="btn btn-sm btn-outline-primary" id="editBtn"
+                                onclick="toggleEditMode()">
+                                ✏️ Edit Details
+                            </button>
+                            <div id="editModeBtns" style="display: none;">
+                                <button type="button" class="btn btn-sm btn-outline-secondary mr-2"
+                                    onclick="toggleEditMode()">Cancel</button>
+                                <button type="button" class="btn btn-sm btn-primary" onclick="submitProfileForm()">Save
+                                    Changes</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <form id="editProfileForm" onsubmit="handleUpdateProfile(event)">
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <label class="form-label-premium">Full Name</label>
+                                    <input type="text" class="form-control-premium" id="name" disabled required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label-premium">Gender</label>
+                                    <select class="form-control-premium" id="gender" disabled required>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label-premium">Phone Number (Optional)</label>
+                                    <input type="tel" class="form-control-premium" id="phone"
+                                        placeholder="+880 1XXX-XXXXXX" disabled>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label-premium">Email Address</label>
+                                    <input type="email" class="form-control-premium" id="email" disabled>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footerContainer"></div>
+
+    <!-- JavaScript Files -->
+    <script src="../js/utils.js"></script>
+    <script src="../js/data.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+    <script>
+        // Check authentication and authorization
+        requireAuth();
+        const currentUser = getCurrentUser();
+
+        // Load navbar and sidebar
+        document.getElementById('navbarContainer').innerHTML = generateNavbar(currentUser);
+        document.getElementById('sidebarContainer').innerHTML = generateSidebar(currentUser.role);
+        document.getElementById('footerContainer').innerHTML = generateFooter();
+        document.querySelector('.main-footer').classList.add('with-sidebar');
+        setActiveNavLink('/shared/profile.html');
+
+        // Initialize View
+        // Header removed
+
+
+        document.getElementById('viewName').textContent = currentUser.name;
+        document.getElementById('viewRole').textContent = currentUser.role;
+        document.getElementById('viewDept').textContent = currentUser.department;
+        document.getElementById('viewUserId').textContent = currentUser.userId;
+        document.getElementById('viewGender').textContent = currentUser.gender || 'Not set';
+
+        // Gender Icon Logic
+        const genderIconMap = {
+            'Male': '♂',
+            'Female': '♀',
+            'Other': '⚧'
+        };
+        const gIcon = genderIconMap[currentUser.gender] || '⚧';
+        document.getElementById('viewGenderIcon').textContent = gIcon;
+        if (currentUser.gender === 'Male') document.getElementById('viewGenderIcon').style.color = '#3498db';
+        if (currentUser.gender === 'Female') document.getElementById('viewGenderIcon').style.color = '#e91e63';
+
+        // Populate Form
+        document.getElementById('name').value = currentUser.name;
+        document.getElementById('gender').value = currentUser.gender || 'Other';
+        document.getElementById('email').value = currentUser.email || '';
+        document.getElementById('phone').value = currentUser.phone || '';
+
+        // Toggle Edit Mode Logic
+        let isEditMode = false;
+
+        function toggleEditMode() {
+            isEditMode = !isEditMode;
+            const editBtn = document.getElementById('editBtn');
+            const editModeBtns = document.getElementById('editModeBtns');
+            const cameraIcon = document.getElementById('cameraIcon');
+            const inputs = ['name', 'gender', 'email', 'phone'];
+
+            if (isEditMode) {
+                editBtn.style.display = 'none';
+                editModeBtns.style.display = 'block';
+                cameraIcon.style.display = 'flex';
+                inputs.forEach(id => {
+                    document.getElementById(id).disabled = false;
+                });
+            } else {
+                editBtn.style.display = 'inline-block';
+                editModeBtns.style.display = 'none';
+                cameraIcon.style.display = 'none';
+                inputs.forEach(id => {
+                    document.getElementById(id).disabled = true;
+                });
+            }
+        }
+
+        function submitProfileForm() {
+            document.getElementById('editProfileForm').dispatchEvent(new Event('submit'));
+        }
+
+        // Render Stats (Role specific)
+        const statsCard = document.getElementById('statsCard');
+        const statsGrid = document.getElementById('statsGrid');
+
+        if (currentUser.role === 'Student') {
+            statsCard.style.display = 'block';
+            const allRoutines = getRoutinesForStudent(currentUser.userId);
+            const completions = getAllCompletions().filter(c => c.studentId === currentUser.userId);
+
+            statsGrid.innerHTML = `
+                ${createStatsCard('📅', allRoutines.length, 'Total Classes')}
+                ${createStatsCard('✅', completions.length, 'Completed')}
+                ${createStatsCard('⏳', allRoutines.length - completions.length, 'Pending')}
+                ${createStatsCard('📊', Math.round((completions.length / (allRoutines.length || 1)) * 100) + '%', 'Progress')}
+            `;
+        } else if (currentUser.role === 'Teacher') {
+            statsCard.style.display = 'block';
+            const routines = getAllRoutines().filter(r => r.createdBy === currentUser.userId); // Corrected property
+
+            statsGrid.innerHTML = `
+                ${createStatsCard('📅', routines.length, 'My Classes')}
+                ${createStatsCard('🏢', currentUser.department, 'Department')}
+            `;
+        }
+        // Admin doesn't need stats here as they have the full dashboard
+
+        // Initialize Profile Image
+        if (currentUser.profileImage) {
+            document.getElementById('profileImagePreview').src = currentUser.profileImage;
+        }
+
+        let newProfileImageBase64 = null;
+
+        function handleImagePreview(event) {
+            const file = event.target.files[0];
+            if (file) {
+                if (file.size > 500000) { // 500KB limit
+                    showToast('Image too large. Max 500KB.', 'error');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('profileImagePreview').src = e.target.result;
+                    newProfileImageBase64 = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Handle Update
+        function handleUpdateProfile(event) {
+            event.preventDefault();
+
+            const updatedData = {
+                name: document.getElementById('name').value,
+                gender: document.getElementById('gender').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value
+            };
+
+            if (newProfileImageBase64) {
+                updatedData.profileImage = newProfileImageBase64;
+            }
+
+            const result = updateProfile(currentUser.userId, updatedData);
+
+            if (result.success) {
+                showToast('Profile updated successfully!', 'success');
+                // Refresh to show updates
+                setTimeout(() => window.location.reload(), 1000);
+            } else {
+                showToast(result.message, 'error');
+            }
+        }
+    </script>
+</body>
+
+</html>

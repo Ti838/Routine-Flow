@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Class - Routine Flow</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <style>
+        /* Mobile responsive adjustments */
+        @media (max-width: 768px) {
+            .card-premium {
+                padding: 1.5rem !important;
+            }
+        }
+
+        .table-responsive {
+            background: transparent !important;
+            border: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div id="navbarContainer"></div>
+
+    <!-- Sidebar -->
+    <div id="sidebarContainer"></div>
+
+    <!-- Main Content -->
+    <main class="main-content with-sidebar">
+
+        <div style="max-width: 900px; margin: 0 auto;">
+            <!-- Header -->
+            <div class="mb-4">
+                <h1 class="mb-2" id="pageTitle" style="font-weight: 800; color: var(--text-dark);">Create Class Schedule
+                </h1>
+                <p class="text-muted" id="pageDesc" style="font-size: 1.1rem;">Add a new class to your official
+                    schedule.</p>
+            </div>
+
+            <!-- Form Card -->
+            <div class="card-premium p-5">
+                <div class="mb-5">
+                    <div class="row g-4">
+                        <div class="col-md-12 mb-2">
+                            <h4 style="font-weight:700; margin-bottom:20px; color: var(--text-dark);">Batch Settings
+                            </h4>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label-premium">📅 Date</label>
+                            <input type="date" class="form-control-premium" id="batchDate" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label-premium">🏢 Department</label>
+                            <input type="text" class="form-control-premium" id="batchDept" readonly>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label-premium">📢 Announcement (Optional)</label>
+                            <textarea class="form-control-premium" id="globalAnnouncement" rows="3"
+                                placeholder="e.g. Bring Lab Coat, Exam Day..." style="resize: none;"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="mb-0" style="font-weight:700; color: var(--text-dark);">Class Periods</h4>
+                </div>
+
+                <div class="table-responsive mb-4 border rounded p-3 bg-white">
+                    <table class="table-premium table-borderless mb-0" id="batchTable">
+                        <thead>
+                            <tr>
+                                <th width="20%">Start</th>
+                                <th width="20%">End</th>
+                                <th width="30%">Activity / Class</th>
+                                <th width="30%">Room / Details</th>
+                                <th width="10%" id="actionsHeader"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="batchRows">
+                            <!-- Rows -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <button type="button" class="btn btn-outline-primary w-100 dashed-border mb-4" id="addPeriodBtn"
+                    onclick="addBatchRow()"
+                    style="border: 2px dashed var(--primary-blue); background: rgba(102,126,234,0.05);">
+                    + Add Another Period
+                </button>
+
+                <div class="d-flex justify-content-end gap-3 pt-3 border-top">
+                    <a href="dashboard.html" class="btn btn-outline-secondary btn-lg px-4">Cancel</a>
+                    <button onclick="handleSave()" class="btn btn-primary btn-lg px-5" id="saveBtn">Save
+                        Schedule</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footerContainer"></div>
+
+    <!-- JavaScript Files -->
+    <script src="../js/utils.js"></script>
+    <script src="../js/data.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+
+    <script>
+        // Check Auth
+        requireAuth();
+        const currentUser = getCurrentUser();
+
+        if (!hasRole('Teacher')) {
+            alert('Access denied.');
+            redirectToDashboard(currentUser.role);
+        }
+
+        // Initialize UI
+        document.getElementById('navbarContainer').innerHTML = generateNavbar(currentUser);
+        document.getElementById('sidebarContainer').innerHTML = generateSidebar('Teacher');
+        document.getElementById('footerContainer').innerHTML = generateFooter();
+        document.querySelector('.main-footer').classList.add('with-sidebar');
+        setActiveNavLink('create-routine.html'); // or dashboard if not in sidebar
+
+        // Batch Logic
+        let rowCount = 0;
+
+        function addBatchRow() {
+            rowCount++;
+            const tbody = document.getElementById('batchRows');
+            if (!tbody) {
+                console.error("Batch table body not found!");
+                return;
+            }
+
+            const trashIcon = (typeof ICONS !== 'undefined' && ICONS.trash) ? ICONS.trash : '🗑️';
+            const announceIcon = (typeof ICONS !== 'undefined' && ICONS.bell) ? ICONS.bell : '📢';
+
+            const row = document.createElement('tr');
+            row.id = `row-${rowCount}`;
+
+            row.innerHTML = `
+                <td><input type="time" class="form-control-premium form-control-sm" name="timeStart" required></td>
+                <td><input type="time" class="form-control-premium form-control-sm" name="timeEnd" required></td>
+                <td><input type="text" class="form-control-premium form-control-sm" name="taskName" placeholder="Class Name" required></td>
+                <td>
+                    <input type="text" class="form-control-premium form-control-sm" name="room" placeholder="Room/Lab">
+                    <div id="announcement-container-${rowCount}" class="mt-2" style="display:none;">
+                        <input type="text" class="form-control-premium form-control-sm border-warning" name="rowAnnouncement" placeholder="📢 Specific note for this class...">
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex gap-2 justify-content-center align-items-center h-100">
+                        <button type="button" class="btn btn-sm btn-outline-secondary d-flex align-items-center justify-content-center" 
+                                onclick="toggleRowAnnouncement(${rowCount})" 
+                                title="Add Note/Announcement"
+                                style="width: 36px; height: 36px; border-radius: 50%;">
+                            <span style="font-size: 1.1rem;">📢</span>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-danger d-flex align-items-center justify-content-center" 
+                                onclick="removeRow(${rowCount})"
+                                style="width: 36px; height: 36px; border-radius: 50%;">
+                            ${trashIcon}
+                        </button>
+                    </div>
+                </td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        // Global File Handler
+        function handleFileSelect(event, rowId) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Size limit 2MB
+            if (file.size > 2097152) {
+                alert("File too large. Max 2MB.");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById(`attachmentData-${rowId}`).value = e.target.result;
+                document.getElementById(`attachmentName-${rowId}`).value = file.name;
+                document.getElementById(`attachmentType-${rowId}`).value = file.type;
+
+                // Update label
+                const label = document.getElementById(`file-label-${rowId}`);
+                if (label) label.textContent = file.name.substring(0, 15) + (file.name.length > 15 ? '...' : '');
+
+                // Change button style to indicate success
+                const btn = label.parentElement;
+                btn.classList.remove('btn-outline-primary');
+                btn.classList.add('btn-primary');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Initialize on Load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Pre-fill Logic
+            const dateInput = document.getElementById('batchDate');
+            const deptInput = document.getElementById('batchDept');
+            const urlParams = new URLSearchParams(window.location.search);
+
+            // Check for date param from calendar redirect
+            const dateParam = urlParams.get('date');
+            if (dateInput) {
+                dateInput.value = dateParam ? dateParam : getCurrentDate();
+            }
+
+            if (deptInput && currentUser) deptInput.value = currentUser.department;
+
+            // Edit Mode Check
+            const editId = urlParams.get('edit');
+            let isEditMode = false;
+
+            if (editId) {
+                isEditMode = true;
+                if (typeof setupEditMode === 'function') setupEditMode(editId);
+            } else {
+                // Add initial rows for create mode
+                addBatchRow();
+                addBatchRow();
+            }
+        });
+
+        function toggleRowAnnouncement(id) {
+            const container = document.getElementById(`announcement-container-${id}`);
+            if (container.style.display === 'none') {
+                container.style.display = 'block';
+                container.querySelector('input').focus();
+            } else {
+                container.style.display = 'none';
+            }
+        }
+
+        function removeRow(id) {
+            const row = document.getElementById(`row-${id}`);
+            if (row) row.remove();
+        }
+
+        function handleSave() {
+            const date = document.getElementById('batchDate').value;
+            const dept = document.getElementById('batchDept').value;
+            const announcement = document.getElementById('globalAnnouncement').value.trim();
+            const rows = document.querySelectorAll('#batchRows tr');
+
+            if (!date) {
+                showToast('Please select Date', 'error');
+                return;
+            }
+
+            if (isEditMode) {
+                // Update Single
+                const row = rows[0];
+                const inputs = row.querySelectorAll('input');
+                const start = inputs[0].value;
+                const end = inputs[1].value;
+                const name = inputs[2].value;
+                const room = inputs[3].value;
+
+                if (!start || !end || !name) {
+                    showToast('Please fill required fields', 'error');
+                    return;
+                }
+
+                // Call update
+                updateRoutine(editId, {
+                    date, department: dept, timeStart: start, timeEnd: end, taskName: name, room, announcement
+                });
+                showToast('Class updated successfully!', 'success');
+                setTimeout(() => window.location.href = 'dashboard.html', 1000);
+
+            } else {
+                // Create Batch
+                let entries = [];
+                for (const row of rows) {
+                    const inputs = row.querySelectorAll('input');
+                    // Indices change because of new hidden inputs. Better to query by name or be careful.
+                    // Let's select specifically within the row
+                    const start = row.querySelector('input[name="timeStart"]').value;
+                    const end = row.querySelector('input[name="timeEnd"]').value;
+                    const name = row.querySelector('input[name="taskName"]').value;
+                    const room = row.querySelector('input[name="room"]').value;
+                    const rowAnnouncement = row.querySelector('input[name="rowAnnouncement"]').value;
+
+                    // Attachments
+                    const attData = row.querySelector('input[name="attachmentData"]').value;
+                    const attName = row.querySelector('input[name="attachmentName"]').value;
+                    const attType = row.querySelector('input[name="attachmentType"]').value;
+
+                    if (!start && !end && !name) continue; // Skip empty
+                    if (!start || !end || !name) {
+                        showToast('Please fill required fields for all rows', 'error');
+                        return;
+                    }
+
+                    let attachmentObj = null;
+                    if (attData) {
+                        attachmentObj = {
+                            name: attName,
+                            type: attType,
+                            data: attData
+                        };
+                    }
+
+                    entries.push({
+                        taskName: name,
+                        date: date,
+                        timeStart: start,
+                        timeEnd: end,
+                        department: dept,
+                        room: room,
+                        assignedStudents: [],
+                        createdBy: currentUser.userId,
+                        authorName: currentUser.name,
+                        announcement: rowAnnouncement || announcement || null,
+                        attachment: attachmentObj
+                        // id gen inside addRoutine
+                    });
+                }
+
+                if (entries.length > 0) {
+                    entries.forEach(r => addRoutine(r));
+                    showToast(`Saved ${entries.length} classes!`, 'success');
+                    setTimeout(() => window.location.href = 'dashboard.html', 1500);
+                } else {
+                    showToast('No classes to save', 'info');
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

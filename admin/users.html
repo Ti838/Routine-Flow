@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - Routine Flow</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div id="navbarContainer"></div>
+
+    <!-- Sidebar -->
+    <div id="sidebarContainer"></div>
+
+    <!-- Main Content -->
+    <main class="main-content with-sidebar animate-admin-entry">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">User Management</h1>
+                <p class="page-description">Manage all users in the system</p>
+            </div>
+            <button class="btn btn-primary" onclick="openModal('addUserModal')">
+                ➕ Add New User
+            </button>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <span class="filter-label">Filters:</span>
+
+            <select class="filter-select" id="roleFilter" onchange="applyFilters()">
+                <option value="">All Roles</option>
+                <option value="Admin">Admin</option>
+                <option value="Teacher">Teacher</option>
+                <option value="Student">Student</option>
+            </select>
+
+            <select class="filter-select" id="departmentFilter" onchange="applyFilters()">
+                <option value="">All Departments</option>
+            </select>
+
+            <select class="filter-select" id="genderFilter" onchange="applyFilters()">
+                <option value="">All Genders</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <!-- Users Table -->
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Department</th>
+                        <th>Gender</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTable">
+                    <!-- Users will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footerContainer"></div>
+
+    <!-- Add User Modal -->
+    <div class="modal" id="addUserModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New User</h2>
+                <button class="modal-close" onclick="closeModal('addUserModal')">✕</button>
+            </div>
+
+            <form id="addUserForm" onsubmit="handleAddUser(event)">
+                <div class="form-group">
+                    <label class="form-label">Name</label>
+                    <input type="text" class="form-input" id="newName" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="newEmail" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="newPassword" required minlength="6">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Role</label>
+                    <select class="form-select" id="newRole" required>
+                        <option value="">Select Role</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Teacher">Teacher</option>
+                        <option value="Student">Student</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Department</label>
+                    <select class="form-select" id="newDepartment" required>
+                        <option value="">Select Department</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Gender</label>
+                    <select class="form-select" id="newGender" required>
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Add User</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="../js/utils.js"></script>
+    <script src="../js/data.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+
+    <script>
+        // Check authentication and authorization
+        requireAuth();
+        const currentUser = getCurrentUser();
+
+        if (!hasRole('Admin')) {
+            alert('Access denied. Admin access required.');
+            redirectToDashboard(currentUser.role);
+        }
+
+        // Load navbar and sidebar
+        document.getElementById('navbarContainer').innerHTML = generateNavbar(currentUser);
+        document.getElementById('sidebarContainer').innerHTML = generateSidebar('Admin');
+        document.getElementById('footerContainer').innerHTML = generateFooter();
+        document.querySelector('.main-footer').classList.add('with-sidebar');
+        setActiveNavLink('/admin/users.html');
+
+        // Load departments into filters and form
+        function loadDepartments() {
+            const departments = getAllDepartments();
+            const options = departments.map(dept =>
+                `<option value="${dept}">${dept}</option>`
+            ).join('');
+
+            document.getElementById('departmentFilter').innerHTML += options;
+            document.getElementById('newDepartment').innerHTML += options;
+        }
+
+        // Load and display users
+        function loadUsers() {
+            const users = getAllUsers();
+            displayUsers(users);
+        }
+
+        // Display users in table
+        function displayUsers(users) {
+            const tbody = document.getElementById('usersTable');
+
+            if (users.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 24px;">No users found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = users.map(user => createUserTableRow(user)).join('');
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const roleFilter = document.getElementById('roleFilter').value;
+            const deptFilter = document.getElementById('departmentFilter').value;
+            const genderFilter = document.getElementById('genderFilter').value;
+
+            let users = getAllUsers();
+
+            if (roleFilter) {
+                users = users.filter(u => u.role === roleFilter);
+            }
+
+            if (deptFilter) {
+                users = users.filter(u => u.department === deptFilter);
+            }
+
+            if (genderFilter) {
+                users = users.filter(u => u.gender === genderFilter);
+            }
+
+            displayUsers(users);
+        }
+
+        // Edit user
+        function editUser(userId) {
+            window.location.href = `edit-user.html?id=${userId}`;
+        }
+
+        // Delete user confirmation
+        function deleteUserConfirm(userId) {
+            const user = getUserById(userId);
+
+            if (confirm(`Are you sure you want to delete ${user.name}?`)) {
+                deleteUser(userId);
+                showToast('User deleted successfully', 'success');
+                loadUsers();
+            }
+        }
+
+        // Handle add user form
+        function handleAddUser(event) {
+            event.preventDefault();
+
+            const userData = {
+                name: document.getElementById('newName').value,
+                email: document.getElementById('newEmail').value,
+                password: document.getElementById('newPassword').value,
+                role: document.getElementById('newRole').value,
+                department: document.getElementById('newDepartment').value,
+                gender: document.getElementById('newGender').value
+            };
+
+            const result = signup(userData);
+
+            if (result.success) {
+                showToast('User added successfully!', 'success');
+                closeModal('addUserModal');
+                document.getElementById('addUserForm').reset();
+                loadUsers();
+            } else {
+                showToast(result.message, 'error');
+            }
+        }
+
+        // Initialize
+        loadDepartments();
+        loadUsers();
+    </script>
+</body>
+
+</html>

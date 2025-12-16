@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Routine - Routine Flow</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div id="navbarContainer"></div>
+
+    <!-- Sidebar -->
+    <div id="sidebarContainer"></div>
+
+    <!-- Main Content -->
+    <main class="main-content with-sidebar animate-student-entry">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Weekly Routine</h1>
+            <p class="page-description">Your schedule for the entire week</p>
+        </div>
+
+        <!-- Week Navigation -->
+        <div class="card mb-3">
+            <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">
+                <button class="btn btn-secondary" onclick="previousWeek()">← Previous Week</button>
+                <h3 id="weekDisplay" style="margin: 0;">This Week</h3>
+                <button class="btn btn-secondary" onclick="nextWeek()">Next Week →</button>
+            </div>
+        </div>
+
+        <!-- Calendar Grid -->
+        <div id="calendarContainer"></div>
+
+        <!-- Routines for Selected Date -->
+        <div class="page-header mt-4">
+            <h2 class="page-title">Routines for <span id="selectedDateDisplay">Today</span></h2>
+        </div>
+
+        <div class="routine-list" id="routinesList">
+            <!-- Routines will be inserted here -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footerContainer"></div>
+
+    <!-- JavaScript Files -->
+    <script src="../js/utils.js"></script>
+    <script src="../js/data.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+
+    <script>
+        // Check authentication and authorization
+        requireAuth();
+        const currentUser = getCurrentUser();
+
+        if (!hasRole('Student')) {
+            alert('Access denied. Student access required.');
+            redirectToDashboard(currentUser.role);
+        }
+
+        // Load navbar and sidebar
+        document.getElementById('navbarContainer').innerHTML = generateNavbar(currentUser);
+        document.getElementById('sidebarContainer').innerHTML = generateSidebar('Student');
+        document.getElementById('footerContainer').innerHTML = generateFooter();
+        document.querySelector('.main-footer').classList.add('with-sidebar');
+        setActiveNavLink('/student/weekly.html');
+
+        let currentWeekStart = new Date();
+        let selectedDate = getCurrentDate();
+
+        // Load calendar
+        function loadCalendar() {
+            const myRoutines = getRoutinesForStudent(currentUser.userId);
+
+            const calendarHTML = createCalendarGrid(currentWeekStart, myRoutines, currentUser.userId);
+            document.getElementById('calendarContainer').innerHTML = calendarHTML;
+
+            updateWeekDisplay();
+            loadRoutinesForDate(selectedDate);
+        }
+
+        // Update week display
+        function updateWeekDisplay() {
+            const weekDates = getWeekDates(currentWeekStart);
+            const startDate = new Date(weekDates[0]);
+            const endDate = new Date(weekDates[6]);
+
+            const display = `${startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
+            document.getElementById('weekDisplay').textContent = display;
+        }
+
+        // Navigate weeks
+        function previousWeek() {
+            currentWeekStart.setDate(currentWeekStart.getDate() - 7);
+            loadCalendar();
+        }
+
+        function nextWeek() {
+            currentWeekStart.setDate(currentWeekStart.getDate() + 7);
+            loadCalendar();
+        }
+
+        // Show routines for specific date
+        function showRoutinesForDate(date) {
+            selectedDate = date;
+            loadRoutinesForDate(date);
+        }
+
+        // Load routines for selected date
+        function loadRoutinesForDate(date) {
+            const myRoutines = getRoutinesForStudent(currentUser.userId);
+            const dateRoutines = myRoutines.filter(r => r.date === date);
+
+            document.getElementById('selectedDateDisplay').textContent = formatDate(date);
+
+            const listDiv = document.getElementById('routinesList');
+
+            if (dateRoutines.length === 0) {
+                listDiv.innerHTML = createEmptyState(
+                    '📅',
+                    'No Routines',
+                    `No routines scheduled for ${formatDate(date)}`
+                );
+                return;
+            }
+
+            // Sort by time
+            dateRoutines.sort((a, b) => a.timeStart.localeCompare(b.timeStart));
+
+            listDiv.innerHTML = dateRoutines.map(routine =>
+                createRoutineCard(routine, false, currentUser.userId)
+            ).join('');
+        }
+
+        // Initialize
+        loadCalendar();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department Management - Routine Flow</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div id="navbarContainer"></div>
+
+    <!-- Sidebar -->
+    <div id="sidebarContainer"></div>
+
+    <!-- Main Content -->
+    <main class="main-content with-sidebar">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Department Management</h1>
+                <p class="page-description">Manage all departments in your organization</p>
+            </div>
+            <button class="btn btn-primary" onclick="openModal('addDeptModal')">
+                ➕ Add New Department
+            </button>
+        </div>
+
+        <!-- Departments Grid -->
+        <div class="dashboard-grid" id="departmentsGrid">
+            <!-- Departments will be inserted here -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footerContainer"></div>
+
+    <!-- Add Department Modal -->
+    <div class="modal" id="addDeptModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Department</h2>
+                <button class="modal-close" onclick="closeModal('addDeptModal')">✕</button>
+            </div>
+
+            <form id="addDeptForm" onsubmit="handleAddDepartment(event)">
+                <div class="form-group">
+                    <label class="form-label">Department Name</label>
+                    <input type="text" class="form-input" id="newDeptName" placeholder="Enter department name" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Add Department</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="../js/utils.js"></script>
+    <script src="../js/data.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+
+    <script>
+        // Check authentication and authorization
+        requireAuth();
+        const currentUser = getCurrentUser();
+
+        if (!hasRole('Admin')) {
+            alert('Access denied. Admin access required.');
+            redirectToDashboard(currentUser.role);
+        }
+
+        // Load navbar and sidebar
+        document.getElementById('navbarContainer').innerHTML = generateNavbar(currentUser);
+        document.getElementById('sidebarContainer').innerHTML = generateSidebar('Admin');
+        document.getElementById('footerContainer').innerHTML = generateFooter();
+        document.querySelector('.main-footer').classList.add('with-sidebar');
+        setActiveNavLink('/admin/departments.html');
+
+        // Load and display departments
+        function loadDepartments() {
+            const departments = getAllDepartments();
+            const grid = document.getElementById('departmentsGrid');
+
+            if (departments.length === 0) {
+                grid.innerHTML = createEmptyState('🏢', 'No Departments', 'Add your first department to get started');
+                return;
+            }
+
+            grid.innerHTML = departments.map(dept => {
+                const users = getUsersByDepartment(dept);
+                const teachers = users.filter(u => u.role === 'Teacher').length;
+                const students = users.filter(u => u.role === 'Student').length;
+
+                return `
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">🏢 ${dept}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div style="display: flex; justify-content: space-around; margin: 16px 0;">
+                                <div style="text-align: center;">
+                                    <div style="font-size: 24px; font-weight: 700; color: var(--primary-blue);">
+                                        ${teachers}
+                                    </div>
+                                    <div style="font-size: 12px; color: var(--text-medium);">Teachers</div>
+                                </div>
+                                <div style="text-align: center;">
+                                    <div style="font-size: 24px; font-weight: 700; color: var(--primary-blue);">
+                                        ${students}
+                                    </div>
+                                    <div style="font-size: 12px; color: var(--text-medium);">Students</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-danger btn-sm" onclick="deleteDepartmentConfirm('${dept}')">
+                                🗑️ Delete
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Handle add department
+        function handleAddDepartment(event) {
+            event.preventDefault();
+
+            const deptName = document.getElementById('newDeptName').value.trim();
+
+            if (!deptName) {
+                showToast('Please enter a department name', 'error');
+                return;
+            }
+
+            const success = addDepartment(deptName);
+
+            if (success) {
+                showToast('Department added successfully!', 'success');
+                closeModal('addDeptModal');
+                document.getElementById('addDeptForm').reset();
+                loadDepartments();
+            } else {
+                showToast('Department already exists', 'error');
+            }
+        }
+
+        // Delete department confirmation
+        function deleteDepartmentConfirm(deptName) {
+            // Check if any users are in this department
+            const users = getUsersByDepartment(deptName);
+
+            if (users.length > 0) {
+                alert(`Cannot delete ${deptName}. It has ${users.length} user(s) assigned to it.\nPlease reassign or remove these users first.`);
+                return;
+            }
+
+            if (confirm(`Are you sure you want to delete "${deptName}" department?`)) {
+                deleteDepartment(deptName);
+                showToast('Department deleted successfully', 'success');
+                loadDepartments();
+            }
+        }
+
+        // Initialize
+        loadDepartments();
+    </script>
+</body>
+
+</html>

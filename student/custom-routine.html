@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routine Flow - Custom Routine</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+
+    <!-- CSS Files -->
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <!-- PDF Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        /* Sliding Panel Container */
+        .container {
+            background-color: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+            position: relative;
+            overflow: hidden;
+            width: 900px;
+            max-width: 100%;
+            min-height: 600px;
+            /* Fixed height for the panel effect */
+        }
+
+        .form-container {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            transition: all 0.6s ease-in-out;
+            background-color: var(--white);
+            padding: 40px;
+            overflow-y: auto;
+            /* Scrollable content inside */
+        }
+
+        /* Routine View (Left initially) */
+        .sign-in-container {
+            left: 0;
+            width: 50%;
+            z-index: 2;
+        }
+
+        .routine-list-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Builder View (Right initially) */
+        .sign-up-container {
+            left: 0;
+            width: 50%;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .container.right-panel-active .sign-in-container {
+            transform: translateX(100%);
+        }
+
+        .container.right-panel-active .sign-up-container {
+            transform: translateX(100%);
+            opacity: 1;
+            z-index: 5;
+            animation: show 0.6s;
+        }
+
+        @keyframes show {
+
+            0%,
+            49.99% {
+                opacity: 0;
+                z-index: 1;
+            }
+
+            50%,
+            100% {
+                opacity: 1;
+                z-index: 5;
+            }
+        }
+
+        /* Overlay */
+        .overlay-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            transition: transform 0.6s ease-in-out;
+            z-index: 100;
+        }
+
+        .container.right-panel-active .overlay-container {
+            transform: translateX(-100%);
+        }
+
+        .overlay {
+            background: var(--gradient-primary);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 0 0;
+            color: #FFFFFF;
+            position: relative;
+            left: -100%;
+            height: 100%;
+            width: 200%;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .container.right-panel-active .overlay {
+            transform: translateX(50%);
+        }
+
+        .overlay-panel {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 40px;
+            text-align: center;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .overlay-left {
+            transform: translateX(-20%);
+        }
+
+        .container.right-panel-active .overlay-left {
+            transform: translateX(0);
+        }
+
+        .overlay-right {
+            right: 0;
+            transform: translateX(0);
+        }
+
+        .container.right-panel-active .overlay-right {
+            transform: translateX(20%);
+        }
+
+        /* Buttons inside overlay */
+        .ghost-btn {
+            background-color: transparent;
+            border-color: #FFFFFF;
+            border: 1px solid #FFFFFF;
+            border-radius: 25px;
+            color: #FFFFFF;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 12px 45px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: transform 80ms ease-in;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .ghost-btn:active {
+            transform: scale(0.95);
+        }
+
+        .ghost-btn:focus {
+            outline: none;
+        }
+
+        /* Form elements inside the sliding container */
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px 18px;
+            background-color: var(--light-bg);
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: var(--font-family);
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            background-color: var(--white);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn-pill {
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+            width: 100%;
+        }
+
+        .btn-pill:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .input-group {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        /* Override Dashboard Card styles */
+        .routine-card {
+            text-align: left;
+            /* Ensure routine cards behave normally */
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+
+            /* Make responsive later if needed, mimicking login responsiveness */
+            .container {
+                width: 100%;
+                min-height: 800px;
+            }
+
+            .sign-in-container,
+            .sign-up-container {
+                width: 100%;
+                position: relative;
+                height: auto;
+            }
+
+            .overlay-container {
+                display: none;
+            }
+        }
+
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            /* Slightly wider panel */
+            gap: var(--space-lg);
+            align-items: start;
+        }
+
+        .routine-view {
+            /* Removed max-height to allow full page scrolling, fixing 'cropped' feel */
+            min-height: 50vh;
+            /* Match login page smooth sliding */
+            animation: slideInLeft 0.6s cubic-bezier(0.23, 1, 0.32, 1) both;
+        }
+
+        .builder-panel {
+            /* Inherit card styles via class, but keep sticky positioning */
+            position: sticky;
+            top: 90px;
+            /* adjusted for navbar */
+            animation: slideInRight 0.6s cubic-bezier(0.23, 1, 0.32, 1) both;
+            animation-delay: 0.1s;
+            /* Slight stagger */
+
+            /* background-color: var(--white); -> Removed to let .card handle theme colors */
+            border-radius: 20px;
+            /* Match login form radius */
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.08);
+            /* Mimic login shadow */
+            padding: 30px;
+            /* More roomy padding like login */
+            border: none;
+            /* Shadow handles the edge */
+            z-index: 10;
+        }
+
+        .routine-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--space-md);
+        }
+
+        /* Custom Event Card Style - Border Only */
+        .routine-card.custom-event {
+            border-left: 4px solid var(--success);
+            background: var(--white);
+        }
+
+        .routine-card.master-event {
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .conflict-alert {
+            background: #fef2f2;
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            padding: var(--space-sm);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-sm);
+            margin-bottom: var(--space-md);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @media (max-width: 900px) {
+            .split-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .builder-panel {
+                position: static;
+                order: -1;
+                margin-bottom: var(--space-md);
+                animation: fadeUp 0.5s ease both;
+            }
+
+            .routine-view {
+                animation: fadeUp 0.5s ease both;
+                animation-delay: 0.1s;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar Container -->
+    <div id="navbarContainer"></div>
+
+    <div class="dashboard-container">
+        <!-- Sidebar Container -->
+        <div id="sidebarContainer"></div>
+
+        <!-- Main Content (Centered Sliding Card) -->
+        <main class="main-content with-sidebar d-flex align-items-center justify-content-center"
+            style="min-height: calc(100vh - 80px);">
+
+            <div class="container" id="container">
+                <!-- Add Activity Panel (Right Side by default, hidden) -->
+                <div class="form-container sign-up-container">
+                    <form id="addActivityForm" onsubmit="handleBatchActivity(event)">
+                        <h1 class="mb-2">Add Activities</h1>
+                        <p class="mb-3 text-muted" style="font-size:13px;">Add multiple tasks for a day.</p>
+
+                        <div id="conflictAlert" class="conflict-alert" style="font-size:12px;">
+                            ⚠️ <strong>Conflict!</strong> <span id="conflictSource"></span>
+                        </div>
+
+                        <div class="input-group mb-2">
+                            <label style="font-size:12px; font-weight:bold;">Select Day</label>
+                            <select id="daySelect" class="form-select" required style="padding: 8px;">
+                                <!-- JS Populated -->
+                            </select>
+                        </div>
+
+                        <div style="max-height: 300px; overflow-y: auto; margin-bottom: 15px;">
+                            <table class="table table-sm" style="font-size:12px; width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th width="20%">Time</th>
+                                        <th width="40%">Subject</th>
+                                        <th width="30%">Loc</th>
+                                        <th width="10%"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="batchRows">
+                                    <!-- Rows -->
+                                </tbody>
+                            </table>
+                            <button type="button" class="btn btn-sm btn-outline-secondary w-100" onclick="addBatchRow()"
+                                style="font-size:12px;">+ Add Row</button>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-pill">Save All</button>
+                    </form>
+                </div>
+
+                <!-- Routine List Panel (Left Side by default) -->
+                <div class="form-container sign-in-container">
+                    <div class="routine-list-wrapper">
+                        <div class="page-header d-flex justify-content-between align-items-center"
+                            style="margin-bottom: 20px;">
+                            <div>
+                                <h1 class="page-title" style="font-size: 24px;">My Routine</h1>
+                                <p class="page-description mb-0">Your personalized weekly schedule.</p>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-sm btn-outline-primary" onclick="exportRoutine('custom')">
+                                    ✏️ Custom PDF
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Routine content goes here -->
+                        <div class="routine-view" id="routineDisplay">
+                            <!-- Dynamic Content -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Overlay Container -->
+                <div class="overlay-container">
+                    <div class="overlay">
+                        <!-- Left Overlay (Visible when Right Panel is active) -->
+                        <div class="overlay-panel overlay-left">
+                            <h1>View Routine</h1>
+                            <p>Done adding activities? Check your schedule.</p>
+                            <button class="ghost-btn" id="signIn" onclick="showRoutinePanel()">Back to List</button>
+                        </div>
+
+                        <!-- Right Overlay (Visible when Left Panel is active/Default) -->
+                        <div class="overlay-panel overlay-right">
+                            <h1>Modify Schedule</h1>
+                            <p>Want to add a new activity to your routine?</p>
+                            <button class="ghost-btn" id="signUp" onclick="showAddPanel()">Add Activity</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <div id="footerContainer"></div>
+
+    <!-- JavaScript Files -->
+    <script src="../js/utils.js"></script>
+    <script src="../js/data.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+
+    <script>
+        // Check Auth
+        requireAuth();
+        const currentUser = getCurrentUser();
+
+        if (!hasRole('Student')) {
+            redirectToDashboard(currentUser.role);
+        }
+
+        // Initialize UI
+        document.getElementById('navbarContainer').innerHTML = generateNavbar(currentUser);
+        document.getElementById('sidebarContainer').innerHTML = generateSidebar('Student');
+        document.getElementById('footerContainer').innerHTML = generateFooter();
+        document.querySelector('.main-footer').classList.add('with-sidebar');
+        setActiveNavLink('/student/custom-routine.html');
+
+        // Sliding Logic
+        const container = document.getElementById('container');
+
+        function showAddPanel() {
+            container.classList.add("right-panel-active");
+            // Clear conflict alert when switching
+            document.getElementById('conflictAlert').style.display = 'none';
+        }
+
+        function showRoutinePanel() {
+            container.classList.remove("right-panel-active");
+        }
+
+        // Logic
+        const weekDates = getWeekDates(new Date());
+        const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+        // Populate Day Select
+        const daySelect = document.getElementById('daySelect');
+        weekDates.forEach(dateStr => {
+            const date = new Date(dateStr);
+            const dayName = dayNames[date.getDay()];
+            const option = document.createElement('option');
+            option.value = dateStr;
+            option.textContent = `${dayName} (${new Date(dateStr).getDate()}/${new Date(dateStr).getMonth() + 1})`;
+            daySelect.appendChild(option);
+        });
+
+        // initial Render
+        renderCombinedRoutine();
+
+        // Batch Logic
+        let rowCount = 0;
+        function addBatchRow() {
+            rowCount++;
+            const tbody = document.getElementById('batchRows');
+            const row = document.createElement('tr');
+            row.id = `row-${rowCount}`;
+            row.innerHTML = `
+                <td>
+                    <input type="time" class="form-input p-1 mb-1" name="start" required style="font-size:11px; height:25px;">
+                    <input type="time" class="form-input p-1" name="end" required style="font-size:11px; height:25px;">
+                </td>
+                <td><input type="text" class="form-input p-1" name="subject" placeholder="Subj" required style="font-size:12px;"></td>
+                <td><input type="text" class="form-input p-1" name="location" placeholder="Loc" style="font-size:12px;"></td>
+                <td><span style="cursor:pointer;" onclick="removeRow(${rowCount})">❌</span></td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        function removeRow(id) {
+            const row = document.getElementById(`row-${id}`);
+            if (row) row.remove();
+        }
+
+        // Add defaults
+        addBatchRow();
+        addBatchRow();
+
+        // Handle Batch Submit
+        function handleBatchActivity(e) {
+            e.preventDefault();
+
+            const date = document.getElementById('daySelect').value;
+            const rows = document.querySelectorAll('#batchRows tr');
+
+            if (rows.length === 0) {
+                showToast('Add at least one activity', 'error');
+                return;
+            }
+
+            let entries = [];
+
+            // 1. Gather and Validate
+            for (const row of rows) {
+                const inputs = row.querySelectorAll('input');
+                const start = inputs[0].value;
+                const end = inputs[1].value;
+                const subject = inputs[2].value;
+                const loc = inputs[3].value;
+
+                if (!start || !end || !subject) continue; // Skip empty
+
+                if (start >= end) {
+                    showConflict(`Invalid time for "${subject}"`);
+                    return;
+                }
+
+                // Conflict Check
+                const conflict = detectConflict(date, start, end);
+                if (conflict) {
+                    showConflict(`"${subject}" overlaps with ${conflict.taskName || conflict.subject}`);
+                    return;
+                }
+
+                entries.push({
+                    studentId: currentUser.userId,
+                    subject: subject,
+                    date: date,
+                    timeStart: start,
+                    timeEnd: end,
+                    location: loc,
+                    type: 'custom'
+                });
+            }
+
+            if (entries.length === 0) {
+                showToast('Please fill in the rows', 'error');
+                return;
+            }
+
+            // 2. Save All
+            entries.forEach(entry => addCustomRoutine(entry));
+
+            e.target.reset(); // Resets form but not table rows strictly, but we can clear them
+            document.getElementById('batchRows').innerHTML = '';
+            addBatchRow(); addBatchRow(); // Reset to 2 empty
+
+            renderCombinedRoutine();
+            showToast(`Added ${entries.length} activities!`, 'success');
+            showRoutinePanel(); // Slide back to view
+        }
+
+        function showConflict(msg) {
+            const alert = document.getElementById('conflictAlert');
+            document.getElementById('conflictSource').textContent = msg;
+            alert.style.display = 'block';
+            setTimeout(() => alert.style.display = 'none', 5000);
+        }
+
+        // Conflict Detection Logic
+        function detectConflict(date, newStart, newEnd) {
+            // Get all events for this date (Master + Custom)
+            const masterRoutines = getRoutinesForStudent(currentUser.userId).filter(r => r.date === date);
+            const customRoutines = getCustomRoutines(currentUser.userId).filter(r => r.date === date);
+            const allEvents = [...masterRoutines, ...customRoutines];
+
+            for (const event of allEvents) {
+                if (isTimeOverlap(newStart, newEnd, event.timeStart, event.timeEnd)) {
+                    return event;
+                }
+            }
+            return null;
+        }
+
+        // Time Overlap Helper
+        function isTimeOverlap(start1, end1, start2, end2) {
+            return (start1 < end2 && start1 >= start2) || (start2 < end1 && start2 >= start1);
+        }
+
+        // Render Combined Routine
+        function renderCombinedRoutine() {
+            const container = document.getElementById('routineDisplay');
+            container.innerHTML = '';
+
+            const masterRoutines = getRoutinesForStudent(currentUser.userId);
+            const customRoutines = getCustomRoutines(currentUser.userId);
+
+            // Group by Date
+            weekDates.forEach(dateStr => {
+                const dayMaster = masterRoutines.filter(r => r.date === dateStr);
+                const dayCustom = customRoutines.filter(r => r.date === dateStr);
+
+                // If usage has events
+                if (dayMaster.length > 0 || dayCustom.length > 0) {
+                    const dateObj = new Date(dateStr);
+                    const dayName = dayNames[dateObj.getDay()];
+
+                    const section = document.createElement('div');
+                    section.className = 'day-section';
+
+                    section.innerHTML = `
+                        <div class="day-header">${dayName} - ${formatDateShort(dateStr)}</div>
+                            <!-- Single column layout for the sliding panel view -->
+                            <div class="routine-list" id="grid-${dateStr}" style="display:flex; flex-direction:column; gap:10px;"></div>
+                    `;
+                    container.appendChild(section);
+
+                    const grid = section.querySelector(`#grid-${dateStr}`);
+
+                    // Render Master Events
+                    dayMaster.forEach(routine => {
+                        grid.innerHTML += createRoutineCard(routine, false, currentUser.userId).replace('routine-card', 'routine-card master-event');
+                    });
+
+                    // Render Custom Events
+                    dayCustom.forEach(custom => {
+                        grid.innerHTML += `
+                        < div class="routine-card custom-event" >
+                                <div class="routine-header">
+                                    <div>
+                                        <h3 class="routine-title">${custom.subject} <span style="font-size:12px; opacity:0.7">(Custom)</span></h3>
+                                        <div class="routine-time">${ICONS.clock} ${formatTime(custom.timeStart)} - ${formatTime(custom.timeEnd)}</div>
+                                    </div>
+                                    <button class="icon-btn danger" onclick="deleteCustomActivity('${custom.id}')" title="Delete">${ICONS.trash}</button>
+                                </div>
+                                <div class="routine-footer">
+                                    <span class="badge badge-success">${custom.location || 'Personal'}</span>
+                                </div>
+                            </div >
+                        `;
+                    });
+                }
+            });
+
+            if (container.innerHTML === '') {
+                container.innerHTML = createEmptyState(ICONS.calendar, 'No Routine Found', 'Add some activities to get started!');
+            }
+        }
+
+        function exportRoutine(mode) {
+            // Mode: 'official' or 'custom'
+
+            // 1. Create a container for the PDF content
+            const pdfContainer = document.createElement('div');
+            pdfContainer.style.width = '100%';
+            pdfContainer.style.background = '#fff';
+            pdfContainer.style.color = '#000';
+            pdfContainer.style.padding = '20px';
+            pdfContainer.style.fontFamily = 'Arial, sans-serif';
+
+            // 2. Add Header
+            const date = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            const currentUser = getCurrentUser();
+            const userName = currentUser ? currentUser.name : 'Student';
+
+            const title = mode === 'official' ? 'Official Class Schedule' : 'My Custom Plan';
+            const subTitle = mode === 'official' ? 'University Provided' : 'Personal Custom Routine';
+
+            pdfContainer.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #667eea; padding-bottom: 20px; margin-bottom: 30px;">
+                    <div style="display: flex; align-items: center;">
+                        <img src="../favicon.png" style="width: 50px; height: 50px; margin-right: 15px;">
+                        <div>
+                            <h1 style="margin: 0; color: #667eea; font-size: 24px;">Routine Flow</h1>
+                            <p style="margin: 0; color: #666; font-size: 14px;">${title}</p>
+                        </div>
+                    </div>
+                    <div style="text-align: right; font-size: 12px; line-height: 1.5;">
+                        <div><strong>Name:</strong> ${userName}</div>
+                        <div><strong>Type:</strong> ${subTitle}</div>
+                        <div><strong>Date:</strong> ${date}</div>
+                    </div>
+                </div>
+            `;
+
+            // 3. Extract Routine Data from the DOM
+            const routineDisplay = document.getElementById('routineDisplay');
+            const children = Array.from(routineDisplay.children);
+            let currentDayTitle = '';
+            let currentTable = null;
+            let hasContent = false;
+
+            children.forEach(child => {
+                if (child.classList.contains('day-section')) {
+                    // Filter check BEFORE creating table: Does this day have any relevant events?
+                    const allCards = child.querySelectorAll('.routine-card');
+                    let relevantCards = [];
+
+                    allCards.forEach(c => {
+                        const isCustom = c.classList.contains('custom-event');
+                        const isMaster = c.classList.contains('master-event'); // We added this class in renderCombinedRoutine
+
+                        if (mode === 'official' && isMaster) relevantCards.push(c);
+                        if (mode === 'custom' && isCustom) relevantCards.push(c);
+                    });
+
+                    if (relevantCards.length > 0) {
+                        hasContent = true;
+
+                        // Close previous table if exists
+                        if (currentTable) pdfContainer.appendChild(currentTable);
+
+                        // Start new section
+                        currentDayTitle = child.querySelector('.day-header').textContent;
+
+                        const dayHeader = document.createElement('div');
+                        dayHeader.innerHTML = `<h3 style="margin-top: 20px; color: #333; border-bottom: 1px solid #ddd; padding-bottom: 5px;">${currentDayTitle}</h3>`;
+                        pdfContainer.appendChild(dayHeader);
+
+                        // Create Table
+                        currentTable = document.createElement('table');
+                        currentTable.style.width = '100%';
+                        currentTable.style.borderCollapse = 'collapse';
+                        currentTable.style.marginBottom = '20px';
+                        currentTable.innerHTML = `
+                            <thead>
+                                <tr style="background-color: #f8f9fa;">
+                                    <th style="border: 1px solid #ddd; padding: 10px; text-align: left; width: 25%;">Time</th>
+                                    <th style="border: 1px solid #ddd; padding: 10px; text-align: left; width: 45%;">Activity</th>
+                                    <th style="border: 1px solid #ddd; padding: 10px; text-align: left; width: 30%;">Details</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        `;
+
+                        // Add rows
+                        const tbody = currentTable.querySelector('tbody');
+                        relevantCards.forEach(card => {
+                            const titleEl = card.querySelector('.routine-title');
+                            // Clean title
+                            let title = titleEl ? titleEl.textContent : 'Event';
+                            title = title.replace('(Custom)', '').trim();
+
+                            const times = card.querySelectorAll('.routine-time');
+                            let timeStr = 'N/A';
+                            if (times.length > 0) timeStr = times[0].textContent.replace(ICONS.clock, '').trim();
+
+                            const badge = card.querySelector('.badge');
+                            const location = badge ? badge.textContent : '';
+
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td style="border: 1px solid #ddd; padding: 10px; font-size: 13px;">${timeStr}</td>
+                                <td style="border: 1px solid #ddd; padding: 10px; font-weight: bold; font-size: 13px;">${title}</td>
+                                <td style="border: 1px solid #ddd; padding: 10px; font-size: 13px;">${location}</td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    }
+                }
+            });
+
+            // Append last table
+            if (currentTable) {
+                pdfContainer.appendChild(currentTable);
+            }
+
+            // If empty
+            if (!hasContent) {
+                pdfContainer.innerHTML += `<p style="text-align:center; margin-top:50px;">No ${mode} routine found.</p>`;
+            }
+
+            // PDF Config
+            const opt = {
+                margin: [15, 15],
+                filename: `${mode === 'official' ? 'Official' : 'Custom'}_Schedule.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Generate
+            html2pdf().set(opt).from(pdfContainer).save().then(() => {
+                showToast(`${mode === 'official' ? 'Official' : 'Custom'} schedule downloaded.`, 'success');
+            }).catch(err => {
+                console.error(err);
+                showToast('Error generating PDF', 'error');
+            });
+        }
+
+        function deleteCustomActivity(id) {
+            if (confirm('Delete this custom activity?')) {
+                deleteCustomRoutine(id);
+                renderCombinedRoutine();
+                showToast('Activity removed.');
+            }
+        }
+    </script>
+</body>
+
+</html>
