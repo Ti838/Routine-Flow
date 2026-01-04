@@ -1,0 +1,11 @@
+{
+    "workbench.editor.autoLockGroups": {
+        "workbench.editorinputs.searchEditorInput": true,
+        "default": true,
+        "jupyter-notebook": true,
+        "antigravity.globalArtifactsEditorInput": true,
+        "workbench.editors.gettingStartedInput": true,
+        "repl": true,
+        "imagePreview.previewEditor": true
+    }
+}

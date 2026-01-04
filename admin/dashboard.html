@@ -5,23 +5,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Routine Flow</title>
-    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="../css/global.css">
-    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
     <!-- HTML2PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 
 <body>
     <!-- Navbar -->
-    <div id="navbarContainer"></div>
+    <div id="navbarContainer">
+        <nav class="navbar" style="position: sticky; top: 0; z-index: 100;">
+            <div class="navbar-content">
+                <a href="../index.html" class="navbar-brand">
+                    <img src="../assets/img/favicon.png" alt="RF" class="navbar-logo">
+                    <span class="navbar-title">Routine Flow</span>
+                </a>
+                <div class="navbar-actions">
+                    <button id="themeToggle" class="theme-toggle" onclick="toggleTheme()">🌙</button>
+                    <a href="../login.html" class="btn btn-primary">Logout</a>
+                </div>
+            </div>
+        </nav>
+    </div>
 
     <!-- Sidebar -->
-    <div id="sidebarContainer"></div>
+    <div id="sidebarContainer">
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3>Menu</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html" class="sidebar-link active">Dashboard</a></li>
+                <li><a href="users.html" class="sidebar-link">Users</a></li>
+                <li><a href="create-routine.html" class="sidebar-link">Master Routine</a></li>
+                <li><a href="../shared/profile.html" class="sidebar-link">Settings</a></li>
+            </ul>
+        </div>
+    </div>
 
-    <!-- Main Content -->
     <!-- Main Content -->
     <main class="main-content with-sidebar animate-admin-entry">
         <!-- Header Panel -->
@@ -35,13 +59,13 @@
                     <div>
                         <h1 class="mb-1" style="font-size: 24px;" id="headerName">Admin User</h1>
                         <p class="text-muted mb-2" style="font-size: 14px;">
-                            System Administrator • <span id="currentDate">Date</span>
+                            System Administrator • <span id="currentDate">Monday, January 12, 2026</span>
                         </p>
                         <a href="../shared/profile.html" class="btn btn-sm btn-outline-primary">System Settings</a>
                     </div>
                 </div>
                 <div class="text-right mobile-left mt-3-mobile">
-                    <button class="btn btn-outline-primary mr-2" onclick="exportMasterRoutine()">Download Loop</button>
+                    <button class="btn btn-outline-primary mr-2">Download Loop</button>
                     <a href="users.html" class="btn btn-outline-primary mr-2">+ Add User</a>
                     <a href="create-routine.html" class="btn btn-primary">+ Create Master Routine</a>
                 </div>
@@ -55,7 +79,34 @@
             <div class="d-flex flex-column gap-3">
                 <!-- Quick Stats Row (Instead of grid to save space) -->
                 <div class="stats-grid" id="statsGrid" style="grid-template-columns: repeat(4, 1fr);">
-                    <!-- Stats inserted via JS -->
+                    <div class="stats-card">
+                        <div class="stats-icon">👨‍🏫</div>
+                        <div class="stats-info">
+                            <h3>25</h3>
+                            <p>Teachers</p>
+                        </div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-icon">👨‍🎓</div>
+                        <div class="stats-info">
+                            <h3>350</h3>
+                            <p>Students</p>
+                        </div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-icon">🏢</div>
+                        <div class="stats-info">
+                            <h3>8</h3>
+                            <p>Depts</p>
+                        </div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-icon">📅</div>
+                        <div class="stats-info">
+                            <h3>140</h3>
+                            <p>Classes</p>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Master Routine Overview -->
@@ -76,7 +127,47 @@
                                     </tr>
                                 </thead>
                                 <tbody id="masterRoutineTable">
-                                    <!-- JS populated -->
+                                    <!-- Static Demo Data -->
+                                    <tr>
+                                        <td>09:00 AM</td>
+                                        <td><strong>Science</strong></td>
+                                        <td>
+                                            Physics 101
+                                        </td>
+                                        <td><span class="badge badge-success">Active</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>10:00 AM</td>
+                                        <td><strong>Science</strong></td>
+                                        <td>
+                                            Chemistry Lab
+                                        </td>
+                                        <td><span class="badge badge-success">Active</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>11:00 AM</td>
+                                        <td><strong>Commerce</strong></td>
+                                        <td>
+                                            Accounting Basics
+                                        </td>
+                                        <td><span class="badge badge-success">Active</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>01:00 PM</td>
+                                        <td><strong>Arts</strong></td>
+                                        <td>
+                                            History of Europe
+                                        </td>
+                                        <td><span class="badge badge-success">Active</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>02:30 PM</td>
+                                        <td><strong>Engineering</strong></td>
+                                        <td>
+                                            Circuit Analysis
+                                        </td>
+                                        <td><span class="badge badge-success">Active</span></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -103,24 +194,16 @@
                         </div>
 
                         <!-- Actions -->
-                        <button class="btn btn-primary w-100"
-                            onclick="document.getElementById('fullRoutineInput').click()">
+                        <button class="btn btn-primary w-100">
                             Upload Official Routine
                         </button>
-                        <input type="file" id="fullRoutineInput" hidden accept="image/*,application/pdf"
-                            onchange="handleFullRoutineUpload(event)">
-
-                        <div id="fileActions" class="mt-2" style="display: none;">
-                            <button class="btn btn-outline-danger btn-sm w-100" onclick="removeFullRoutine()">Remove
-                                File</button>
-                        </div>
                     </div>
                 </div>
 
                 <!-- Recent Activity/Notices -->
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-white border-bottom">
-                        <h3 class="card-title mb-0">📢 Recent Updates</h3>
+                        <h3 class="card-title mb-0">📢 Notices</h3>
                     </div>
                     <div class="card-body">
                         <div class="notice-item mb-2 pb-2 border-bottom">
@@ -166,7 +249,24 @@
                     </div>
                     <div class="card-body p-0">
                         <ul class="list-group list-group-flush" id="recentUsersList">
-                            <!-- JS Populated -->
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="font-weight-bold" style="font-size:14px">Sarah Johnson</div>
+                                    <small class="text-muted">Teacher • Science</small>
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="font-weight-bold" style="font-size:14px">Mike Ross</div>
+                                    <small class="text-muted">Student • Law</small>
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="font-weight-bold" style="font-size:14px">James Bond</div>
+                                    <small class="text-muted">Admin • Administration</small>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -176,284 +276,16 @@
     </main>
 
     <!-- Footer -->
-    <div id="footerContainer"></div>
+    <div id="footerContainer">
+        <footer class="main-footer with-sidebar">
+            <div class="footer-content">
+                <p>&copy; 2025 Routine Flow. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
 
     <!-- JavaScript Files -->
-    <script src="../js/utils.js"></script>
-    <script src="../js/data.js"></script>
-    <script src="../js/auth.js"></script>
-    <script src="../js/components.js"></script>
-
-    <script>
-        // Check Auth
-        requireAuth();
-        const currentUser = getCurrentUser();
-
-        if (!hasRole('Admin')) {
-            alert('Access denied.');
-            redirectToDashboard(currentUser.role);
-        }
-
-        // Initialize UI
-        document.getElementById('navbarContainer').innerHTML = generateNavbar(currentUser);
-        document.getElementById('sidebarContainer').innerHTML = generateSidebar('Admin');
-        document.getElementById('footerContainer').innerHTML = generateFooter();  // Inject Footer
-        document.querySelector('.main-footer').classList.add('with-sidebar'); // Add offset class
-
-        // Header
-        document.getElementById('headerAvatar').textContent = getInitials(currentUser.name);
-        document.getElementById('headerName').textContent = currentUser.name;
-        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-
-        setActiveNavLink('/admin/dashboard.html');
-
-        // Load Statistics
-        function loadStats() {
-            const statsHTML = `
-                ${createStatsCard('👨‍🏫', getTotalByRole('Teacher'), 'Teachers')}
-                ${createStatsCard('👨‍🎓', getTotalByRole('Student'), 'Students')}
-                ${createStatsCard('🏢', getTotalDepartments(), 'Depts')}
-                ${createStatsCard('📅', getTotalRoutines(), 'Classes')}
-            `;
-            document.getElementById('statsGrid').innerHTML = statsHTML;
-        }
-
-        // Load Master Routine Overview (First 5 items)
-        function loadMasterRoutine() {
-            const routines = getAllRoutines().slice(0, 5); // Just latest 5
-            const tbody = document.getElementById('masterRoutineTable');
-
-            if (routines.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" class="text-center p-3 text-muted">No routines created yet.</td></tr>';
-                return;
-            }
-
-            tbody.innerHTML = routines.map(r => `
-                <tr>
-                    <td>${formatTime(r.timeStart)}</td>
-                    <td>${r.department}</td>
-                    <td>
-                        ${r.taskName}
-                        ${r.announcement ? `<span title="${r.announcement}" style="cursor:help;">📢</span>` : ''}
-                    </td>
-                    <td><span class="badge badge-success">Active</span></td>
-                </tr>
-            `).join('');
-        }
-
-        // Load Recent Users (List format)
-        function loadRecentUsers() {
-            const users = getAllUsers().slice(-5).reverse();
-            const list = document.getElementById('recentUsersList');
-
-            if (users.length === 0) {
-                list.innerHTML = '<li class="list-group-item text-center">No users found</li>';
-                return;
-            }
-
-            list.innerHTML = users.map(user => `
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                        <div class="font-weight-bold" style="font-size:14px">${user.name}</div>
-                        <small class="text-muted">${user.role} • ${user.department}</small>
-                    </div>
-                </li>
-            `).join('');
-        }
-
-        // --- NOTIFICATION SYSTEM (Local) ---
-        function checkNewNotifications() {
-            // Admin wants to know about NEW USERS
-            const allUsers = getAllUsers();
-            const currentCount = allUsers.length;
-
-            const key = `notif_count_admin_${currentUser.userId}`;
-            const lastCount = parseInt(localStorage.getItem(key) || '0');
-
-            if (currentCount > lastCount) {
-                setTimeout(() => {
-                    showToast('🔔 New users have registered!', 'info');
-                }, 1500);
-                localStorage.setItem(key, currentCount);
-            } else if (!localStorage.getItem(key)) {
-                localStorage.setItem(key, currentCount);
-            }
-        }
-        // --- EXPORT MASTER ROUTINE ---
-        function exportMasterRoutine() {
-            const routines = getAllRoutines();
-
-            // Container
-            const pdfContainer = document.createElement('div');
-            pdfContainer.style.width = '100%';
-            pdfContainer.style.background = '#fff';
-            pdfContainer.style.padding = '20px';
-            pdfContainer.style.fontFamily = 'Arial, sans-serif';
-
-            // Header
-            const dateStr = new Date().toLocaleDateString();
-            pdfContainer.innerHTML = `
-                <div style="border-bottom: 2px solid #2563eb; padding-bottom: 20px; margin-bottom: 20px;">
-                    <button style="float:right; display:none;">Placeholder</button>
-                    <h1 style="color: #2563eb; margin: 0;">Master Routine</h1>
-                    <p style="margin: 5px 0 0;"><strong>Institute Schedule</strong></p>
-                    <p style="margin: 0; font-size: 12px; color: #666;">Generated on ${dateStr}</p>
-                </div>
-            `;
-
-            // Table
-            if (routines.length === 0) {
-                pdfContainer.innerHTML += '<p>No routines created yet.</p>';
-            } else {
-                // Group by Day (Date)
-                const dates = [...new Set(routines.map(r => r.date))].sort();
-
-                dates.forEach(date => {
-                    const dayRoutines = routines.filter(r => r.date === date).sort((a, b) => a.timeStart.localeCompare(b.timeStart));
-                    const dayName = new Date(date).toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
-
-                    const table = document.createElement('table');
-                    table.style.width = '100%';
-                    table.style.borderCollapse = 'collapse';
-                    table.style.marginBottom = '20px';
-
-                    let rows = `
-                        <tr style="background: #f1f5f9;">
-                            <th style="text-align: left; padding: 6px; border: 1px solid #ddd; width: 15%">Time</th>
-                            <th style="text-align: left; padding: 6px; border: 1px solid #ddd; width: 15%">Dept</th>
-                            <th style="text-align: left; padding: 6px; border: 1px solid #ddd; width: 40%">Activity</th>
-                            <th style="text-align: left; padding: 6px; border: 1px solid #ddd; width: 30%">Room</th>
-                        </tr>
-                    `;
-
-                    dayRoutines.forEach(r => {
-                        rows += `
-                            <tr>
-                                <td style="padding: 6px; border: 1px solid #ddd;">${formatTime(r.timeStart)}</td>
-                                <td style="padding: 6px; border: 1px solid #ddd;"><strong>${r.department}</strong></td>
-                                <td style="padding: 6px; border: 1px solid #ddd;">${r.taskName}</td>
-                                <td style="padding: 6px; border: 1px solid #ddd;">${r.room || 'N/A'}</td>
-                            </tr>
-                        `;
-                    });
-
-                    table.innerHTML = rows;
-                    pdfContainer.innerHTML += `<h3 style="margin-bottom:10px; font-size:16px;">${dayName}</h3>`;
-                    pdfContainer.appendChild(table);
-                });
-            }
-
-            // Generate
-            const opt = {
-                margin: [10, 10],
-                filename: `Master_Routine_${dateStr.replace(/\//g, '-')}.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-
-            html2pdf().set(opt).from(pdfContainer).save();
-        }
-
-        // --- Full Routine Feature (Admin) ---
-        let currentFullRoutine = null;
-        const savedRoutine = localStorage.getItem('full_routine_file');
-
-        function initFullRoutine() {
-            if (savedRoutine) {
-                currentFullRoutine = JSON.parse(savedRoutine);
-                renderFullRoutineUI(currentFullRoutine);
-            } else {
-                renderFullRoutineUI(null);
-            }
-        }
-
-        function handleFullRoutineUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            if (file.size > 5242880) { // 5MB limit
-                showToast('File too large (Max 5MB)', 'error');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const routineData = {
-                    name: file.name,
-                    type: file.type,
-                    data: e.target.result,
-                    date: new Date().toISOString()
-                };
-
-                localStorage.setItem('full_routine_file', JSON.stringify(routineData));
-                currentFullRoutine = routineData;
-                showToast('Official Routine published!', 'success');
-                renderFullRoutineUI(routineData);
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function removeFullRoutine() {
-            if (confirm('Remove the Official Routine? Users will no longer see it.')) {
-                localStorage.removeItem('full_routine_file');
-                currentFullRoutine = null;
-                renderFullRoutineUI(null);
-                showToast('Routine removed', 'info');
-            }
-        }
-
-        function viewFullRoutine() {
-            if (!currentFullRoutine) return;
-            const win = window.open();
-            if (currentFullRoutine.type.startsWith('image/')) {
-                win.document.write('<img src="' + currentFullRoutine.data + '" style="max-width:100%">');
-            } else {
-                win.document.write('<iframe src="' + currentFullRoutine.data + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
-            }
-        }
-
-        function renderFullRoutineUI(data) {
-            const display = document.getElementById('routineUploadDisplay');
-            const fileActions = document.getElementById('fileActions');
-
-            if (data) {
-                let icon = '📄';
-                if (data.type.startsWith('image/')) icon = '🖼️';
-
-                display.innerHTML = `
-                    <span style="font-size: 2rem;">${icon}</span>
-                    <p class="mb-0 mt-2 font-weight-bold text-truncate" style="max-width:100%;">${data.name}</p>
-                    <small class="text-primary font-weight-bold" style="cursor: pointer;">Live • Click to View</small>
-                `;
-                display.style.border = '2px solid var(--primary-blue)';
-                display.style.background = 'rgba(102, 126, 234, 0.05)';
-                display.style.cursor = 'pointer';
-                display.onclick = viewFullRoutine;
-                display.title = "Click to verify file";
-                fileActions.style.display = 'block';
-            } else {
-                display.innerHTML = `
-                    <span style="font-size: 2rem;">📤</span>
-                    <p class="mb-0 mt-2 font-weight-bold">No file uploaded</p>
-                `;
-                display.style.border = '2px dashed #e2e8f0';
-                display.style.background = '#f8fafc';
-                display.style.cursor = 'default';
-                display.onclick = null;
-                display.title = "";
-                fileActions.style.display = 'none';
-            }
-        }
-
-        initFullRoutine();
-
-        checkNewNotifications();
-
-        loadStats();
-        loadMasterRoutine();
-        loadRecentUsers();
-    </script>
+    <script src="../assets/js/theme.js"></script>
 </body>
 
 </html>
