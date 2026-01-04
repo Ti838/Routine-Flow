@@ -12,12 +12,62 @@ body {
     align-items: center;
     flex-direction: column;
     min-height: 100vh;
-    overflow-x: hidden;
+    overflow: hidden;
+    /* Force no scroll on page */
 }
 
 /* Dark mode adjustments */
 [data-theme="dark"] body {
     background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%);
+}
+
+/* Navbar Overrides for Login Page */
+.navbar.login-nav {
+    background: transparent;
+    border-bottom: none;
+    box-shadow: none;
+}
+
+.navbar.login-nav .navbar-title {
+    color: var(--white);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    font-weight: 700;
+}
+
+.navbar.login-nav .navbar-logo {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.navbar.login-nav .theme-toggle {
+    color: var(--white);
+}
+
+/* Home Button Style (Left Aligned) */
+.navbar.login-nav .nav-link.home-btn-left {
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.1);
+    text-decoration: none !important;
+    margin-right: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navbar.login-nav .nav-link.home-btn-left:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff !important;
+    opacity: 1;
+}
+
+
+
+.navbar.login-nav .theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
 }
 
 /* Animated Background */
@@ -47,7 +97,7 @@ body::before {
 
 h1 {
     font-weight: 800;
-    margin: 0;
+    margin: 0 0 10px 0;
     font-size: 2rem;
     color: var(--text-dark);
 }
@@ -77,16 +127,15 @@ a:hover {
 }
 
 .container {
-    background-color: #fff;
+    background-color: var(--bg-card);
     border-radius: 20px;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     position: relative;
     overflow: hidden;
     width: 900px;
     max-width: 100%;
-    min-height: 650px;
+    min-height: 550px;
     margin: auto;
-    /* Center vertically and horizontally in flex column */
 }
 
 .form-container {
@@ -96,9 +145,23 @@ a:hover {
     transition: all 0.6s ease-in-out;
     background-color: var(--white);
     color: var(--text-dark);
-    overflow-y: auto;
-    /* Allow scrolling inside panels */
+    overflow-y: hidden;
     padding: 20px;
+}
+
+.forgot-password-link {
+    font-size: 12px;
+    color: var(--primary-blue);
+    margin-bottom: 15px;
+    display: block;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.forgot-password-link:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
 }
 
 /* Form Styling */
@@ -108,15 +171,14 @@ form {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 0 50px;
+    padding: 0 40px;
     height: 100%;
     text-align: center;
-    min-height: 600px;
-    /* Ensure specific height for flex centering */
+    min-height: auto;
 }
 
 .input-group {
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     text-align: left;
     width: 100%;
     max-width: 350px;
@@ -169,6 +231,11 @@ form {
     max-width: 350px;
 }
 
+.submit-btn:hover {
+    color: #FFFFFF;
+    filter: brightness(1.1);
+}
+
 .submit-btn:active {
     transform: scale(0.95);
 }
@@ -191,6 +258,12 @@ form {
     transition: transform 80ms ease-in;
     cursor: pointer;
     margin-top: 20px;
+}
+
+.ghost-btn:hover {
+    background-color: var(--bg-card);
+    color: var(--primary-blue);
+    /* filter removed */
 }
 
 .ghost-btn:active {
@@ -392,30 +465,7 @@ form {
     }
 }
 
-/* Theme Toggle */
-.theme-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    cursor: pointer;
-    transition: all 0.3s;
-    z-index: 1000;
-}
 
-.theme-toggle:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: rotate(180deg) scale(1.1);
-}
 
 /* Responsive */
 @media (max-width: 768px) {

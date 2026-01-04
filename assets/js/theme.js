@@ -9,7 +9,12 @@ function setTheme(theme) {
     localStorage.setItem('theme', theme);
     const themeToggle = document.getElementById('themeToggle');
     if (themeToggle) {
-        document.getElementById('themeIcon').textContent = theme === 'dark' ? '☀️' : '🌙';
+        const icon = document.getElementById('themeIcon');
+        if (icon) {
+            icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+        } else {
+            themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
     }
 }
 

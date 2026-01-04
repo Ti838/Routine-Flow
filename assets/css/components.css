@@ -260,7 +260,7 @@
     border-radius: var(--radius-md);
     font-weight: 600;
     font-size: 14px;
-    transition: all 0.2s;
+    /* transition removed */
     cursor: pointer;
     border: 1px solid transparent;
 }
@@ -271,9 +271,10 @@
 }
 
 .btn-primary:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    color: white;
+    /* Fix: Override a:hover */
+    filter: brightness(1.1);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
 .btn-outline {
@@ -302,7 +303,7 @@
     background: transparent;
     cursor: pointer;
     color: var(--text-medium);
-    transition: all 0.2s;
+    /* transition removed */
 }
 
 .icon-btn:hover {
