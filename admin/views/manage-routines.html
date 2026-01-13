@@ -121,7 +121,7 @@
                                     <?php echo htmlspecialchars($r['teacher_name']); ?>
                                 </td>
                                 <td class="px-4 py-4 text-right">
-                                    <button onclick="deleteRoutine(<?php echo $r['id']; ?>, this)"
+                                    <button data-id="<?php echo $r['id']; ?>" onclick="deleteRoutine(this)"
                                         class="w-8 h-8 rounded-lg bg-red-500/10 text-red-500 flex items-center justify-center ml-auto hover:bg-red-500 hover:text-white transition-all">
                                         <i class="ri-delete-bin-line"></i>
                                     </button>
@@ -164,7 +164,8 @@
         searchInput.addEventListener('input', filterRoutines);
         deptFilter.addEventListener('change', filterRoutines);
 
-        async function deleteRoutine(id, btn) {
+        async function deleteRoutine(btn) {
+            const id = btn.getAttribute('data-id');
             if (!confirm('Are you sure you want to delete this routine entry? This cannot be undone.')) return;
 
             const icon = btn.querySelector('i');

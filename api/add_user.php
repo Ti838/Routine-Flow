@@ -13,25 +13,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $dept_id = $_POST['dept_id'];
 
     // Additional fields
-    $student_id = $_POST['student_id'] ?? null;
+    $student_id_val = $_POST['student_id'] ?? null;
     $semester = $_POST['semester'] ?? null;
-    $teacher_id = $_POST['teacher_id'] ?? null;
+    $teacher_id_val = $_POST['teacher_id'] ?? null;
+
+    // Check for duplicate email in ALL three tables
+    $tables = ['admins', 'teachers', 'students'];
+    foreach ($tables as $t) {
+        $check = $conn->prepare("SELECT id FROM $t WHERE email = ?");
+        $check->execute([$email]);
+        if ($check->fetch()) {
+            echo json_encode(['success' => false, 'message' => 'Email address already registered']);
+            exit;
+        }
+    }
 
     try {
         $conn->beginTransaction();
 
-        // 1. Insert into base users table
-        $stmt = $conn->prepare("INSERT INTO users (email, password, full_name, role) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$email, $password, $full_name, $role]);
-        $user_id = $conn->lastInsertId();
-
-        // 2. Insert into role-specific table
         if ($role === 'student') {
-            $stmt = $conn->prepare("INSERT INTO students (user_id, student_id, department_id, semester) VALUES (?, ?, ?, ?)");
-            $stmt->execute([$user_id, $student_id, $dept_id, $semester]);
+            $stmt = $conn->prepare("INSERT INTO students (email, password, full_name, student_id, department_id, semester) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$email, $password, $full_name, $student_id_val, $dept_id, $semester]);
         } else if ($role === 'teacher') {
-            $stmt = $conn->prepare("INSERT INTO teachers (user_id, teacher_id, department_id) VALUES (?, ?, ?)");
-            $stmt->execute([$user_id, $teacher_id, $dept_id]);
+            $stmt = $conn->prepare("INSERT INTO teachers (email, password, full_name, teacher_id, department_id) VALUES (?, ?, ?, ?, ?)");
+            $stmt->execute([$email, $password, $full_name, $teacher_id_val, $dept_id]);
+        } else {
+            throw new Exception("Invalid role");
         }
 
         // Log activity
@@ -40,7 +47,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn->commit();
         echo json_encode(['success' => true, 'message' => 'User created successfully']);
     } catch (Exception $e) {
-        $conn->rollBack();
+        if ($conn->inTransaction())
+            $conn->rollBack();
         echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
     }
 }

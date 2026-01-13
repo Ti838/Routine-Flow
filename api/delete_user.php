@@ -7,16 +7,27 @@ checkAuth('admin');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = json_decode(file_get_contents("php://input"), true);
-    $user_id = $data['id'];
+    $user_id = $data['id'] ?? null;
+    $role = $data['role'] ?? null;
 
-    if (!$user_id) {
-        echo json_encode(['success' => false, 'message' => 'User ID is required']);
+    if (!$user_id || !$role) {
+        echo json_encode(['success' => false, 'message' => 'User ID and Role are required']);
+        exit;
+    }
+
+    $table = '';
+    if ($role === 'student')
+        $table = 'students';
+    else if ($role === 'teacher')
+        $table = 'teachers';
+    else {
+        echo json_encode(['success' => false, 'message' => 'Invalid role']);
         exit;
     }
 
     try {
         // Fetch name for logging
-        $stmt = $conn->prepare("SELECT full_name, role FROM users WHERE id = ?");
+        $stmt = $conn->prepare("SELECT full_name FROM $table WHERE id = ?");
         $stmt->execute([$user_id]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -25,21 +36,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         }
 
-        // Delete (Cascading might need to be handled if not in DB schema, but following project patterns)
-        // Usually, foreign keys handle this, but we'll be safe.
-        $conn->beginTransaction();
+        $stmt = $conn->prepare("DELETE FROM $table WHERE id = ?");
+        $stmt->execute([$user_id]);
 
-        // Remove from role tables first
-        $conn->prepare("DELETE FROM students WHERE user_id = ?")->execute([$user_id]);
-        $conn->prepare("DELETE FROM teachers WHERE user_id = ?")->execute([$user_id]);
-        $conn->prepare("DELETE FROM users WHERE id = ?")->execute([$user_id]);
+        logActivity(
+            $conn,
+            $_SESSION['user_id'],
+            'admin',
+            $_SESSION['user_name'],
+            'delete',
+            'User Removed',
+            "Deleted $role: {$user['full_name']}",
+            'ri-user-unfollow-line',
+            'danger'
+        );
 
-        logActivity($conn, $_SESSION['user_id'], 'admin', $_SESSION['user_name'], 'delete', 'User Removed', "Deleted {$user['role']}: {$user['full_name']}", 'ri-user-unfollow-line', 'danger');
-
-        $conn->commit();
         echo json_encode(['success' => true, 'message' => 'User deleted successfully']);
     } catch (Exception $e) {
-        $conn->rollBack();
         echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
     }
 }
