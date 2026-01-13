@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Log - Routine Flow</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../assets/js/tailwind-config.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script>
+        (function () {
+            const theme = localStorage.getItem('theme') || 'light';
+            if (theme === 'dark') document.documentElement.classList.add('dark');
+        })();
+    </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+
+    <?php renderNavbar($role, $name); ?>
+
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'activity-log.php'); ?>
+
+        <main class="flex-1 p-6 lg:p-10 space-y-10">
+            <header>
+                <h1 class="text-4xl font-extrabold tracking-tight">System Logs</h1>
+                <p class="text-gray-500 dark:text-gray-400 mt-2">Track all user actions and system events for audit and
+                    security.</p>
+            </header>
+
+            <div class="space-y-4">
+                <?php if (empty($logs)): ?>
+                    <div
+                        class="p-20 text-center rounded-[40px] bg-white dark:bg-white/5 border border-dashed border-gray-200 dark:border-white/10 opacity-50 italic">
+                        No activity logs found.
+                    </div>
+                <?php else: ?>
+                    <?php foreach ($logs as $log): ?>
+                        <div
+                            class="p-6 rounded-3xl bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-xl transition-all flex items-start gap-6 group">
+                            <div
+                                class="w-14 h-14 rounded-2xl <?php
+                                echo $log['badge_type'] === 'success' ? 'bg-emerald-500/10 text-emerald-500' :
+                                    ($log['badge_type'] === 'alert' ? 'bg-red-500/10 text-red-500' : 'bg-blue-500/10 text-blue-500');
+                                ?> flex items-center justify-center text-2xl shrink-0 group-hover:scale-110 transition-transform">
+                                <i class="<?php echo $log['icon_class']; ?>"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-bold text-lg">
+                                        <?php echo htmlspecialchars($log['action_title']); ?>
+                                    </h4>
+                                    <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">
+                                        <?php echo date('M d, Y - H:i', strtotime($log['created_at'])); ?>
+                                    </span>
+                                </div>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm mb-4">
+                                    <?php echo htmlspecialchars($log['action_description']); ?>
+                                </p>
+                                <div class="flex items-center gap-3">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="w-6 h-6 rounded-full bg-indigo-500/10 flex items-center justify-center text-[10px] text-indigo-500">
+                                            <i class="ri-user-line"></i></div>
+                                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                                            <?php echo htmlspecialchars($log['user_name']); ?> (
+                                            <?php echo ucfirst($log['user_role']); ?>)
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </main>
+    </div>
+
+    <script src="../assets/js/theme.js"></script>
+</body>
+
+</html>
