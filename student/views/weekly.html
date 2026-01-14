@@ -107,7 +107,7 @@
 
         async function initCalendar() {
             try {
-                const res = await fetch('/Routine Flow/api/student_scheduler.php');
+                const res = await fetch('../api/student_scheduler.php');
                 const json = await res.json();
                 if (json.success) {
                     events = json.data;
@@ -146,13 +146,18 @@
                 } else {
                     dayEvents.forEach(ev => {
                         const isClass = ev.type === 'class';
-                        const bgColor = isClass ? 'bg-white dark:bg-white/5 border-l-4 border-indigo-500' : 'bg-orange-50 dark:bg-orange-500/10 border-l-4 border-orange-500';
+                        const color = ev.color || (isClass ? 'indigo' : 'orange');
+                        const borderSide = isClass ? 'border-l-4' : 'border-l-4';
+                        const bgColor = isClass
+                            ? `bg-white dark:bg-white/5 ${borderSide} border-${color}-500`
+                            : `bg-${color}-50 dark:bg-${color}-500/10 ${borderSide} border-${color}-500`;
+
                         const deleteBtn = !isClass ? `<button onclick="deleteTask(${ev.id})" class="absolute top-4 right-4 text-gray-400 hover:text-red-500"><i class="ri-delete-bin-line"></i></button>` : '';
 
                         col.innerHTML += `
                             <div class="relative p-6 rounded-[24px] ${bgColor} border-y border-r border-gray-100 dark:border-white/5 shadow-sm group hover:scale-[1.02] transition-transform">
                                 ${deleteBtn}
-                                <span class="text-[10px] font-bold uppercase tracking-widest ${isClass ? 'text-indigo-500' : 'text-orange-500'} block mb-1">
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-${color}-500 block mb-1">
                                     ${ev.start_time.substring(0, 5)} - ${ev.end_time.substring(0, 5)}
                                 </span>
                                 <h4 class="text-lg font-black leading-tight mb-1">${ev.title}</h4>
@@ -170,7 +175,7 @@
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
 
-            const res = await fetch('/Routine Flow/api/student_scheduler.php', {
+            const res = await fetch('../api/student_scheduler.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -187,7 +192,7 @@
 
         async function deleteTask(id) {
             if (!confirm('Delete this task?')) return;
-            const res = await fetch(`/Routine Flow/api/student_scheduler.php?action=delete&id=${id}`, { method: 'DELETE' });
+            const res = await fetch(`../api/student_scheduler.php?action=delete&id=${id}`, { method: 'DELETE' });
             if ((await res.json()).success) initCalendar();
         }
 

@@ -91,8 +91,13 @@
                                 data-dept="<?php echo htmlspecialchars($r['department']); ?>"
                                 data-search="<?php echo strtolower(htmlspecialchars($r['subject_name'] . ' ' . $r['teacher_name'] . ' ' . $r['dept_code'])); ?>">
                                 <td class="px-4 py-4">
-                                    <div class="font-bold text-gray-900 dark:text-white">
-                                        <?php echo htmlspecialchars($r['subject_name']); ?>
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-2 h-8 rounded-full bg-<?php echo htmlspecialchars($r['color_tag'] ?? 'indigo'); ?>-500 shadow-[0_0_10px_rgba(<?php echo $r['color_tag'] === 'indigo' ? '99,102,241' : '100,100,100'; ?>,0.3)]">
+                                        </div>
+                                        <div class="font-bold text-gray-900 dark:text-white">
+                                            <?php echo htmlspecialchars($r['subject_name']); ?>
+                                        </div>
                                     </div>
                                 </td>
                                 <td class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-400">

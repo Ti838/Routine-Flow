@@ -14,8 +14,20 @@ try {
     $dept_stmt->execute([$dept_id]);
     $dept_name = $dept_stmt->fetchColumn();
 
-    $stmt = $conn->prepare("SELECT * FROM routines WHERE department_id = ? AND status = 'active' ORDER BY FIELD(day_of_week, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), start_time ASC");
-    $stmt->execute([$dept_id]);
+    // Semester Filter Logic
+    $selected_semester = $_GET['semester'] ?? 'All Semesters';
+    $params = [$dept_id];
+    $sql = "SELECT * FROM routines WHERE department_id = ? AND status = 'active'";
+
+    if ($selected_semester !== 'All Semesters') {
+        $sql .= " AND semester = ?";
+        $params[] = $selected_semester;
+    }
+
+    $sql .= " ORDER BY FIELD(day_of_week, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), start_time ASC";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($params);
     $routines = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     $routines = [];

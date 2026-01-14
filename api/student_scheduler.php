@@ -8,7 +8,7 @@ header('Content-Type: application/json');
 session_start();
 require_once '../includes/db.php';
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {
+if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'student') {
     echo json_encode(['success' => false, 'message' => 'Unauthorized']);
     exit;
 }
@@ -23,7 +23,7 @@ try {
         // FETCH MERGED SCHEDULE (Classes + Tasks)
 
         // 1. Fetch Official Classes
-        $stmt = $conn->prepare("SELECT id, subject_name as title, day_of_week, start_time, end_time, room_number, teacher_name, 'class' as type, 'blue' as color 
+        $stmt = $conn->prepare("SELECT id, subject_name as title, day_of_week, start_time, end_time, room_number, teacher_name, 'class' as type, color_tag as color 
                                FROM routines 
                                WHERE department_id = ? AND semester = ? AND status = 'active'");
         $stmt->execute([$dept_id, $semester]);

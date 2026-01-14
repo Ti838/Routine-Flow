@@ -12,8 +12,8 @@ function renderNavbar($role, $name)
                     class="lg:hidden w-10 h-10 rounded-xl bg-gray-50 dark:bg-white/5 flex items-center justify-center text-gray-500">
                     <i class="ri-menu-2-line text-2xl"></i>
                 </button>
-                <a href="/Routine Flow/index.php" class="flex items-center gap-3">
-                    <img src="/Routine Flow/assets/img/favicon.png" alt="RF"
+                <a href="../index.php" class="flex items-center gap-3">
+                    <img src="../assets/img/favicon.png" alt="RF"
                         class="w-10 h-10 rounded-xl shadow-lg shadow-indigo-500/20">
                     <span
                         class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 hidden sm:block">Routine
@@ -70,13 +70,13 @@ function renderNavbar($role, $name)
                             }
                             ?>
                         </div>
-                        <a href="/Routine Flow/shared/notices.php"
+                        <a href="../shared/notices.php"
                             class="block p-3 text-center text-xs font-bold text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 transition-colors">
                             View All Notifications
                         </a>
                     </div>
                 </div>
-                <a href="/Routine Flow/shared/profile.php"
+                <a href="../shared/profile.php"
                     class="flex items-center gap-4 pl-6 border-l border-gray-200 dark:border-white/10 hover:opacity-80 transition-opacity"
                     title="Edit Profile">
                     <div class="hidden md:block text-right">
@@ -89,7 +89,7 @@ function renderNavbar($role, $name)
                     </div>
                     <?php
                     // Fetch fresh profile pic if available (optional optimization, but reliable)
-                    $pic_path = isset($_SESSION['profile_pic']) && !empty($_SESSION['profile_pic']) ? '/Routine Flow/assets/uploads/profiles/' . $_SESSION['profile_pic'] : "https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=" . urlencode($name);
+                    $pic_path = isset($_SESSION['profile_pic']) && !empty($_SESSION['profile_pic']) ? '../assets/uploads/profiles/' . $_SESSION['profile_pic'] : "https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=" . urlencode($name);
 
                     // Note: To make session profile_pic dynamic, we should update session on login. 
                     // For now, we fallback to UI Avatars if not explicitly in session.
@@ -97,8 +97,8 @@ function renderNavbar($role, $name)
                     <img src="<?php echo $pic_path; ?>"
                         class="w-10 h-10 rounded-full bg-gray-100 dark:bg-dark-bg p-0.5 border border-indigo-500/30 object-cover">
                 </a>
-                <a href="/Routine Flow/login.php" class="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
-                    title="Logout">
+                <a href="../logout.php" id="logoutBtn"
+                    class="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-all" title="Logout">
                     <i class="ri-logout-box-line text-2xl"></i>
                 </a>
             </div>
@@ -113,35 +113,35 @@ function renderSidebar($role, $active_page)
     $menu = [];
     if ($role === 'admin') {
         $menu = [
-            ['title' => 'Dashboard', 'icon' => 'ri-dashboard-line', 'link' => '/Routine Flow/admin/dashboard.php'],
-            ['title' => 'User Management', 'icon' => 'ri-user-settings-line', 'link' => '/Routine Flow/admin/users.php'],
-            ['title' => 'Departments', 'icon' => 'ri-building-line', 'link' => '/Routine Flow/admin/departments.php'],
-            ['title' => 'Create Routine', 'icon' => 'ri-calendar-event-line', 'link' => '/Routine Flow/admin/create-routine.php'],
-            ['title' => 'Routine Library', 'icon' => 'ri-list-settings-line', 'link' => '/Routine Flow/admin/manage_routines.php'],
-            ['title' => 'Analytics', 'icon' => 'ri-bar-chart-2-line', 'link' => '/Routine Flow/admin/analytics.php'],
-            ['title' => 'Bulletins', 'icon' => 'ri-notification-badge-line', 'link' => '/Routine Flow/admin/notices.php'],
-            ['title' => 'Activity Log', 'icon' => 'ri-history-line', 'link' => '/Routine Flow/admin/activity-log.php'],
+            ['title' => 'Dashboard', 'icon' => 'ri-dashboard-line', 'link' => '../admin/dashboard.php'],
+            ['title' => 'User Management', 'icon' => 'ri-user-settings-line', 'link' => '../admin/users.php'],
+            ['title' => 'Departments', 'icon' => 'ri-building-line', 'link' => '../admin/departments.php'],
+            ['title' => 'Create Routine', 'icon' => 'ri-calendar-event-line', 'link' => '../admin/create-routine.php'],
+            ['title' => 'Routine Library', 'icon' => 'ri-list-settings-line', 'link' => '../admin/manage_routines.php'],
+            ['title' => 'Analytics', 'icon' => 'ri-bar-chart-2-line', 'link' => '../admin/analytics.php'],
+            ['title' => 'Bulletins', 'icon' => 'ri-notification-badge-line', 'link' => '../admin/notices.php'],
+            ['title' => 'Activity Log', 'icon' => 'ri-history-line', 'link' => '../admin/activity-log.php'],
         ];
     } elseif ($role === 'teacher') {
         $menu = [
-            ['title' => 'Dashboard', 'icon' => 'ri-dashboard-line', 'link' => '/Routine Flow/teacher/dashboard.php'],
-            ['title' => 'My Classes', 'icon' => 'ri-calendar-todo-line', 'link' => '/Routine Flow/teacher/today.php'],
-            ['title' => 'Submit Routine', 'icon' => 'ri-upload-cloud-2-line', 'link' => '/Routine Flow/teacher/create-routine.php'],
-            ['title' => 'Department View', 'icon' => 'ri-building-2-line', 'link' => '/Routine Flow/teacher/department.php'],
+            ['title' => 'Dashboard', 'icon' => 'ri-dashboard-line', 'link' => '../teacher/dashboard.php'],
+            ['title' => 'My Classes', 'icon' => 'ri-calendar-todo-line', 'link' => '../teacher/today.php'],
+            ['title' => 'Submit Routine', 'icon' => 'ri-upload-cloud-2-line', 'link' => '../teacher/create-routine.php'],
+            ['title' => 'Department View', 'icon' => 'ri-building-2-line', 'link' => '../teacher/department.php'],
         ];
     } elseif ($role === 'student') {
         $menu = [
-            ['title' => 'Dashboard', 'icon' => 'ri-dashboard-line', 'link' => '/Routine Flow/student/dashboard.php'],
-            ['title' => 'Today\'s Routine', 'icon' => 'ri-calendar-check-line', 'link' => '/Routine Flow/student/today.php'],
-            ['title' => 'Weekly Planner', 'icon' => 'ri-calendar-2-line', 'link' => '/Routine Flow/student/weekly.php'],
-            ['title' => 'Custom Builder', 'icon' => 'ri-equalizer-line', 'link' => '/Routine Flow/student/custom-routine.php'],
+            ['title' => 'Dashboard', 'icon' => 'ri-dashboard-line', 'link' => '../student/dashboard.php'],
+            ['title' => 'Today\'s Routine', 'icon' => 'ri-calendar-check-line', 'link' => '../student/today.php'],
+            ['title' => 'Weekly Planner', 'icon' => 'ri-calendar-2-line', 'link' => '../student/weekly.php'],
+            ['title' => 'Custom Builder', 'icon' => 'ri-equalizer-line', 'link' => '../student/custom-routine.php'],
         ];
     }
 
     // Common settings for all roles
     $settings_menu = [
-        ['title' => 'My Profile', 'icon' => 'ri-user-3-line', 'link' => '/Routine Flow/shared/profile.php'],
-        ['title' => 'Settings', 'icon' => 'ri-settings-4-line', 'link' => '/Routine Flow/shared/settings.php'],
+        ['title' => 'My Profile', 'icon' => 'ri-user-3-line', 'link' => '../shared/profile.php'],
+        ['title' => 'Settings', 'icon' => 'ri-settings-4-line', 'link' => '../shared/settings.php'],
     ];
 
     ?>
@@ -154,7 +154,7 @@ function renderSidebar($role, $active_page)
                 </p>
                 <nav class="space-y-1">
                     <?php foreach ($menu as $item):
-                        $is_active = basename($_SERVER['PHP_SELF']) == $item['link'];
+                        $is_active = basename($_SERVER['PHP_SELF']) == basename($item['link']);
                         ?>
                         <a href="<?php echo $item['link']; ?>"
                             class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all group <?php echo $is_active ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20' : 'text-gray-500 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-indigo-600'; ?>">

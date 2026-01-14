@@ -29,8 +29,12 @@
                 <div>
                     <h1 class="text-4xl font-extrabold tracking-tight">Today's Academic Flow</h1>
                     <div class="flex items-center gap-3 mt-2">
-                        <span class="text-sm font-bold text-gray-500 uppercase tracking-widest">
+                        <span id="liveDate" class="text-sm font-bold text-gray-500 uppercase tracking-widest">
                             <?php echo date('l, F d'); ?>
+                        </span>
+                        <span class="w-1 h-1 rounded-full bg-gray-300"></span>
+                        <span id="liveClock" class="text-sm font-bold text-indigo-500 uppercase tracking-widest">
+                            <?php echo date('H:i:s'); ?>
                         </span>
                         <span class="w-1 h-1 rounded-full bg-gray-300"></span>
                         <span class="text-sm font-bold text-indigo-500 uppercase tracking-widest">
@@ -65,15 +69,16 @@
             <?php else: ?>
             <div class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6" id="routineContainer">
                 <?php foreach ($classes as $class):
+                        $color = $class['color_tag'] ?? 'indigo';
                         $priority_colors = ['bg-gray-100', 'bg-blue-100', 'bg-amber-100', 'bg-red-100'];
                         $priority_text = ['Normal', 'Low', 'Medium', 'High'];
                         $custom_color = $class['color_code'] ?? '';
                         ?>
-                <div class="routine-card relative group p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-2xl transition-all overflow-hidden"
+                <div class="routine-card relative group p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-2xl transition-all overflow-hidden border-l-8"
                     data-subject="<?php echo htmlspecialchars($class['subject_name']); ?>"
                     data-teacher="<?php echo htmlspecialchars($class['teacher_name']); ?>"
                     data-room="<?php echo htmlspecialchars($class['room_number']); ?>"
-                    style="<?php echo $custom_color ? 'border-left: 8px solid ' . $custom_color . ';' : ''; ?>">
+                    style="border-color: <?php echo $custom_color ?: 'var(--tw-color-' . $color . '-500)'; ?>;">
                     <div class="flex items-start justify-between mb-8">
                         <div>
                             <div class="text-3xl font-black mb-1">
@@ -90,7 +95,8 @@
                     </div>
 
                     <div class="space-y-4">
-                        <h3 class="text-xl font-black group-hover:text-indigo-600 transition-colors leading-tight">
+                        <h3
+                            class="text-xl font-black group-hover:text-<?php echo $color; ?>-600 transition-colors leading-tight">
                             <?php echo htmlspecialchars($class['subject_name']); ?>
                         </h3>
                         <div class="flex flex-wrap gap-2">
@@ -166,6 +172,19 @@
     <script src="../assets/js/theme.js"></script>
     <script src="../assets/js/modules/search.js"></script>
     <script src="../assets/js/modules/export.js"></script>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+            const dateOptions = { weekday: 'long', month: 'long', day: '2-digit' };
+            const dateStr = now.toLocaleDateString('en-US', dateOptions).toUpperCase();
+
+            document.getElementById('liveClock').textContent = timeStr;
+            document.getElementById('liveDate').textContent = dateStr;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
 </body>
 
 </html>

@@ -54,32 +54,43 @@
                         </div>
                     </div>
 
-                    <form method="POST" enctype="multipart/form-data" class="space-y-6">
-                        <input type="hidden" name="upload_routine" value="1">
+                    <!-- Global Semester Selection -->
+                    <div
+                        class="space-y-2 p-6 bg-indigo-50 dark:bg-indigo-500/5 rounded-3xl border border-indigo-100 dark:border-indigo-500/20">
+                        <label
+                            class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest pl-1">Target
+                            Batch (Semester)</label>
+                        <select id="globalSemester" required
+                            class="w-full bg-white dark:bg-black/40 border border-gray-100 dark:border-white/10 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+                            <option value="1st Year, 1st Sem">1st Year, 1st Sem</option>
+                            <option value="1st Year, 2nd Sem">1st Year, 2nd Sem</option>
+                            <option value="2nd Year, 1st Sem">2nd Year, 1st Sem</option>
+                            <option value="2nd Year, 2nd Sem">2nd Year, 2nd Sem</option>
+                            <option value="3rd Year, 1st Sem">3rd Year, 1st Sem</option>
+                            <option value="3rd Year, 2nd Sem">3rd Year, 2nd Sem</option>
+                            <option value="4th Year, 1st Sem">4th Year, 1st Sem</option>
+                            <option value="4th Year, 2nd Sem">4th Year, 2nd Sem</option>
+                        </select>
+                    </div>
 
-                        <div class="space-y-2">
-                            <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Target
-                                Semester</label>
-                            <select name="semester" required
-                                class="w-full bg-gray-50 dark:bg-black/20 border border-gray-100 dark:border-white/10 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
-                                <option value="1st Year, 1st Sem">1st Year, 1st Sem</option>
-                                <option value="2nd Year, 1st Sem">2nd Year, 1st Sem</option>
-                                <option value="3rd Year, 1st Sem">3rd Year, 1st Sem</option>
-                                <option value="4th Year, 1st Sem">4th Year, 1st Sem</option>
-                            </select>
-                        </div>
+                    <form action="create-routine.php" method="POST" enctype="multipart/form-data" class="space-y-6"
+                        id="uploadForm">
+                        <input type="hidden" name="upload_routine" value="1">
+                        <input type="hidden" name="semester" id="hiddenSemesterInput">
 
                         <div class="space-y-2">
                             <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Routine
                                 File (PDF/PNG/JPG)</label>
                             <div class="relative group cursor-pointer">
-                                <input type="file" name="routine_file" required
-                                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                                <input type="file" name="routine_file" id="routineFile" required
+                                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                                    onchange="updateFileName(this)">
                                 <div
                                     class="w-full border-2 border-dashed border-gray-100 dark:border-white/10 rounded-3xl p-10 flex flex-col items-center justify-center group-hover:border-indigo-500 transition-all">
                                     <i
                                         class="ri-cloud-line text-4xl text-gray-400 group-hover:text-indigo-500 mb-2"></i>
-                                    <span class="text-sm font-bold text-gray-400 group-hover:text-indigo-500">Select
+                                    <span id="fileLabel"
+                                        class="text-sm font-bold text-gray-400 group-hover:text-indigo-500">Select
                                         File to Upload</span>
                                 </div>
                             </div>
@@ -87,7 +98,7 @@
 
                         <button type="submit"
                             class="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-lg shadow-xl shadow-indigo-600/20 hover:scale-[1.02] transition-all">
-                            Publish to Department
+                            Publish to Batch
                         </button>
                     </form>
                 </section>
@@ -155,6 +166,19 @@
 
     <script src="../assets/js/theme.js"></script>
     <script>
+        function updateFileName(input) {
+            const label = document.getElementById('fileLabel');
+            if (input.files && input.files[0]) {
+                label.textContent = input.files[0].name;
+                label.classList.remove('text-gray-400');
+                label.classList.add('text-indigo-600');
+            } else {
+                label.textContent = 'Select File to Upload';
+                label.classList.remove('text-indigo-600');
+                label.classList.add('text-gray-400');
+            }
+        }
+
         let teachers = [];
 
         async function fetchTeachers() {
@@ -247,7 +271,7 @@
                     end: row.querySelector('.end').value,
                     room: row.querySelector('.room').value,
                     department: "<?php echo $dept_name; ?>",
-                    semester: "<?php echo $_POST['semester'] ?? '1st Year, 1st Sem'; ?>"
+                    semester: document.getElementById('globalSemester').value
                 };
             });
 
@@ -257,6 +281,9 @@
                 btn.innerHTML = originalContent;
                 return alert('Please fill all required fields in each row');
             }
+
+            // Sync hidden semester for form submission if needed (though we use API here)
+            document.getElementById('hiddenSemesterInput').value = document.getElementById('globalSemester').value;
 
             try {
                 const res = await fetch('../api/create_routine.php', {
@@ -280,6 +307,11 @@
             btn.disabled = false;
             btn.innerHTML = originalContent;
         }
+
+        // Ensure file upload form also gets the global semester
+        document.getElementById('uploadForm').addEventListener('submit', function () {
+            document.getElementById('hiddenSemesterInput').value = document.getElementById('globalSemester').value;
+        });
     </script>
 </body>
 

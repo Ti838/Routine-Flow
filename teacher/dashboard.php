@@ -28,6 +28,20 @@ try {
     $stmt->execute();
     $notices = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    // Calculate next session for teacher
+    $next_session_time = "Done Today";
+    $next_session_subject = "No more classes";
+    if (!empty($today_classes)) {
+        $now_time = date('H:i:s');
+        foreach ($today_classes as $class) {
+            if ($class['start_time'] > $now_time) {
+                $next_session_time = date('h:i A', strtotime($class['start_time']));
+                $next_session_subject = $class['subject_name'];
+                break;
+            }
+        }
+    }
+
 } catch (PDOException $e) {
     $dept_name = 'Error';
     $today_classes = [];

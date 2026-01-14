@@ -22,11 +22,16 @@
     <div class="max-w-[1600px] mx-auto flex">
         <?php renderSidebar($role, 'today.php'); ?>
         <main class="flex-1 p-6 lg:p-10 space-y-10">
-            <header>
-                <h1 class="text-4xl font-extrabold tracking-tight">Today's Sessions</h1>
-                <p class="text-gray-500 dark:text-gray-400 mt-2">
-                    <?php echo date('l, F j, Y'); ?>
-                </p>
+            <header class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-extrabold tracking-tight">Today's Sessions</h1>
+                    <p id="liveDate" class="text-gray-500 dark:text-gray-400 mt-2">
+                        <?php echo date('l, F j, Y'); ?>
+                    </p>
+                </div>
+                <div id="liveClock" class="text-3xl font-black text-indigo-600">
+                    <?php echo date('H:i:s'); ?>
+                </div>
             </header>
 
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
@@ -36,20 +41,22 @@
                     No classes scheduled for today. Enjoy your day!
                 </div>
                 <?php else: ?>
-                <?php foreach ($classes as $class): ?>
+                <?php foreach ($classes as $class): 
+                    $color = $class['color_tag'] ?? 'indigo';
+                ?>
                 <div
-                    class="p-8 rounded-[32px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-xl transition-all group">
+                    class="p-8 rounded-[32px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-xl transition-all group border-l-8 border-l-<?php echo $color; ?>-500">
                     <div class="flex items-center gap-4 mb-6">
                         <div
-                            class="w-14 h-14 rounded-2xl bg-indigo-600/10 text-indigo-600 flex items-center justify-center text-2xl font-black">
+                            class="w-14 h-14 rounded-2xl bg-<?php echo $color; ?>-600/10 text-<?php echo $color; ?>-600 flex items-center justify-center text-2xl font-black">
                             <?php echo substr($class['subject_name'], 0, 1); ?>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold group-hover:text-indigo-600 transition-colors">
+                            <h3 class="text-xl font-bold group-hover:text-<?php echo $color; ?>-600 transition-colors">
                                 <?php echo htmlspecialchars($class['subject_name']); ?>
                             </h3>
                             <span
-                                class="text-[10px] font-bold text-indigo-500 bg-indigo-500/10 px-3 py-1 rounded-full uppercase tracking-widest">
+                                class="text-[10px] font-bold text-<?php echo $color; ?>-500 bg-<?php echo $color; ?>-500/10 px-3 py-1 rounded-full uppercase tracking-widest">
                                 <?php echo htmlspecialchars($class['semester']); ?>
                             </span>
                         </div>
@@ -77,6 +84,19 @@
         </main>
     </div>
     <script src="../assets/js/theme.js"></script>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+            const dateOptions = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+            const dateStr = now.toLocaleDateString('en-US', dateOptions);
+
+            document.getElementById('liveClock').textContent = timeStr;
+            document.getElementById('liveDate').textContent = dateStr;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
 </body>
 
 </html>

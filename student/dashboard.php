@@ -7,8 +7,8 @@ checkAuth('student');
 
 $name = $_SESSION['user_name'];
 $role = $_SESSION['user_role'];
-$student_id = $_SESSION['student_id'] ?? 'N/A';
-$semester = $_SESSION['semester'] ?? '1st Year, 1st Sem';
+$student_id = !empty($_SESSION['student_id']) ? $_SESSION['student_id'] : 'Not Set';
+$semester = !empty($_SESSION['semester']) ? $_SESSION['semester'] : 'Semester Not Set';
 $dept_id = $_SESSION['department_id'];
 
 // Logic: Fetch dynamic data
@@ -25,14 +25,16 @@ try {
     $today_classes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Calculate next session
-    $next_session_time = "09:00 AM";
-    $next_session_subject = "No session soon";
+    $next_session_time = "Done Today";
+    $next_session_subject = "Relax for now";
     if (!empty($today_classes)) {
         $now_time = date('H:i:s');
+        $found = false;
         foreach ($today_classes as $class) {
             if ($class['start_time'] > $now_time) {
-                $next_session_time = date('H:i A', strtotime($class['start_time']));
+                $next_session_time = date('h:i A', strtotime($class['start_time']));
                 $next_session_subject = $class['subject_name'];
+                $found = true;
                 break;
             }
         }
@@ -42,6 +44,11 @@ try {
     $stmt = $conn->prepare("SELECT * FROM notices ORDER BY created_at DESC LIMIT 3");
     $stmt->execute();
     $notices = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Fetch uploaded routine files for this department and semester
+    $stmt = $conn->prepare("SELECT * FROM routine_files WHERE (department = ? OR department IS NULL) AND (semester = ? OR semester IS NULL OR semester = 'Any') ORDER BY created_at DESC LIMIT 5");
+    $stmt->execute([$dept_name, $semester]);
+    $routine_files = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {
     $dept_name = 'Error';

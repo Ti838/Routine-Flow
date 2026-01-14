@@ -48,9 +48,22 @@
                                 Semester</label>
                             <select name="semester"
                                 class="w-full bg-gray-50 dark:bg-black/20 border border-gray-100 dark:border-white/10 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
-                                <option value="1st Year, 1st Sem">1st Year, 1st Sem</option>
-                                <option value="1st Year, 2nd Sem">1st Year, 2nd Sem</option>
-                                <option value="2nd Year, 1st Sem">2nd Year, 1st Sem</option>
+                                <option value="1st Year, 1st Sem" <?php echo ($semester==='1st Year, 1st Sem' )
+                                    ? 'selected' : '' ; ?>>1st Year, 1st Sem</option>
+                                <option value="1st Year, 2nd Sem" <?php echo ($semester==='1st Year, 2nd Sem' )
+                                    ? 'selected' : '' ; ?>>1st Year, 2nd Sem</option>
+                                <option value="2nd Year, 1st Sem" <?php echo ($semester==='2nd Year, 1st Sem' )
+                                    ? 'selected' : '' ; ?>>2nd Year, 1st Sem</option>
+                                <option value="2nd Year, 2nd Sem" <?php echo ($semester==='2nd Year, 2nd Sem' )
+                                    ? 'selected' : '' ; ?>>2nd Year, 2nd Sem</option>
+                                <option value="3rd Year, 1st Sem" <?php echo ($semester==='3rd Year, 1st Sem' )
+                                    ? 'selected' : '' ; ?>>3rd Year, 1st Sem</option>
+                                <option value="3rd Year, 2nd Sem" <?php echo ($semester==='3rd Year, 2nd Sem' )
+                                    ? 'selected' : '' ; ?>>3rd Year, 2nd Sem</option>
+                                <option value="4th Year, 1st Sem" <?php echo ($semester==='4th Year, 1st Sem' )
+                                    ? 'selected' : '' ; ?>>4th Year, 1st Sem</option>
+                                <option value="4th Year, 2nd Sem" <?php echo ($semester==='4th Year, 2nd Sem' )
+                                    ? 'selected' : '' ; ?>>4th Year, 2nd Sem</option>
                             </select>
                         </div>
 

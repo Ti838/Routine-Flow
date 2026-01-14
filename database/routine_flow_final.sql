@@ -94,6 +94,7 @@ CREATE TABLE IF NOT EXISTS `routines` (
   `status` enum('active','inactive') DEFAULT 'active',
   `is_file_only` BOOLEAN DEFAULT FALSE,
   `file_description` TEXT,
+  `color_tag` varchar(50) DEFAULT 'indigo',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   FOREIGN KEY (department_id) REFERENCES departments(id) ON DELETE CASCADE,
@@ -115,6 +116,19 @@ CREATE TABLE IF NOT EXISTS `routine_attachments` (
     FOREIGN KEY (`routine_id`) REFERENCES `routines` (`id`) ON DELETE CASCADE,
     INDEX idx_routine_id (routine_id),
     INDEX idx_uploaded_by (uploaded_by_role, uploaded_by_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `routine_files` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `user_id` int(11) NOT NULL,
+    `role` enum('admin','teacher') NOT NULL,
+    `file_path` varchar(255) NOT NULL,
+    `file_type` varchar(20) NOT NULL,
+    `department` varchar(100) DEFAULT NULL,
+    `semester` varchar(50) DEFAULT NULL,
+    `description` text,
+    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 5. STUDENT CUSTOMIZATIONS & TEMPLATES

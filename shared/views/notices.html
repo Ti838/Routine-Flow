@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notices - Routine Flow</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../assets/js/tailwind-config.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script>
+        (function () {
+            const theme = localStorage.getItem('theme') || 'light';
+            if (theme === 'dark') document.documentElement.classList.add('dark');
+        })();
+    </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+
+    <?php renderNavbar($role, $name); ?>
+
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'notices.php'); ?>
+
+        <main class="flex-1 p-6 lg:p-10 space-y-10">
+            <header class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-extrabold tracking-tight">Bulletin Board</h1>
+                    <p class="text-gray-500 dark:text-gray-400 mt-2">Latest announcements and system alerts.</p>
+                </div>
+                <div class="flex gap-4">
+                    <span
+                        class="px-6 py-3 rounded-2xl bg-indigo-500/10 text-indigo-500 font-bold border border-indigo-500/20">
+                        <?php echo count($notices); ?> Total Notices
+                    </span>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 gap-6">
+                <?php if (count($notices) > 0): ?>
+                <?php foreach ($notices as $note): ?>
+                <div
+                    class="p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm group hover:scale-[1.01] transition-all">
+                    <div class="flex gap-6">
+                        <div
+                            class="w-14 h-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-500 text-2xl flex-shrink-0 group-hover:bg-indigo-500 group-hover:text-white transition-colors">
+                            <i class="ri-megaphone-line"></i>
+                        </div>
+                        <div class="flex-1 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-xl font-bold group-hover:text-indigo-500 transition-colors">
+                                    <?php echo htmlspecialchars($note['title']); ?>
+                                </h3>
+                                <span
+                                    class="text-xs font-bold text-gray-400 uppercase tracking-widest bg-gray-100 dark:bg-white/5 px-3 py-1 rounded-full">
+                                    <?php echo date('F d, Y', strtotime($note['created_at'])); ?>
+                                </span>
+                            </div>
+                            <p class="text-gray-500 dark:text-gray-400 leading-relaxed max-w-4xl">
+                                <?php echo nl2br(htmlspecialchars($note['content'])); ?>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+                <?php else: ?>
+                <div
+                    class="p-20 text-center rounded-[40px] bg-white dark:bg-white/5 border border-dashed border-gray-200 dark:border-white/10 opacity-50">
+                    <i class="ri-notification-off-line text-6xl text-gray-300 block mb-6"></i>
+                    <h3 class="text-2xl font-black text-gray-400 uppercase tracking-widest">No active notices</h3>
+                    <p class="mt-2 font-bold text-gray-300">Stay tuned for future announcements.</p>
+                </div>
+                <?php endif; ?>
+            </div>
+        </main>
+    </div>
+
+    <script src="../assets/js/theme.js"></script>
+</body>
+
+</html>

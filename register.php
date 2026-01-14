@@ -27,8 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt = $conn->prepare("INSERT INTO teachers (full_name, email, password, gender, department_id) VALUES (?, ?, ?, ?, ?)");
             $stmt->execute([$name, $email, $hashed_password, $gender, $department_id]);
         } elseif ($role === 'Student') {
-            $student_id = "S" . rand(2410710000, 2410719999);
-            $default_sem = "1st Year, 1st Sem";
+            $student_id = ""; // To be filled by student manually
+            $default_sem = ""; // To be filled by student manually
             $stmt = $conn->prepare("INSERT INTO students (student_id, full_name, email, password, gender, department_id, semester) VALUES (?, ?, ?, ?, ?, ?, ?)");
             $stmt->execute([$student_id, $name, $email, $hashed_password, $gender, $department_id, $default_sem]);
         } else {

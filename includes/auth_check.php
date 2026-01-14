@@ -3,19 +3,21 @@ require_once 'core.php';
 
 function checkAuth($required_role = null)
 {
-    handleMaintenance();
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
+    handleMaintenance();
+
+    $baseUrl = getBaseUrl();
 
     if (!isset($_SESSION['user_id'])) {
-        header('Location: ../login.php');
+        header("Location: {$baseUrl}login.php");
         exit();
     }
 
     if ($required_role && $_SESSION['user_role'] !== $required_role) {
-        // Forbidden access for this role
-        header('Location: ../login.php');
+        // Forbidden access for this role - redirect to their dashboard or login
+        header("Location: {$baseUrl}index.php");
         exit();
     }
 }
