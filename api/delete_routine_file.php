@@ -15,13 +15,13 @@ require_once '../includes/file_handler.php';
 session_start();
 
 // Check authentication
-if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_role'])) {
     echo json_encode(['success' => false, 'message' => 'Unauthorized']);
     exit;
 }
 
 $userId = $_SESSION['user_id'];
-$userRole = $_SESSION['role'];
+$userRole = $_SESSION['user_role'];
 
 // Get attachment ID
 $data = json_decode(file_get_contents('php://input'), true);

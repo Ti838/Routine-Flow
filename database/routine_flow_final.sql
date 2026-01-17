@@ -40,6 +40,7 @@ ON DUPLICATE KEY UPDATE name = VALUES(name);
 CREATE TABLE IF NOT EXISTS `admins` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `full_name` varchar(255) NOT NULL,
+  `username` varchar(50) NOT NULL UNIQUE,
   `email` varchar(255) NOT NULL UNIQUE,
   `password` varchar(255) NOT NULL,
   `gender` varchar(20) DEFAULT NULL,
@@ -51,10 +52,12 @@ CREATE TABLE IF NOT EXISTS `admins` (
 CREATE TABLE IF NOT EXISTS `teachers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `full_name` varchar(255) NOT NULL,
+  `username` varchar(50) NOT NULL UNIQUE,
   `email` varchar(255) NOT NULL UNIQUE,
   `password` varchar(255) NOT NULL,
   `gender` varchar(20) DEFAULT NULL,
   `profile_pic` varchar(255) DEFAULT NULL,
+  `teacher_id` varchar(20) DEFAULT NULL UNIQUE,
   `department` varchar(100) DEFAULT NULL,
   `department_id` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -65,6 +68,7 @@ CREATE TABLE IF NOT EXISTS `teachers` (
 CREATE TABLE IF NOT EXISTS `students` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `full_name` varchar(255) NOT NULL,
+  `username` varchar(50) NOT NULL UNIQUE,
   `email` varchar(255) NOT NULL UNIQUE,
   `password` varchar(255) NOT NULL,
   `gender` varchar(20) DEFAULT NULL,

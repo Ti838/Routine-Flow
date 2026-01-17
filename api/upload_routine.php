@@ -21,7 +21,7 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
 }
 
 $userId = $_SESSION['user_id'];
-$userRole = $_SESSION['role'];
+$userRole = $_SESSION['user_role'];
 
 // Only admin and teacher can upload
 if ($userRole !== 'admin' && $userRole !== 'teacher') {

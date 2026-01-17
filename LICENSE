@@ -1,32 +1,102 @@
-ROUTINE FLOW - EXCLUSIVE COMMERCIAL PROPRIETARY LICENSE
-Version 2.0 (Enterprise Readiness)
+PROPRIETARY SOFTWARE LICENSE AGREEMENT
 
-Copyright (c) 2026 Timon Biswas. All Rights Reserved.
+Copyright © 2026 Timon Biswas. All Rights Reserved.
 
-THIS IS A PROPRIETARY COMMERCIAL SOFTWARE BLUEPRINT. ALL INTELLECTUAL PROPERTY, LOGIC, RESEARCH, AND DESIGN ARE THE EXCLUSIVE PROPERTY OF TIMON BISWAS.
+ROUTINE FLOW - Academic Scheduling System
 
-1. AUTHORSHIP & OWNERSHIP
-   - Timon Biswas is the sole Author and Owner of "Routine Flow".
-   - The Author retains the absolute and unilateral right to sell, license, lease, or distribute the Software to any third party at any time for any amount.
+================================================================================
+STRICT PROPRIETARY LICENSE
+================================================================================
 
-2. USER PERMISSIONS (INDIVIDUAL LICENSE)
-   - This version is provided for non-commercial personal use and technical evaluation.
-   - No rights are granted to any third party to redistribute or resell this code.
+This software and associated documentation files (the "Software") are the 
+exclusive property of Timon Biswas ("Owner"). This Software is protected by 
+copyright laws and international copyright treaties, as well as other 
+intellectual property laws and treaties.
 
-3. COMMERCIAL & RESALE RIGHTS (FOR THE OWNER)
-   - The Author (Timon Biswas) may transition this project into a paid product, Saas (Software as a Service), or enterprise-level application.
-   - The Author reserves the right to provide customized "Commercial Master Licenses" to institutions or individuals who wish to purchase the product for distribution.
-   - Any person or entity found using this code for commercial gain without a "Master License" from Timon Biswas will be subject to legal action for Intellectual Property theft.
+================================================================================
+TERMS AND CONDITIONS
+================================================================================
 
-4. TRANSFERABILITY
-   - Only the Author has the right to transfer this software to others.
-   - Third-party users are strictly prohibited from "providing", "sharing", or "transferring" the source code to anyone else.
+1. OWNERSHIP
+   The Software is licensed, not sold. Timon Biswas retains all right, title, 
+   and interest in and to the Software, including all copyrights, patents, 
+   trade secrets, trademarks, and other intellectual property rights.
 
-5. CONTACT FOR COMMERCIAL INQUIRIES
-   If you wish to purchase a "Commercial Master License" or the full "Intellectual Property Rights" of Routine Flow, please contact:
+2. RESTRICTIONS
+   You are explicitly PROHIBITED from:
+   
+   a) Copying, reproducing, or duplicating the Software in any form
+   b) Modifying, adapting, translating, or creating derivative works
+   c) Reverse engineering, decompiling, or disassembling the Software
+   d) Distributing, sublicensing, selling, or transferring the Software
+   e) Renting, leasing, or lending the Software to third parties
+   f) Removing or altering any proprietary notices, labels, or marks
+   g) Using the Software for commercial purposes without explicit permission
+   h) Publishing, sharing, or making the source code publicly available
+   i) Using the Software as a basis for competing products or services
+   j) Extracting or reusing any portion of the code, design, or algorithms
 
-   Owner: Timon Biswas
-   Email: <timonbiswas33@gmail.com>
-   Location: Bangladesh
+3. NO REDISTRIBUTION
+   This Software may NOT be redistributed in any form, whether modified or 
+   unmodified, without explicit written permission from the Owner.
 
-"Your hard work is protected. This license ensures that only YOU have the power to sell or provide this software to the world."
+4. NO OPEN SOURCE
+   This Software is NOT open source. It is proprietary and confidential.
+   No open source license (MIT, GPL, Apache, etc.) applies to this Software.
+
+5. PERMITTED USE
+   This license grants you ONLY the right to:
+   - Use the Software for personal, educational, or internal business purposes
+   - Deploy the Software on your own servers for your own use
+   
+   Any other use requires explicit written permission from Timon Biswas.
+
+6. COMMERCIAL USE
+   Commercial use, resale, or redistribution requires a separate commercial 
+   license agreement. Contact the Owner for licensing inquiries.
+
+7. NO WARRANTY
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+   FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL 
+   THE OWNER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING 
+   FROM THE USE OF THE SOFTWARE.
+
+8. TERMINATION
+   This license is effective until terminated. Your rights under this license 
+   will terminate automatically without notice if you fail to comply with any 
+   of its terms. Upon termination, you must destroy all copies of the Software.
+
+9. LEGAL ACTION
+   Violation of this license will result in immediate legal action. The Owner 
+   reserves the right to seek all available legal remedies, including but not 
+   limited to injunctive relief and monetary damages.
+
+10. GOVERNING LAW
+    This license shall be governed by and construed in accordance with the 
+    laws of Bangladesh, without regard to its conflict of law provisions.
+
+================================================================================
+CONTACT INFORMATION
+================================================================================
+
+For licensing inquiries, permissions, or questions:
+
+Owner: Timon Biswas
+Email: [Your Email]
+Project: Routine Flow - Academic Scheduling System
+
+================================================================================
+ACKNOWLEDGMENT
+================================================================================
+
+BY USING THIS SOFTWARE, YOU ACKNOWLEDGE THAT YOU HAVE READ THIS LICENSE 
+AGREEMENT, UNDERSTAND IT, AND AGREE TO BE BOUND BY ITS TERMS AND CONDITIONS.
+
+IF YOU DO NOT AGREE TO THESE TERMS, YOU ARE NOT AUTHORIZED TO USE, COPY, 
+MODIFY, OR DISTRIBUTE THIS SOFTWARE.
+
+================================================================================
+
+Last Updated: January 14, 2026
+Version: 1.0

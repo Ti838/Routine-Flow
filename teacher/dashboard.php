@@ -16,10 +16,16 @@ try {
     $stmt->execute([$dept_id]);
     $dept_name = $stmt->fetchColumn() ?: 'General Engineering';
 
-    // Fetch today's classes for this teacher
+    // Fetch today's classes for this teacher's department (Broad Visibility)
     $today = date('l');
-    $stmt = $conn->prepare("SELECT * FROM routines WHERE (teacher_id = ? OR teacher_name = ?) AND day_of_week = ? AND status = 'active' ORDER BY start_time ASC");
-    $stmt->execute([$_SESSION['user_id'], $name, $today]);
+    $stmt = $conn->prepare("
+        SELECT * FROM routines 
+        WHERE (teacher_id = ? OR teacher_name = ? OR department_id = ?) 
+        AND day_of_week = ? 
+        AND status = 'active' 
+        ORDER BY start_time ASC
+    ");
+    $stmt->execute([$_SESSION['user_id'], $name, $dept_id, $today]);
     $today_classes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $classes_today_count = count($today_classes);
 

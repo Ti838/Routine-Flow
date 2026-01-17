@@ -289,18 +289,33 @@
 
         <!-- Sign In -->
         <div class="credentials-panel signin">
-            <h2 class="text-3xl font-extrabold mb-8 text-gray-900 dark:text-white">Sign In</h2>
+            <h2 class="text-3xl font-extrabold mb-6 text-gray-900 dark:text-white">Sign In</h2>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mb-6">Login with your Username or Email</p>
             <form method="POST">
 
                 <div class="field-wrapper mb-2">
-                    <input type="email" name="email"
+                    <input type="text" name="identifier"
                         class="text-gray-900 dark:text-gray-100 dark:bg-white/5 rounded-md px-2" required>
-                    <label>Email Address</label>
+                    <label>Username or Email</label>
                 </div>
                 <div class="field-wrapper mb-2">
                     <input type="password" name="password"
                         class="text-gray-900 dark:text-gray-100 dark:bg-white/5 rounded-md px-2" required>
                     <label>Password</label>
+                </div>
+
+                <!-- Math Captcha -->
+                <div class="field-wrapper mb-2 mt-4">
+                    <div class="flex items-center gap-4">
+                        <span class="text-xl font-bold text-gray-400 select-none">
+                            <?php echo $captcha_question; ?> = ?
+                        </span>
+                        <div class="relative flex-1">
+                            <input type="number" name="captcha_input"
+                                class="w-full text-gray-900 dark:text-gray-100 dark:bg-white/5 rounded-md px-2 py-2 border-b-2 border-gray-300 dark:border-white/20 focus:border-indigo-500 outline-none"
+                                required placeholder="Answer">
+                        </div>
+                    </div>
                 </div>
 
                 <div class="flex justify-end mb-6">
@@ -332,6 +347,12 @@
                         class="text-gray-900 dark:text-gray-100 dark:bg-white/5 rounded-md px-2 py-1.5 text-sm"
                         required>
                     <label class="text-sm">Full Name</label>
+                </div>
+                <div class="field-wrapper mb-3">
+                    <input type="text" name="username"
+                        class="text-gray-900 dark:text-gray-100 dark:bg-white/5 rounded-md px-2 py-1.5 text-sm" required
+                        pattern="[a-zA-Z0-9_]{3,20}" title="3-20 characters, letters, numbers, and underscores only">
+                    <label class="text-sm">Username</label>
                 </div>
                 <div class="field-wrapper mb-3">
                     <input type="email" name="email"
@@ -379,19 +400,51 @@
                     </label>
                 </div>
 
-                <!-- Hardcoded Department Selector (Fallback since DB is offline) -->
+                <!-- Dynamic Department Selector -->
                 <div class="field-wrapper mb-4" id="deptField">
                     <select name="department_id"
                         class="text-gray-900 dark:text-gray-100 dark:bg-gray-800 rounded-md px-2 py-1.5 text-sm"
                         required>
                         <option value="" disabled selected></option>
-                        <option value="1">Computer Science (CSE)</option>
-                        <option value="2">Electrical Eng (EEE)</option>
-                        <option value="3">Mechanical Eng (ME)</option>
-                        <option value="4">Civil Eng (CE)</option>
-                        <option value="5">Business Admin (BBA)</option>
+                        <?php foreach ($departments as $d): ?>
+                        <option value="<?php echo $d['id']; ?>">
+                            <?php echo htmlspecialchars($d['name']); ?>
+                        </option>
+                        <?php endforeach; ?>
                     </select>
                     <label class="text-sm">Select Department</label>
+                </div>
+
+                <!-- Semester Selector (Only for Students) -->
+                <div class="field-wrapper mb-4" id="semesterField">
+                    <select name="semester"
+                        class="text-gray-900 dark:text-gray-100 dark:bg-gray-800 rounded-md px-2 py-1.5 text-sm"
+                        required>
+                        <option value="" disabled selected></option>
+                        <option value="1st Year, 1st Sem">1st Year, 1st Sem</option>
+                        <option value="1st Year, 2nd Sem">1st Year, 2nd Sem</option>
+                        <option value="2nd Year, 1st Sem">2nd Year, 1st Sem</option>
+                        <option value="2nd Year, 2nd Sem">2nd Year, 2nd Sem</option>
+                        <option value="3rd Year, 1st Sem">3rd Year, 1st Sem</option>
+                        <option value="3rd Year, 2nd Sem">3rd Year, 2nd Sem</option>
+                        <option value="4th Year, 1st Sem">4th Year, 1st Sem</option>
+                        <option value="4th Year, 2nd Sem">4th Year, 2nd Sem</option>
+                    </select>
+                    <label class="text-sm">Batch / Semester</label>
+                </div>
+
+                <!-- Math Captcha for Signup -->
+                <div class="field-wrapper mb-4">
+                    <div class="flex items-center gap-4">
+                        <span class="text-sm font-bold text-gray-400 select-none">Prove you're human:
+                            <?php echo $captcha_question; ?> = ?
+                        </span>
+                        <div class="relative flex-1">
+                            <input type="number" name="captcha_input"
+                                class="w-full text-gray-900 dark:text-gray-100 dark:bg-white/5 rounded-md px-2 py-1.5 text-sm border-b-2 border-gray-300 dark:border-white/20 focus:border-indigo-500 outline-none"
+                                required>
+                        </div>
+                    </div>
                 </div>
 
                 <button type="submit" name="register"
@@ -429,9 +482,18 @@
                 if (radio.value === 'Admin') {
                     deptField.classList.add('hidden');
                     deptSelect.removeAttribute('required');
+                    document.getElementById('semesterField').classList.add('hidden');
+                    document.getElementById('semesterField').querySelector('select').removeAttribute('required');
+                } else if (radio.value === 'Teacher') {
+                    deptField.classList.remove('hidden');
+                    deptSelect.setAttribute('required', '');
+                    document.getElementById('semesterField').classList.add('hidden');
+                    document.getElementById('semesterField').querySelector('select').removeAttribute('required');
                 } else {
                     deptField.classList.remove('hidden');
                     deptSelect.setAttribute('required', '');
+                    document.getElementById('semesterField').classList.remove('hidden');
+                    document.getElementById('semesterField').querySelector('select').setAttribute('required', '');
                 }
             });
         });

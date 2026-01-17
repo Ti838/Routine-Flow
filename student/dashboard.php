@@ -18,11 +18,35 @@ try {
     $stmt->execute([$dept_id]);
     $dept_name = $stmt->fetchColumn() ?: 'General Engineering';
 
-    // Fetch today's classes
+    // Fetch today's classes (Official + Personal)
     $today = date('l');
-    $stmt = $conn->prepare("SELECT * FROM routines WHERE department_id = ? AND semester = ? AND day_of_week = ? AND status = 'active' ORDER BY start_time ASC");
-    $stmt->execute([$dept_id, $semester, $today]);
-    $today_classes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // 1. Official Routines
+    $stmt = $conn->prepare("
+        SELECT r.*, c.color_code, c.is_starred, 'class' as type 
+        FROM routines r
+        LEFT JOIN student_routine_customizations c ON r.id = c.routine_id AND c.student_id = ?
+        WHERE r.department_id = ? AND r.semester = ? AND r.day_of_week = ? AND r.status = 'active'
+    ");
+    $stmt->execute([$student_id, $dept_id, $semester, $today]);
+    $official_classes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // 2. Personal Tasks
+    $stmt = $conn->prepare("
+        SELECT id, title as subject_name, day_of_week, start_time, end_time, 
+               '' as room_number, 'Personal Task' as teacher_name, 
+               color as color_code, 'personal' as type, 0 as is_starred
+        FROM personal_events 
+        WHERE student_id = ? AND day_of_week = ?
+    ");
+    $stmt->execute([$student_id, $today]);
+    $personal_tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Merge and Sort
+    $today_classes = array_merge($official_classes, $personal_tasks);
+    usort($today_classes, function ($a, $b) {
+        return strcmp($a['start_time'], $b['start_time']);
+    });
 
     // Calculate next session
     $next_session_time = "Done Today";

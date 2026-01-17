@@ -43,6 +43,57 @@
                 </div>
             </header>
 
+            <!-- Summary Statistics Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                <div class="p-8 rounded-[32px] bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+                            <i class="ri-calendar-line text-3xl"></i>
+                        </div>
+                        <span class="text-4xl font-black">
+                            <?php echo $totalRoutines; ?>
+                        </span>
+                    </div>
+                    <h4 class="text-sm font-bold text-white/80 uppercase tracking-widest">Active Classes</h4>
+                </div>
+
+                <div class="p-8 rounded-[32px] bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+                            <i class="ri-user-line text-3xl"></i>
+                        </div>
+                        <span class="text-4xl font-black">
+                            <?php echo $totalTeachers; ?>
+                        </span>
+                    </div>
+                    <h4 class="text-sm font-bold text-white/80 uppercase tracking-widest">Faculty Members</h4>
+                </div>
+
+                <div class="p-8 rounded-[32px] bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+                            <i class="ri-door-line text-3xl"></i>
+                        </div>
+                        <span class="text-4xl font-black">
+                            <?php echo $totalRooms; ?>
+                        </span>
+                    </div>
+                    <h4 class="text-sm font-bold text-white/80 uppercase tracking-widest">Classrooms Used</h4>
+                </div>
+
+                <div class="p-8 rounded-[32px] bg-gradient-to-br from-purple-500 to-pink-600 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+                            <i class="ri-building-line text-3xl"></i>
+                        </div>
+                        <span class="text-4xl font-black">
+                            <?php echo $totalDepartments; ?>
+                        </span>
+                    </div>
+                    <h4 class="text-sm font-bold text-white/80 uppercase tracking-widest">Departments</h4>
+                </div>
+            </div>
+
             <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
                 <!-- Room Usage Chart -->
                 <div
@@ -136,18 +187,56 @@
                     options: { ...commonOptions, indexAxis: 'y' }
                 });
 
-                // 3. Dept Chart (Doughnut)
+                // 3. Dept Chart (Professional Pie/Doughnut)
                 new Chart(document.getElementById('deptChart'), {
                     type: 'doughnut',
                     data: {
                         labels: data.deptDistribution.map(i => i.label),
                         datasets: [{
                             data: data.deptDistribution.map(i => i.value),
-                            backgroundColor: ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'],
-                            borderWidth: 0
+                            backgroundColor: [
+                                '#6366f1', // Indigo
+                                '#10b981', // Emerald
+                                '#f59e0b', // Amber
+                                '#ef4444', // Red
+                                '#8b5cf6', // Purple
+                                '#06b6d4', // Cyan
+                                '#ec4899', // Pink
+                                '#14b8a6'  // Teal
+                            ],
+                            borderWidth: 4,
+                            borderColor: document.documentElement.classList.contains('dark') ? '#0B1121' : '#ffffff',
+                            hoverOffset: 10
                         }]
                     },
-                    options: { ...commonOptions, plugins: { legend: { display: true, position: 'right' } } }
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'right',
+                                labels: {
+                                    padding: 15,
+                                    font: { size: 12, weight: 'bold' },
+                                    color: document.documentElement.classList.contains('dark') ? '#fff' : '#000',
+                                    usePointStyle: true,
+                                    pointStyle: 'circle'
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        const label = context.label || '';
+                                        const value = context.parsed || 0;
+                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        const percentage = ((value / total) * 100).toFixed(1);
+                                        return `${label}: ${value} classes (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 });
 
                 // 4. Daily Chart (Line)

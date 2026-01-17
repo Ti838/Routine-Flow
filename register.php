@@ -5,32 +5,45 @@ require_once 'includes/core.php';
 handleMaintenance();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // 1. Verify Captcha
+    if (!isset($_POST['captcha_input']) || intval($_POST['captcha_input']) !== $_SESSION['captcha_answer']) {
+        echo "<script>alert('Incorrect Math Answer. Registration Failed.'); window.history.back();</script>";
+        exit();
+    }
     $name = $_POST['name'];
+    $username = trim($_POST['username']);
     $email = $_POST['email'];
     $password = $_POST['password'];
     $role = $_POST['role']; // Student, Teacher, or Admin
     $gender = isset($_POST['gender']) ? $_POST['gender'] : null;
     $department_id = isset($_POST['department_id']) ? $_POST['department_id'] : null;
 
-    if (empty($name) || empty($email) || empty($password) || empty($role) || empty($gender)) {
+    if (empty($name) || empty($username) || empty($email) || empty($password) || empty($role) || empty($gender)) {
         echo "<script>alert('Please fill in all required fields.'); window.history.back();</script>";
         exit();
     }
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $semester = isset($_POST['semester']) ? $_POST['semester'] : null;
 
     try {
+        // Fetch department name for consistency
+        $dept_name = null;
+        if ($department_id) {
+            $d_stmt = $conn->prepare("SELECT name FROM departments WHERE id = ?");
+            $d_stmt->execute([$department_id]);
+            $dept_name = $d_stmt->fetchColumn();
+        }
+
         if ($role === 'Admin') {
-            $stmt = $conn->prepare("INSERT INTO admins (full_name, email, password, gender) VALUES (?, ?, ?, ?)");
-            $stmt->execute([$name, $email, $hashed_password, $gender]);
+            $stmt = $conn->prepare("INSERT INTO admins (full_name, username, email, password, gender) VALUES (?, ?, ?, ?, ?)");
+            $stmt->execute([$name, $username, $email, $hashed_password, $gender]);
         } elseif ($role === 'Teacher') {
-            $stmt = $conn->prepare("INSERT INTO teachers (full_name, email, password, gender, department_id) VALUES (?, ?, ?, ?, ?)");
-            $stmt->execute([$name, $email, $hashed_password, $gender, $department_id]);
+            $stmt = $conn->prepare("INSERT INTO teachers (full_name, username, email, password, gender, department_id, department) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$name, $username, $email, $hashed_password, $gender, $department_id, $dept_name]);
         } elseif ($role === 'Student') {
-            $student_id = ""; // To be filled by student manually
-            $default_sem = ""; // To be filled by student manually
-            $stmt = $conn->prepare("INSERT INTO students (student_id, full_name, email, password, gender, department_id, semester) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $stmt->execute([$student_id, $name, $email, $hashed_password, $gender, $department_id, $default_sem]);
+            $stmt = $conn->prepare("INSERT INTO students (full_name, username, email, password, gender, department_id, department, semester) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$name, $username, $email, $hashed_password, $gender, $department_id, $dept_name, $semester]);
         } else {
             echo "<script>alert('Invalid Role Selected.'); window.history.back();</script>";
             exit();
@@ -42,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </script>";
     } catch (PDOException $e) {
         if ($e->getCode() == 23000) { // Duplicate entry
-            echo "<script>alert('Error: This email is already registered.'); window.history.back();</script>";
+            echo "<script>alert('Error: This email or username is already registered.'); window.history.back();</script>";
         } else {
             echo "Error: " . $e->getMessage();
         }

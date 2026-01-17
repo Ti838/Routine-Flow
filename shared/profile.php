@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['update_profile'])) {
         $full_name = $_POST['full_name'];
+        $username = trim($_POST['username']);
         $email = $_POST['email'];
         $uploaded_file = null;
 
@@ -47,14 +48,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         try {
             if ($role === 'student') {
-                $sql = "UPDATE students SET full_name = ?, email = ?, gender = ?, student_id = ?, semester = ?";
-                $params = [$full_name, $email, $gender, $student_id, $semester];
+                $sql = "UPDATE students SET full_name = ?, username = ?, email = ?, gender = ?, student_id = ?, semester = ?";
+                $params = [$full_name, $username, $email, $gender, $student_id, $semester];
             } elseif ($role === 'teacher') {
-                $sql = "UPDATE teachers SET full_name = ?, email = ?, gender = ?, teacher_id = ?, department = ?";
-                $params = [$full_name, $email, $gender, $teacher_id, $department];
+                $sql = "UPDATE teachers SET full_name = ?, username = ?, email = ?, gender = ?, teacher_id = ?, department = ?";
+                $params = [$full_name, $username, $email, $gender, $teacher_id, $department];
             } else {
-                $sql = "UPDATE $table SET full_name = ?, email = ?, gender = ?";
-                $params = [$full_name, $email, $gender];
+                $sql = "UPDATE $table SET full_name = ?, username = ?, email = ?, gender = ?";
+                $params = [$full_name, $username, $email, $gender];
             }
 
             if ($uploaded_file) {

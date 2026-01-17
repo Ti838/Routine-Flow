@@ -16,7 +16,7 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
 }
 
 $userId = $_SESSION['user_id'];
-$userRole = $_SESSION['role'];
+$userRole = $_SESSION['user_role'];
 
 // Get attachment ID
 if (!isset($_GET['id'])) {
@@ -25,12 +25,24 @@ if (!isset($_GET['id'])) {
 }
 
 $attachmentId = intval($_GET['id']);
+$table = isset($_GET['type']) && $_GET['type'] === 'file' ? 'routine_files' : 'routine_attachments';
 
 try {
-    // Get file information
-    $stmt = $conn->prepare("SELECT * FROM routine_attachments WHERE id = :id");
-    $stmt->execute([':id' => $attachmentId]);
-    $attachment = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Get file information from appropriate table
+    if ($table === 'routine_files') {
+        $stmt = $conn->prepare("SELECT id, file_path, file_type as file_name, created_at FROM routine_files WHERE id = :id");
+        $stmt->execute([':id' => $attachmentId]);
+        $attachment = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($attachment) {
+            // Extract filename from path for routine_files
+            $attachment['file_name'] = basename($attachment['file_path']);
+        }
+    } else {
+        $stmt = $conn->prepare("SELECT * FROM routine_attachments WHERE id = :id");
+        $stmt->execute([':id' => $attachmentId]);
+        $attachment = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
     if (!$attachment) {
         http_response_code(404);

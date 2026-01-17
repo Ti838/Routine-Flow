@@ -23,10 +23,14 @@ try {
         // FETCH MERGED SCHEDULE (Classes + Tasks)
 
         // 1. Fetch Official Classes
-        $stmt = $conn->prepare("SELECT id, subject_name as title, day_of_week, start_time, end_time, room_number, teacher_name, 'class' as type, color_tag as color 
-                               FROM routines 
-                               WHERE department_id = ? AND semester = ? AND status = 'active'");
-        $stmt->execute([$dept_id, $semester]);
+        $stmt = $conn->prepare("
+            SELECT r.id, r.subject_name as title, r.day_of_week, r.start_time, r.end_time, r.room_number, r.teacher_name, 'class' as type, 
+                   COALESCE(c.color_code, r.color_tag, 'indigo') as color, c.is_starred
+            FROM routines r
+            LEFT JOIN student_routine_customizations c ON r.id = c.routine_id AND c.student_id = ?
+            WHERE r.department_id = ? AND r.semester = ? AND r.status = 'active'
+        ");
+        $stmt->execute([$student_id, $dept_id, $semester]);
         $classes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // 2. Fetch Personal Tasks
@@ -39,29 +43,34 @@ try {
         $merged = array_merge($classes, $tasks);
         echo json_encode(['success' => true, 'data' => $merged]);
     } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // ADD NEW TASK
         $data = json_decode(file_get_contents('php://input'), true);
+        $actionData = $data['action'] ?? '';
 
-        $title = $data['title'];
-        $day = $data['day'];
-        $start = $data['start'];
-        $end = $data['end'];
-        $color = $data['color'] ?? 'orange';
+        if ($actionData === 'add') {
+            // ADD NEW TASK
+            $title = $data['title'];
+            $day = $data['day'];
+            $start = $data['start'];
+            $end = $data['end'];
+            $color = $data['color'] ?? 'orange';
 
-        $stmt = $conn->prepare("INSERT INTO personal_events (student_id, title, day_of_week, start_time, end_time, color) VALUES (?, ?, ?, ?, ?, ?)");
-        if ($stmt->execute([$student_id, $title, $day, $start, $end, $color])) {
-            echo json_encode(['success' => true]);
+            $stmt = $conn->prepare("INSERT INTO personal_events (student_id, title, day_of_week, start_time, end_time, color) VALUES (?, ?, ?, ?, ?, ?)");
+            if ($stmt->execute([$student_id, $title, $day, $start, $end, $color])) {
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Failed to save']);
+            }
+        } elseif ($actionData === 'delete') {
+            // DELETE TASK
+            $id = $data['id'];
+            $stmt = $conn->prepare("DELETE FROM personal_events WHERE id = ? AND student_id = ?");
+            if ($stmt->execute([$id, $student_id])) {
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Failed to delete']);
+            }
         } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to save']);
-        }
-    } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-        // DELETE TASK
-        $id = $_GET['id'];
-        $stmt = $conn->prepare("DELETE FROM personal_events WHERE id = ? AND student_id = ?");
-        if ($stmt->execute([$id, $student_id])) {
-            echo json_encode(['success' => true]);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to delete']);
+            echo json_encode(['success' => false, 'message' => 'Invalid action']);
         }
     }
 

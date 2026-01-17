@@ -14,7 +14,7 @@ require_once '../includes/db.php';
 session_start();
 
 // Check authentication
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {
+if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'student') {
     echo json_encode(['success' => false, 'message' => 'Unauthorized. Students only.']);
     exit;
 }

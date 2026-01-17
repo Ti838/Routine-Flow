@@ -36,6 +36,24 @@
         <?php renderSidebar($role, 'dashboard.php'); ?>
 
         <main class="flex-1 p-6 lg:p-10 space-y-10">
+            <!-- Professional Print Header -->
+            <div class="hidden print:block text-center border-b-4 border-indigo-600 pb-6 mb-10">
+                <h1 class="text-4xl font-black text-indigo-600 uppercase tracking-tighter">Routine Flow</h1>
+                <p class="text-sm font-bold text-gray-400 uppercase tracking-[0.3em] mt-1">Official Academic Routine
+                    Report</p>
+                <div
+                    class="flex justify-center gap-10 mt-6 text-[10px] font-black uppercase tracking-widest text-gray-500">
+                    <span>Student:
+                        <?php echo htmlspecialchars($name); ?>
+                    </span>
+                    <span>Dept:
+                        <?php echo htmlspecialchars($dept_name); ?>
+                    </span>
+                    <span>Generated:
+                        <?php echo date('d M, Y | H:i'); ?>
+                    </span>
+                </div>
+            </div>
             <header class="flex items-center justify-between">
                 <div>
                     <h1 class="text-4xl font-extrabold tracking-tight">Academic Pulse</h1>
@@ -129,7 +147,10 @@
                         </div>
                         <?php else: ?>
                         <?php foreach ($today_classes as $class): 
-                            $color = $class['color_tag'] ?? 'indigo';
+                            $isPersonal = isset($class['type']) && $class['type'] === 'personal';
+                            $color = !empty($class['color_code']) ? $class['color_code'] : ($class['color_tag'] ?? 'indigo');
+                            // Ensure color is a valid name, remove # if present just in case (though we switched to names)
+                            $color = str_replace('#', '', $color); 
                         ?>
                         <div
                             class="timeline-card p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-2xl transition-all text-gray-900 dark:text-white group relative hover:z-10 border-l-8 border-l-<?php echo $color; ?>-500">
@@ -138,13 +159,13 @@
                                     <div class="text-3xl font-black mb-1">
                                         <?php echo date('H:i', strtotime($class['start_time'])); ?>
                                     </div>
-                                    <div class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">RM-
-                                        <?php echo htmlspecialchars($class['room_number']); ?>
+                                    <div class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">
+                                        <?php echo $isPersonal ? 'PERSONAL' : 'RM-' . htmlspecialchars($class['room_number']); ?>
                                     </div>
                                 </div>
                                 <div
                                     class="w-10 h-10 rounded-xl bg-<?php echo $color; ?>-500/10 dark:bg-<?php echo $color; ?>-500/20 flex items-center justify-center text-<?php echo $color; ?>-500">
-                                    <i class="ri-history-line"></i>
+                                    <i class="<?php echo $isPersonal ? 'ri-task-line' : 'ri-history-line'; ?>"></i>
                                 </div>
                             </div>
                             <h4 class="text-xl font-black mb-2 leading-tight">
@@ -155,8 +176,9 @@
                             </p>
                             <div class="flex gap-2">
                                 <span
-                                    class="px-4 py-2 bg-<?php echo $color; ?>-500 text-white rounded-xl text-[10px] font-black uppercase tracking-widest">Standard
-                                    Session</span>
+                                    class="px-4 py-2 bg-<?php echo $color; ?>-500 text-white rounded-xl text-[10px] font-black uppercase tracking-widest">
+                                    <?php echo $isPersonal ? 'Custom Event' : 'Standard Session'; ?>
+                                </span>
                             </div>
                         </div>
                         <?php endforeach; ?>
@@ -212,7 +234,7 @@
                             $icon = $is_pdf ? 'ri-file-pdf-line' : 'ri-image-line';
                             $color = $is_pdf ? 'text-red-500 bg-red-500/10' : 'text-blue-500 bg-blue-500/10';
                         ?>
-                        <a href="../<?php echo $file['file_path']; ?>" target="_blank"
+                        <a href="../api/download_routine.php?id=<?php echo $file['id']; ?>&type=file"
                             class="flex items-center justify-between p-6 rounded-[30px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 hover:border-indigo-500/50 transition-all group">
                             <div class="flex items-center gap-4">
                                 <div

@@ -24,9 +24,9 @@ function checkAuth($required_role = null)
 
 function getBaseUrl()
 {
-    // Determine the base path relative to the current file
-// This allows includes to work across different folder depths
-    $depth = count(explode(DIRECTORY_SEPARATOR, $_SERVER['PHP_SELF'])) - 2;
+    // Use forward slash for URLs regardless of OS
+    $script_name = str_replace('\\', '/', $_SERVER['PHP_SELF']);
+    $depth = count(explode('/', $script_name)) - 2;
     return str_repeat('../', max(0, $depth - 1));
 }
 ?>

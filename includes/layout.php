@@ -21,6 +21,13 @@ function renderNavbar($role, $name)
                 </a>
             </div>
             <div class="flex items-center gap-6">
+
+                <!-- Theme Toggle -->
+                <button onclick="toggleTheme()"
+                    class="w-10 h-10 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center text-gray-500 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-white/10 transition-all"
+                    title="Toggle Theme">
+                    <i class="ri-sun-line hidden dark:block text-xl"></i>
+                    <i class="ri-moon-line dark:hidden text-xl"></i>
                 </button>
 
                 <!-- Notifications -->
