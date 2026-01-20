@@ -19,5 +19,5 @@ try {
 }
 
 // Presentation: Include the view
-include 'views/notices.html';
+include __DIR__ . '/notices.html';
 ?>

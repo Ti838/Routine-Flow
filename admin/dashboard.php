@@ -27,5 +27,5 @@ try {
 }
 
 // Presentation: Include the view
-include 'views/dashboard.html';
+include __DIR__ . '/dashboard.html';
 ?>

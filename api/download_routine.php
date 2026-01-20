@@ -10,7 +10,7 @@ require_once '../includes/db.php';
 session_start();
 
 // Check if user is logged in
-if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_role'])) {
     http_response_code(401);
     die('Unauthorized. Please login.');
 }

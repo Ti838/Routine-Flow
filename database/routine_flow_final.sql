@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS `departments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `code` varchar(10) NOT NULL UNIQUE,
+  `logo_path` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -125,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `routine_attachments` (
 CREATE TABLE IF NOT EXISTS `routine_files` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `user_id` int(11) NOT NULL,
-    `role` enum('admin','teacher') NOT NULL,
+    `role` enum('admin','teacher','student') NOT NULL,
     `file_path` varchar(255) NOT NULL,
     `file_type` varchar(20) NOT NULL,
     `department` varchar(100) DEFAULT NULL,
@@ -167,6 +168,19 @@ CREATE TABLE IF NOT EXISTS `personal_events` (
     FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS `student_tasks` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `student_id` int(11) NOT NULL,
+    `title` varchar(255) NOT NULL,
+    `description` text,
+    `estimated_time` int(11) DEFAULT 25,
+    `spent_time` int(11) DEFAULT 0,
+    `status` enum('pending','completed') DEFAULT 'pending',
+    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS `routine_templates` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `student_id` int(11) NOT NULL,
@@ -195,6 +209,12 @@ CREATE TABLE IF NOT EXISTS `activity_log` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Sample activity log entries
+INSERT INTO `activity_log` (`user_id`, `user_role`, `user_name`, `action_type`, `action_title`, `action_description`, `icon_class`, `badge_type`) VALUES
+(1, 'admin', 'Admin User', 'login', 'Login', 'Admin logged in', 'ri-login-box-line', 'success'),
+(2, 'teacher', 'John Doe', 'create_user', 'Created User', 'Added new teacher account', 'ri-user-add-line', 'info'),
+(3, 'student', 'Jane Smith', 'failed_login', 'Failed Login', 'Attempted login with wrong password', 'ri-shield-cross-line', 'alert');
 
 CREATE TABLE IF NOT EXISTS `download_logs` (
     `id` int(11) NOT NULL AUTO_INCREMENT,

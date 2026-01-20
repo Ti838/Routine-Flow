@@ -41,5 +41,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $departments = $conn->query("SELECT * FROM departments ORDER BY name ASC")->fetchAll(PDO::FETCH_ASSOC);
 
 // Presentation: Include the view
-include 'views/edit-user.html';
+include __DIR__ . '/edit-user.html';
 ?>

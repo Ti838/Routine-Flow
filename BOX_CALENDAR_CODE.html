@@ -1,0 +1,151 @@
+<!-- Premium Box-Style Calendar Grid -->
+<!-- Replace lines 73-207 in student/weekly.html with this code -->
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-4">
+    <!-- Monday Box -->
+    <div
+        class="bg-white dark:bg-white/5 rounded-3xl border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-xl transition-all overflow-hidden">
+        <div
+            class="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-500/10 dark:to-purple-500/10 p-4 border-b border-gray-200 dark:border-white/10">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Monday
+                    </div>
+                    <div class="text-3xl font-black text-gray-900 dark:text-white mt-1" id="date-Monday"></div>
+                </div>
+                <button onclick="quickAddEvent('Monday')"
+                    class="w-10 h-10 rounded-2xl bg-indigo-500 text-white flex items-center justify-center hover:bg-indigo-600 hover:scale-110 transition-all shadow-lg shadow-indigo-500/30">
+                    <i class="ri-add-line text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-4 space-y-2 min-h-[300px] max-h-[400px] overflow-y-auto custom-scrollbar" id="events-Monday">
+        </div>
+    </div>
+
+    <!-- Tuesday Box -->
+    <div
+        class="bg-white dark:bg-white/5 rounded-3xl border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-xl transition-all overflow-hidden">
+        <div
+            class="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-500/10 dark:to-cyan-500/10 p-4 border-b border-gray-200 dark:border-white/10">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Tuesday
+                    </div>
+                    <div class="text-3xl font-black text-gray-900 dark:text-white mt-1" id="date-Tuesday"></div>
+                </div>
+                <button onclick="quickAddEvent('Tuesday')"
+                    class="w-10 h-10 rounded-2xl bg-blue-500 text-white flex items-center justify-center hover:bg-blue-600 hover:scale-110 transition-all shadow-lg shadow-blue-500/30">
+                    <i class="ri-add-line text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-4 space-y-2 min-h-[300px] max-h-[400px] overflow-y-auto custom-scrollbar" id="events-Tuesday">
+        </div>
+    </div>
+
+    <!-- Wednesday Box -->
+    <div
+        class="bg-white dark:bg-white/5 rounded-3xl border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-xl transition-all overflow-hidden">
+        <div
+            class="bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-500/10 dark:to-teal-500/10 p-4 border-b border-gray-200 dark:border-white/10">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Wednesday
+                    </div>
+                    <div class="text-3xl font-black text-gray-900 dark:text-white mt-1" id="date-Wednesday"></div>
+                </div>
+                <button onclick="quickAddEvent('Wednesday')"
+                    class="w-10 h-10 rounded-2xl bg-emerald-500 text-white flex items-center justify-center hover:bg-emerald-600 hover:scale-110 transition-all shadow-lg shadow-emerald-500/30">
+                    <i class="ri-add-line text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-4 space-y-2 min-h-[300px] max-h-[400px] overflow-y-auto custom-scrollbar" id="events-Wednesday">
+        </div>
+    </div>
+
+    <!-- Thursday Box -->
+    <div
+        class="bg-white dark:bg-white/5 rounded-3xl border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-xl transition-all overflow-hidden">
+        <div
+            class="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-500/10 dark:to-orange-500/10 p-4 border-b border-gray-200 dark:border-white/10">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Thursday
+                    </div>
+                    <div class="text-3xl font-black text-gray-900 dark:text-white mt-1" id="date-Thursday"></div>
+                </div>
+                <button onclick="quickAddEvent('Thursday')"
+                    class="w-10 h-10 rounded-2xl bg-amber-500 text-white flex items-center justify-center hover:bg-amber-600 hover:scale-110 transition-all shadow-lg shadow-amber-500/30">
+                    <i class="ri-add-line text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-4 space-y-2 min-h-[300px] max-h-[400px] overflow-y-auto custom-scrollbar" id="events-Thursday">
+        </div>
+    </div>
+
+    <!-- Friday Box -->
+    <div
+        class="bg-white dark:bg-white/5 rounded-3xl border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-xl transition-all overflow-hidden">
+        <div
+            class="bg-gradient-to-r from-rose-50 to-pink-50 dark:from-rose-500/10 dark:to-pink-500/10 p-4 border-b border-gray-200 dark:border-white/10">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Friday
+                    </div>
+                    <div class="text-3xl font-black text-gray-900 dark:text-white mt-1" id="date-Friday"></div>
+                </div>
+                <button onclick="quickAddEvent('Friday')"
+                    class="w-10 h-10 rounded-2xl bg-rose-500 text-white flex items-center justify-center hover:bg-rose-600 hover:scale-110 transition-all shadow-lg shadow-rose-500/30">
+                    <i class="ri-add-line text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-4 space-y-2 min-h-[300px] max-h-[400px] overflow-y-auto custom-scrollbar" id="events-Friday">
+        </div>
+    </div>
+
+    <!-- Saturday Box -->
+    <div
+        class="bg-white dark:bg-white/5 rounded-3xl border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-xl transition-all overflow-hidden">
+        <div
+            class="bg-gradient-to-r from-violet-50 to-purple-50 dark:from-violet-500/10 dark:to-purple-500/10 p-4 border-b border-gray-200 dark:border-white/10">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Saturday
+                    </div>
+                    <div class="text-3xl font-black text-gray-900 dark:text-white mt-1" id="date-Saturday"></div>
+                </div>
+                <button onclick="quickAddEvent('Saturday')"
+                    class="w-10 h-10 rounded-2xl bg-violet-500 text-white flex items-center justify-center hover:bg-violet-600 hover:scale-110 transition-all shadow-lg shadow-violet-500/30">
+                    <i class="ri-add-line text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-4 space-y-2 min-h-[300px] max-h-[400px] overflow-y-auto custom-scrollbar" id="events-Saturday">
+        </div>
+    </div>
+
+    <!-- Sunday Box -->
+    <div
+        class="bg-white dark:bg-white/5 rounded-3xl border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-xl transition-all overflow-hidden">
+        <div
+            class="bg-gradient-to-r from-slate-50 to-gray-50 dark:from-slate-500/10 dark:to-gray-500/10 p-4 border-b border-gray-200 dark:border-white/10">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Sunday
+                    </div>
+                    <div class="text-3xl font-black text-gray-900 dark:text-white mt-1" id="date-Sunday"></div>
+                </div>
+                <button onclick="quickAddEvent('Sunday')"
+                    class="w-10 h-10 rounded-2xl bg-slate-500 text-white flex items-center justify-center hover:bg-slate-600 hover:scale-110 transition-all shadow-lg shadow-slate-500/30">
+                    <i class="ri-add-line text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-4 space-y-2 min-h-[300px] max-h-[400px] overflow-y-auto custom-scrollbar" id="events-Sunday">
+        </div>
+    </div>
+</div>

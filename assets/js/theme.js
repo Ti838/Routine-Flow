@@ -14,6 +14,23 @@ function setTheme(theme) {
     }
 }
 
+// Initialize theme on page load using saved preference or system setting
+function initTheme() {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark' || saved === 'light') {
+        setTheme(saved);
+        return;
+    }
+
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setTheme('dark');
+    } else {
+        setTheme('light');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initTheme);
+
 // Mobile Menu Management
 document.addEventListener('DOMContentLoaded', () => {
     const toggle = document.getElementById('mobileMenuToggle');
@@ -120,3 +137,38 @@ window.toggleTheme = toggleTheme;
     `;
     document.head.appendChild(style);
 })();
+
+// --- Zoom Level Detection & Layout Adjustment ---
+(function handleZoomChanges() {
+    let lastZoom = window.devicePixelRatio;
+    
+    function adjustLayoutForZoom() {
+        const currentZoom = window.devicePixelRatio;
+        const zoomLevel = Math.round((currentZoom / lastZoom) * 100);
+        
+        // Add zoom-level class to body for CSS targeting
+        document.body.classList.remove('zoom-low', 'zoom-normal', 'zoom-high', 'zoom-very-high');
+        
+        if (currentZoom < 1) {
+            document.body.classList.add('zoom-low');
+        } else if (currentZoom >= 1 && currentZoom < 1.5) {
+            document.body.classList.add('zoom-normal');
+        } else if (currentZoom >= 1.5 && currentZoom < 2) {
+            document.body.classList.add('zoom-high');
+        } else {
+            document.body.classList.add('zoom-very-high');
+        }
+        
+        lastZoom = currentZoom;
+    }
+    
+    // Check on load
+    adjustLayoutForZoom();
+    
+    // Monitor zoom changes
+    window.addEventListener('resize', adjustLayoutForZoom);
+    
+    // Detect browser zoom via matchMedia
+    window.matchMedia('screen and (min-resolution: 1dppx)').addListener(adjustLayoutForZoom);
+})();
+

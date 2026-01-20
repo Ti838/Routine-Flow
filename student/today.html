@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today's Routine - Routine Flow</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="../assets/css/zoom-fix.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script>
+        (function () {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark' || saved === 'light') {
+                if (saved === 'dark') document.documentElement.classList.add('dark');
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+
+    <?php renderNavbar($role, $name); ?>
+
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'today.php'); ?>
+
+        <main class="flex-1 p-4 sm:p-6 lg:p-10 space-y-10">
+            <header class="flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div class="text-center sm:text-left">
+                    <h1
+                        class="text-3xl sm:text-4xl font-extrabold tracking-tight underline decoration-indigo-500 decoration-4 underline-offset-8">
+                        Today's Academic Flow</h1>
+                    <div class="flex items-center justify-center sm:justify-start gap-3 mt-4">
+                        <span id="liveDate"
+                            class="text-xs sm:text-sm font-bold text-gray-500 uppercase tracking-widest">
+                            <?php echo date('l, F d'); ?>
+                        </span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+                        <span id="liveClock"
+                            class="text-xs sm:text-sm font-bold text-indigo-500 uppercase tracking-widest">
+                            <?php echo date('H:i:s'); ?>
+                        </span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4 w-full sm:w-auto justify-center">
+                    <div class="relative hidden lg:block">
+                        <i class="ri-search-line absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" id="routineSearch" placeholder="Search teacher, room or subject..."
+                            class="pl-12 pr-6 py-3 bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl text-sm focus:ring-2 focus:ring-indigo-500 transition-all w-80">
+                    </div>
+                    <button id="exportPdf"
+                        class="px-5 py-2.5 sm:px-6 sm:py-3 bg-indigo-600 text-white rounded-2xl font-bold transition-all hover:bg-indigo-700 flex items-center gap-2 shadow-lg shadow-indigo-600/20 text-xs sm:text-sm">
+                        <i class="ri-file-pdf-line"></i> Export
+                    </button>
+                </div>
+            </header>
+
+            <?php if (empty($classes)): ?>
+            <div
+                class="p-20 text-center rounded-[40px] bg-white dark:bg-white/5 border border-dashed border-gray-200 dark:border-white/10">
+                <div
+                    class="w-20 h-20 rounded-full bg-indigo-500/10 flex items-center justify-center text-indigo-500 text-4xl mx-auto mb-6">
+                    <i class="ri-zzz-line"></i>
+                </div>
+                <h3 class="text-2xl font-black">Relax! No classes today.</h3>
+                <p class="text-gray-500 mt-2">Your schedule is clear. Take some time for yourself or catch up on
+                    reading.</p>
+            </div>
+            <?php else: ?>
+            <div class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6" id="routineContainer">
+                <?php foreach ($classes as $class):
+                        $color = $class['color_tag'] ?? 'indigo';
+                        $priority_colors = ['bg-gray-100', 'bg-blue-100', 'bg-amber-100', 'bg-red-100'];
+                        $priority_text = ['Normal', 'Low', 'Medium', 'High'];
+                        $custom_color = $class['color_code'] ?? '';
+                        ?>
+                <div class="routine-card relative group p-6 sm:p-8 rounded-[32px] sm:rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-2xl transition-all overflow-hidden border-l-8"
+                    data-subject="<?php echo htmlspecialchars($class['subject_name']); ?>"
+                    data-teacher="<?php echo htmlspecialchars($class['teacher_name']); ?>"
+                    data-room="<?php echo htmlspecialchars($class['room_number']); ?>" <?php if($custom_color)
+                    echo 'style="border-color: ' . htmlspecialchars($custom_color) . ';"' ; ?>>
+                    <div class="flex items-start justify-between mb-8">
+                        <div>
+                            <div class="text-3xl font-black mb-1">
+                                <?php echo date('H:i', strtotime($class['start_time'])); ?>
+                            </div>
+                            <div class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Starts Academic
+                                Session</div>
+                        </div>
+                        <button
+                            class="w-10 h-10 rounded-xl bg-gray-50 dark:bg-white/5 flex items-center justify-center transition-all <?php echo isset($class['is_starred']) && $class['is_starred'] ? 'text-amber-500 bg-amber-500/10' : 'text-gray-400 hover:text-amber-500'; ?>">
+                            <i
+                                class="ri-<?php echo isset($class['is_starred']) && $class['is_starred'] ? 'star-fill' : 'star-line'; ?> text-xl"></i>
+                        </button>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h3
+                            class="text-xl font-black group-hover:text-<?php echo $color; ?>-600 transition-colors leading-tight">
+                            <?php echo htmlspecialchars($class['subject_name']); ?>
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span
+                                class="px-3 py-1 bg-indigo-500/10 text-indigo-500 rounded-lg text-[10px] font-bold uppercase tracking-widest">Room
+                                <?php echo htmlspecialchars($class['room_number']); ?>
+                            </span>
+                            <span
+                                class="px-3 py-1 bg-emerald-500/10 text-emerald-500 rounded-lg text-[10px] font-bold uppercase tracking-widest">
+                                <?php echo htmlspecialchars($class['teacher_name']); ?>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div
+                        class="mt-8 pt-8 border-t border-gray-50 dark:border-white/5 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full <?php echo $priority_colors[$class['priority'] ?? 0]; ?>">
+                            </div>
+                            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                                <?php echo $priority_text[$class['priority'] ?? 0]; ?> Priority
+                            </span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button
+                                class="w-8 h-8 rounded-lg bg-gray-50 dark:bg-white/5 flex items-center justify-center text-gray-400 hover:text-indigo-600 transition-all"><i
+                                    class="ri-palette-line"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+            <?php endif; ?>
+        </main>
+    </div>
+
+    <!-- Export Styles -->
+    <style>
+        @media print {
+
+            .navbar,
+            aside,
+            #routineSearch,
+            #exportPdf,
+            button {
+                display: none !important;
+            }
+
+            main {
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+                max-width: none !important;
+            }
+
+            .routine-card {
+                break-inside: avoid;
+                border: 1px solid #eee !important;
+                box-shadow: none !important;
+            }
+
+            body {
+                background: white !important;
+                color: black !important;
+            }
+
+            .max-w-\[1600px\] {
+                max-width: none !important;
+            }
+        }
+    </style>
+
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/modules/search.js"></script>
+    <script src="../assets/js/modules/export.js"></script>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+            const dateOptions = { weekday: 'long', month: 'long', day: '2-digit' };
+            const dateStr = now.toLocaleDateString('en-US', dateOptions).toUpperCase();
+
+            document.getElementById('liveClock').textContent = timeStr;
+            document.getElementById('liveDate').textContent = dateStr;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>

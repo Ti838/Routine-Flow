@@ -36,5 +36,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_routine'])) {
 }
 
 // Presentation: Include the view
-include 'views/create-routine.html';
+include __DIR__ . '/create-routine.html';
 ?>

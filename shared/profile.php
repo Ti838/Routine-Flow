@@ -38,7 +38,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (in_array($file_type, $allowed_types)) {
                 $ext = pathinfo($_FILES['profile_pic']['name'], PATHINFO_EXTENSION);
                 $filename = "user_" . $user_id . "_" . time() . "." . $ext;
-                $destination = "../assets/uploads/profiles/" . $filename;
+                $uploadDir = __DIR__ . '/../assets/uploads/profiles/';
+
+                if (!is_dir($uploadDir)) {
+                    mkdir($uploadDir, 0755, true);
+                }
+
+                $destination = $uploadDir . $filename;
 
                 if (move_uploaded_file($file_tmp, $destination)) {
                     $uploaded_file = $filename;
@@ -136,5 +142,5 @@ try {
 }
 
 // Presentation: Include the view
-include 'views/profile.html';
+include __DIR__ . '/profile.html';
 ?>

@@ -16,5 +16,5 @@ try {
 }
 
 // Presentation: Include the view
-include 'views/activity-log.html';
+include __DIR__ . '/activity-log.html';
 ?>

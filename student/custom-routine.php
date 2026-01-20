@@ -7,69 +7,52 @@ checkAuth('student');
 
 $name = $_SESSION['user_name'];
 $role = $_SESSION['user_role'];
-$dept_id = $_SESSION['department_id'];
 $user_id = $_SESSION['user_id'];
+$dept_id = $_SESSION['department_id'] ?? 0;
+$semester = $_SESSION['semester'] ?? '1st Year, 1st Sem';
 
-// Get Filters
-$semester = $_GET['semester'] ?? $_SESSION['semester'] ?? '1st Year, 1st Sem';
+$success_msg = null;
+$error_msg = null;
 
-$routines = [];
-try {
-    // Fetch Routines with Customizations (Stars, Colors)
-    $stmt = $conn->prepare("
-        SELECT r.*, 
-               c.color_code, 
-               c.is_starred as is_favorite, 
-               c.notes as custom_notes,
-               'class' as type
-        FROM routines r
-        LEFT JOIN student_routine_customizations c 
-        ON r.id = c.routine_id AND c.student_id = ?
-        WHERE r.department_id = ? 
-        AND r.semester = ? 
-        AND r.status = 'active' 
-    ");
-    $stmt->execute([$user_id, $dept_id, $semester]);
-    $official_routines = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Handle Image Upload
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_image'])) {
+    if (isset($_FILES['routine_image']) && $_FILES['routine_image']['error'] === 0) {
+        $upload_dir = '../assets/uploads/routines/';
+        if (!is_dir($upload_dir))
+            mkdir($upload_dir, 0777, true);
 
-    // Fetch Personal Tasks
-    $stmt = $conn->prepare("
-        SELECT id, 
-               title as subject_name, 
-               day_of_week, 
-               start_time, 
-               end_time, 
-               'Personal Task' as teacher_name, 
-               '' as room_number, 
-               color as color_code, 
-               0 as is_favorite, 
-               '' as custom_notes,
-               'personal' as type
-        FROM personal_events 
-        WHERE student_id = ?
-    ");
-    $stmt->execute([$user_id]);
-    $personal_tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $ext = strtolower(pathinfo($_FILES['routine_image']['name'], PATHINFO_EXTENSION));
+        if (!in_array($ext, ['png', 'jpg', 'jpeg', 'pdf'])) {
+            $error_msg = "Unsupported file type. Please upload Image or PDF.";
+        } else {
+            $file_name = 'student_' . $user_id . '_' . time() . '.' . $ext;
+            $target_file = $upload_dir . $file_name;
 
-    // Merge and Sort
-    $routines = array_merge($official_routines, $personal_tasks);
-
-    // Sort logic
-    $dayOrder = ['Monday' => 1, 'Tuesday' => 2, 'Wednesday' => 3, 'Thursday' => 4, 'Friday' => 5, 'Saturday' => 6, 'Sunday' => 7];
-    usort($routines, function ($a, $b) use ($dayOrder) {
-        $da = $dayOrder[$a['day_of_week']] ?? 8;
-        $db = $dayOrder[$b['day_of_week']] ?? 8;
-        if ($da !== $db)
-            return $da - $db;
-        return strcmp($a['start_time'], $b['start_time']);
-    });
-
-    $dept_name = $conn->query("SELECT name FROM departments WHERE id = $dept_id")->fetchColumn();
-} catch (PDOException $e) {
-    $routines = [];
-    $dept_name = "Department";
+            if (move_uploaded_file($_FILES['routine_image']['tmp_name'], $target_file)) {
+                $stmt = $conn->prepare("INSERT INTO routine_files (user_id, role, file_path, file_type, description) VALUES (?, 'student', ?, ?, ?)");
+                $stmt->execute([$user_id, $file_name, $ext, $_POST['description'] ?? 'Personal Resource']);
+                $success_msg = "Resource uploaded successfully!";
+            } else {
+                $error_msg = "Failed to upload file.";
+            }
+        }
+    }
 }
 
-// Presentation: Include the view
-include 'views/custom-routine.html';
-?>
+// Fetch Official Routines for personalization
+$stmt = $conn->prepare("
+    SELECT r.*, src.color_code, src.is_starred 
+    FROM routines r 
+    LEFT JOIN student_routine_customizations src ON r.id = src.routine_id AND src.student_id = ?
+    WHERE r.department_id = ? AND r.semester = ? AND r.status = 'active'
+    ORDER BY r.day_of_week, r.start_time
+");
+$stmt->execute([$user_id, $dept_id, $semester]);
+$routines = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Fetch Personal Image Routines
+$stmt = $conn->prepare("SELECT * FROM routine_files WHERE user_id = ? AND role = 'student' ORDER BY created_at DESC");
+$stmt->execute([$user_id]);
+$personal_files = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+include __DIR__ . '/custom-routine.html';

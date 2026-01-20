@@ -20,5 +20,5 @@ try {
 }
 
 // Presentation: Include the view
-include 'views/users.html';
+include __DIR__ . '/users.html';
 ?>

@@ -34,4 +34,4 @@ try {
     $dept_name = "Department";
 }
 
-include 'views/department.html';
+include __DIR__ . '/department.html';

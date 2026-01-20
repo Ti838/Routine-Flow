@@ -18,4 +18,4 @@ try {
     $classes = [];
 }
 
-include 'views/today.html';
+include __DIR__ . '/today.html';

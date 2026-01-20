@@ -1,5 +1,5 @@
 <?php
-require_once 'core.php';
+require_once __DIR__ . '/core.php';
 
 function checkAuth($required_role = null)
 {

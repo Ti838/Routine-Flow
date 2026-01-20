@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once 'includes/db.php';
-require_once 'includes/core.php';
+require_once __DIR__ . '/includes/db.php';
+require_once __DIR__ . '/includes/core.php';
 handleMaintenance();
 
 // Prepare variables for dynamic sectors
@@ -14,7 +14,7 @@ try {
 }
 
 // Presentation: Load template and handle dynamic elements
-$template = file_get_contents('views/index.html');
+$template = file_get_contents('index.html');
 
 $placeholders = [
     '{{DEPT_COUNT}}' => $dept_count,

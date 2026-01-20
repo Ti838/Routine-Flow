@@ -1,12 +1,16 @@
 <?php
 session_start();
-require_once 'includes/db.php';
-require_once 'includes/core.php';
+require_once __DIR__ . '/includes/db.php';
+require_once __DIR__ . '/includes/core.php';
 handleMaintenance();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // 1. Verify Captcha
-    if (!isset($_POST['captcha_input']) || intval($_POST['captcha_input']) !== $_SESSION['captcha_answer']) {
+    // 1. Verify Captcha (Synchronized with JS logic)
+    $c_n1 = isset($_POST['captcha_n1']) ? intval($_POST['captcha_n1']) : 0;
+    $c_n2 = isset($_POST['captcha_n2']) ? intval($_POST['captcha_n2']) : 0;
+    $c_input = isset($_POST['captcha_input']) ? intval($_POST['captcha_input']) : -1;
+
+    if ($c_input !== ($c_n1 + $c_n2)) {
         echo "<script>alert('Incorrect Math Answer. Registration Failed.'); window.history.back();</script>";
         exit();
     }

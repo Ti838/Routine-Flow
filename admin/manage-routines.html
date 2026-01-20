@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Routines - Routine Flow</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="../assets/css/zoom-fix.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script>
+        (function () {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark' || saved === 'light') {
+                if (saved === 'dark') document.documentElement.classList.add('dark');
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+
+    <?php renderNavbar($role, $name); ?>
+
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'manage_routines.php'); ?>
+
+        <main class="flex-1 p-4 sm:p-6 lg:p-10 space-y-10">
+            <header class="flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div class="text-center sm:text-left">
+                    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Routine Library</h1>
+                    <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm sm:text-base">View, filter, and manage all
+                        published academic
+                        schedules.</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="create-routine.php"
+                        class="px-5 py-2.5 sm:px-6 sm:py-3 bg-indigo-600 text-white rounded-2xl font-bold hover:scale-105 transition-all shadow-lg shadow-indigo-600/20 flex items-center gap-2 text-xs sm:text-sm">
+                        <i class="ri-add-line"></i> New Entry
+                    </a>
+                </div>
+            </header>
+
+            <section
+                class="p-6 sm:p-8 rounded-[32px] sm:rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm space-y-8">
+                <div class="flex flex-col md:flex-row gap-6 items-center justify-between">
+                    <div class="flex items-center gap-4 w-full md:w-auto">
+                        <div class="relative flex-1 md:w-64">
+                            <i class="ri-search-line absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" id="routineSearch" placeholder="Search routines..."
+                                class="w-full pl-12 pr-4 py-3 bg-gray-50 dark:bg-black/20 border border-gray-100 dark:border-white/10 rounded-2xl font-medium focus:ring-2 focus:ring-indigo-500 transition-all outline-none">
+                        </div>
+                        <select id="deptFilter"
+                            class="px-4 py-3 bg-gray-50 dark:bg-black/20 border border-gray-100 dark:border-white/10 rounded-2xl font-bold outline-none focus:ring-2 focus:ring-indigo-500 transition-all cursor-pointer">
+                            <option value="">All Depts</option>
+                            <?php foreach ($departments as $d): ?>
+                            <option value="<?php echo htmlspecialchars($d['name']); ?>">
+                                <?php echo htmlspecialchars($d['code']); ?>
+                            </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="text-sm font-bold text-gray-400 uppercase tracking-widest">
+                        Total: <span class="text-indigo-600">
+                            <?php echo count($routines); ?>
+                        </span> Entries
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr
+                                class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] border-b border-gray-50 dark:border-white/5">
+                                <th class="px-4 py-4">Subject</th>
+                                <th class="px-4 py-4">Department</th>
+                                <th class="px-4 py-4">Semester</th>
+                                <th class="px-4 py-4">Schedule</th>
+                                <th class="px-4 py-4">Room</th>
+                                <th class="px-4 py-4">Teacher</th>
+                                <th class="px-4 py-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="routineTableBody">
+                            <?php if (empty($routines)): ?>
+                            <tr>
+                                <td colspan="7" class="px-4 py-20 text-center text-gray-400 italic">No routine entries
+                                    found.</td>
+                            </tr>
+                            <?php else: ?>
+                            <?php foreach ($routines as $r): ?>
+                            <tr class="routine-row border-b border-gray-50 dark:border-white/5 hover:bg-gray-50/50 dark:hover:bg-white/[0.02] transition-colors group"
+                                data-dept="<?php echo htmlspecialchars($r['department']); ?>"
+                                data-search="<?php echo strtolower(htmlspecialchars($r['subject_name'] . ' ' . $r['teacher_name'] . ' ' . $r['dept_code'])); ?>">
+                                <td class="px-4 py-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-2 h-8 rounded-full routine-color-tag"
+                                            data-color="<?php echo htmlspecialchars($r['color_tag'] ?? 'indigo'); ?>">
+                                        </div>
+                                        <div class="font-bold text-gray-900 dark:text-white">
+                                            <?php echo htmlspecialchars($r['subject_name']); ?>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-4 text-sm font-medium text-gray-500 dark:text-gray-400">
+                                    <?php echo htmlspecialchars($r['department']); ?>
+                                </td>
+                                <td class="px-4 py-4">
+                                    <span
+                                        class="px-3 py-1 bg-indigo-500/10 text-indigo-500 rounded-lg text-[10px] font-bold uppercase tracking-widest">
+                                        <?php echo htmlspecialchars($r['semester']); ?>
+                                    </span>
+                                </td>
+                                <td class="px-4 py-4 text-sm">
+                                    <div class="font-bold text-gray-900 dark:text-white">
+                                        <?php echo htmlspecialchars($r['day_of_week']); ?>
+                                    </div>
+                                    <div class="text-[10px] text-gray-400">
+                                        <?php echo date('H:i', strtotime($r['start_time'])); ?> -
+                                        <?php echo date('H:i', strtotime($r['end_time'])); ?>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-4 font-mono text-xs font-bold text-indigo-500">
+                                    RM-
+                                    <?php echo htmlspecialchars($r['room_number']); ?>
+                                </td>
+                                <td class="px-4 py-4 text-sm font-medium text-gray-600 dark:text-gray-300">
+                                    <?php echo htmlspecialchars($r['teacher_name']); ?>
+                                </td>
+                                <td class="px-4 py-4 text-right">
+                                    <button data-id="<?php echo $r['id']; ?>" onclick="deleteRoutine(this)"
+                                        class="w-8 h-8 rounded-lg bg-red-500/10 text-red-500 flex items-center justify-center ml-auto hover:bg-red-500 hover:text-white transition-all">
+                                        <i class="ri-delete-bin-line"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../assets/js/theme.js"></script>
+    <script>
+        const searchInput = document.getElementById('routineSearch');
+        const deptFilter = document.getElementById('deptFilter');
+        const rows = document.querySelectorAll('.routine-row');
+
+        function filterRoutines() {
+            const query = searchInput.value.toLowerCase().trim();
+            const dept = deptFilter.value;
+
+            rows.forEach(row => {
+                const searchText = row.getAttribute('data-search');
+                const rowDept = row.getAttribute('data-dept');
+
+                const matchesSearch = searchText.includes(query);
+                const matchesDept = dept === "" || rowDept === dept;
+
+                if (matchesSearch && matchesDept) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        searchInput.addEventListener('input', filterRoutines);
+        deptFilter.addEventListener('change', filterRoutines);
+
+        async function deleteRoutine(btn) {
+            const id = btn.getAttribute('data-id');
+            if (!confirm('Are you sure you want to delete this routine entry? This cannot be undone.')) return;
+
+            const icon = btn.querySelector('i');
+            icon.className = 'ri-loader-4-line animate-spin';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('../api/delete_routine.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    const row = btn.closest('tr');
+                    row.classList.add('opacity-0', 'scale-95');
+                    setTimeout(() => row.remove(), 300);
+                } else {
+                    alert(data.message || 'Failed to delete routine');
+                    icon.className = 'ri-delete-bin-line';
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                alert('Network error. Please try again.');
+                icon.className = 'ri-delete-bin-line';
+                btn.disabled = false;
+            }
+        }
+    </script>
+    <script>
+        // Fix for dynamic colors to avoid CSS linting issues in PHP templates
+        document.querySelectorAll('.routine-color-tag').forEach(tag => {
+            const color = tag.dataset.color || 'indigo';
+            const shadowRgba = color === 'indigo' ? '99,102,241' : '100,100,100';
+            tag.style.backgroundColor = color;
+            tag.style.boxShadow = `0 0 10px rgba(${shadowRgba}, 0.3)`;
+        });
+    </script>
+</body>
+
+</html>

@@ -23,5 +23,5 @@ try {
 }
 
 // Presentation: Include the view
-include 'views/analytics.html';
+include __DIR__ . '/analytics.html';
 ?>

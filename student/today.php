@@ -28,5 +28,5 @@ try {
 }
 
 // Presentation: Include the view
-include 'views/today.html';
+include __DIR__ . '/today.html';
 ?>

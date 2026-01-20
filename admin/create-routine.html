@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Routine - Routine Flow</title>
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="../assets/css/zoom-fix.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script>
+        (function () {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark' || saved === 'light') {
+                if (saved === 'dark') document.documentElement.classList.add('dark');
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+
+    <?php renderNavbar($role, $name); ?>
+
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'create-routine.php'); ?>
+
+        <main class="flex-1 p-6 lg:p-10 space-y-10">
+            <header>
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div>
+                        <h1 class="text-4xl font-extrabold tracking-tight">Routine Master</h1>
+                        <p class="text-gray-500 dark:text-gray-400 mt-2">Manage and publish academic schedules for the
+                            entire institution.</p>
+                    </div>
+                    <a href="manage_routines.php"
+                        class="px-6 py-3 bg-white dark:bg-white/5 border border-indigo-500/20 text-indigo-500 rounded-2xl font-bold hover:bg-indigo-500 hover:text-white transition-all flex items-center gap-2">
+                        <i class="ri-list-settings-line"></i> Manage All Routines
+                    </a>
+                </div>
+            </header>
+
+            <?php if (isset($success_msg)): ?>
+            <div
+                class="p-6 bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 rounded-3xl font-bold flex items-center gap-3 animate-in fade-in zoom-in duration-300">
+                <i class="ri-checkbox-circle-fill text-2xl"></i>
+                <?php echo $success_msg; ?>
+            </div>
+            <?php endif; ?>
+
+            <?php if (isset($error_msg)): ?>
+            <div
+                class="p-6 bg-red-500/10 border border-red-500/20 text-red-500 rounded-3xl font-bold flex items-center gap-3 animate-in fade-in zoom-in duration-300">
+                <i class="ri-error-warning-fill text-2xl"></i>
+                <?php echo $error_msg; ?>
+            </div>
+            <?php endif; ?>
+
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-10">
+                <!-- Manual Entry Form -->
+                <section
+                    class="p-10 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm space-y-10">
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-indigo-600 flex items-center justify-center text-white text-2xl">
+                            <i class="ri-edit-box-line"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">Manual Entry</h3>
+                            <p class="text-sm text-gray-500">Insert classes row by row for precise control.</p>
+                        </div>
+                    </div>
+
+                    <form method="POST" class="space-y-6">
+                        <input type="hidden" name="manual_entry" value="1">
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Department</label>
+                                <select name="department_id" onchange="updateDeptName(this)" required
+                                    class="w-full bg-gray-50 dark:bg-black/20 border border-gray-100 dark:border-white/10 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+                                    <option value="">Select Dept</option>
+                                    <?php foreach ($departments as $d): ?>
+                                    <option value="<?php echo $d['id']; ?>" data-name="<?php echo $d['name']; ?>">
+                                        <?php echo $d['code']; ?>
+                                    </option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <input type="hidden" name="department_name" id="deptNameInput">
+                            </div>
+                            <div class="space-y-2">
+                                <label
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Semester</label>
+                                <select name="semester" required
+                                    class="w-full bg-gray-50 dark:bg-black/20 border border-gray-100 dark:border-white/10 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+                                    <option value="1st Year, 1st Sem">1st Year, 1st Sem</option>
+                                    <option value="1st Year, 2nd Sem">1st Year, 2nd Sem</option>
+                                    <option value="2nd Year, 1st Sem">2nd Year, 1st Sem</option>
+                                    <option value="2nd Year, 2nd Sem">2nd Year, 2nd Sem</option>
+                                    <option value="3rd Year, 1st Sem">3rd Year, 1st Sem</option>
+                                    <option value="3rd Year, 2nd Sem">3rd Year, 2nd Sem</option>
+                                    <option value="4th Year, 1st Sem">4th Year, 1st Sem</option>
+                                    <option value="4th Year, 2nd Sem">4th Year, 2nd Sem</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Subject
+                                Name</label>
+                            <input type="text" name="subject" placeholder="e.g. Applied Physics" required
+                                class="w-full bg-gray-50 dark:bg-black/20 border border-gray-100 dark:border-white/10 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Teacher
+                                    Name</label>
+                                <input type="text" name="teacher" placeholder="e.g. Dr. John" required
+                                    class="w-full bg-gray-50 dark:bg-black/20 border border-gray-100 dark:border-white/10 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Room /
+                                    Lab</label>
+                                <input type="text" name="room" placeholder="e.g. L-102" required
+                                    class="w-full bg-gray-50 dark:bg-black/20 border border-gray-100 dark:border-white/10 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="space-y-2">
+                                <label
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Day</label>
+                                <select name="day" required
+                                    class="w-full bg-gray-50 dark:bg-black/20 border border-gray-100 dark:border-white/10 rounded-2xl p-4 font-bold outline-none">
+                                    <option value="Monday">Monday</option>
+                                    <option value="Tuesday">Tuesday</option>
+                                    <option value="Wednesday">Wednesday</option>
+                                    <option value="Thursday">Thursday</option>
+                                    <option value="Friday">Friday</option>
+                                </select>
+                            </div>
+                            <div class="space-y-2">
+                                <label
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Start</label>
+                                <input type="time" name="start" required
+                                    class="w-full bg-gray-50 dark:bg-black/20 border border-gray-100 dark:border-white/10 rounded-2xl p-4 font-bold outline-none">
+                            </div>
+                            <div class="space-y-2">
+                                <label
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">End</label>
+                                <input type="time" name="end" required
+                                    class="w-full bg-gray-50 dark:bg-black/20 border border-gray-100 dark:border-white/10 rounded-2xl p-4 font-bold outline-none">
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Indication
+                                Color</label>
+                            <div class="flex flex-wrap gap-3">
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="color_tag" value="indigo" class="hidden peer" checked>
+                                    <div
+                                        class="w-10 h-10 rounded-xl bg-indigo-500 border-4 border-transparent peer-checked:border-white dark:peer-checked:border-indigo-400 shadow-lg transition-all group-hover:scale-110">
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="color_tag" value="rose" class="hidden peer">
+                                    <div
+                                        class="w-10 h-10 rounded-xl bg-rose-500 border-4 border-transparent peer-checked:border-white dark:peer-checked:border-rose-400 shadow-lg transition-all group-hover:scale-110">
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="color_tag" value="emerald" class="hidden peer">
+                                    <div
+                                        class="w-10 h-10 rounded-xl bg-emerald-500 border-4 border-transparent peer-checked:border-white dark:peer-checked:border-emerald-400 shadow-lg transition-all group-hover:scale-110">
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="color_tag" value="amber" class="hidden peer">
+                                    <div
+                                        class="w-10 h-10 rounded-xl bg-amber-500 border-4 border-transparent peer-checked:border-white dark:peer-checked:border-amber-400 shadow-lg transition-all group-hover:scale-110">
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="color_tag" value="sky" class="hidden peer">
+                                    <div
+                                        class="w-10 h-10 rounded-xl bg-sky-500 border-4 border-transparent peer-checked:border-white dark:peer-checked:border-sky-400 shadow-lg transition-all group-hover:scale-110">
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="color_tag" value="violet" class="hidden peer">
+                                    <div
+                                        class="w-10 h-10 rounded-xl bg-violet-500 border-4 border-transparent peer-checked:border-white dark:peer-checked:border-violet-400 shadow-lg transition-all group-hover:scale-110">
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="color_tag" value="fuchsia" class="hidden peer">
+                                    <div
+                                        class="w-10 h-10 rounded-xl bg-fuchsia-500 border-4 border-transparent peer-checked:border-white dark:peer-checked:border-fuchsia-400 shadow-lg transition-all group-hover:scale-110">
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="color_tag" value="cyan" class="hidden peer">
+                                    <div
+                                        class="w-10 h-10 rounded-xl bg-cyan-500 border-4 border-transparent peer-checked:border-white dark:peer-checked:border-cyan-400 shadow-lg transition-all group-hover:scale-110">
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="color_tag" value="orange" class="hidden peer">
+                                    <div
+                                        class="w-10 h-10 rounded-xl bg-orange-500 border-4 border-transparent peer-checked:border-white dark:peer-checked:border-orange-400 shadow-lg transition-all group-hover:scale-110">
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="color_tag" value="lime" class="hidden peer">
+                                    <div
+                                        class="w-10 h-10 rounded-xl bg-lime-500 border-4 border-transparent peer-checked:border-white dark:peer-checked:border-lime-400 shadow-lg transition-all group-hover:scale-110">
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-lg shadow-xl shadow-indigo-600/20 hover:scale-[1.02] transition-all">
+                            Publish Entry
+                        </button>
+                    </form>
+                </section>
+
+                <div class="space-y-10">
+                    <section id="expressUpload"
+                        class="p-10 rounded-[40px] bg-gradient-to-br from-indigo-600 to-purple-700 text-white shadow-2xl relative overflow-hidden transition-all">
+                        <div class="relative z-10">
+                            <h3 class="text-2xl font-black mb-4">Express Upload</h3>
+                            <p class="text-indigo-100 mb-8 font-medium italic">Instantly publish routine files
+                                (PDF/Images) to a specific department batch.</p>
+
+                            <form action="create-routine.php" method="POST" enctype="multipart/form-data"
+                                class="space-y-6">
+                                <input type="hidden" name="upload_routine" value="1">
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="space-y-1">
+                                        <label
+                                            class="text-[9px] font-bold text-indigo-200 uppercase tracking-widest pl-2">Department</label>
+                                        <select name="department_id" required
+                                            class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl outline-none focus:bg-white/20 font-bold text-sm text-white transition-all">
+                                            <option value="" class="text-gray-900">Select Dept</option>
+                                            <?php foreach ($departments as $d): ?>
+                                            <option value="<?php echo $d['id']; ?>" class="text-gray-900">
+                                                <?php echo $d['code']; ?>
+                                            </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="space-y-1">
+                                        <label
+                                            class="text-[9px] font-bold text-indigo-200 uppercase tracking-widest pl-2">Semester</label>
+                                        <select name="semester" required
+                                            class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl outline-none focus:bg-white/20 font-bold text-sm text-white transition-all">
+                                            <option value="1st Year, 1st Sem" class="text-gray-900">1st Year, 1st Sem
+                                            </option>
+                                            <option value="1st Year, 2nd Sem" class="text-gray-900">1st Year, 2nd Sem
+                                            </option>
+                                            <option value="2nd Year, 1st Sem" class="text-gray-900">2nd Year, 1st Sem
+                                            </option>
+                                            <option value="2nd Year, 2nd Sem" class="text-gray-900">2nd Year, 2nd Sem
+                                            </option>
+                                            <option value="3rd Year, 1st Sem" class="text-gray-900">3rd Year, 1st Sem
+                                            </option>
+                                            <option value="3rd Year, 2nd Sem" class="text-gray-900">3rd Year, 2nd Sem
+                                            </option>
+                                            <option value="4th Year, 1st Sem" class="text-gray-900">4th Year, 1st Sem
+                                            </option>
+                                            <option value="4th Year, 2nd Sem" class="text-gray-900">4th Year, 2nd Sem
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="relative group cursor-pointer">
+                                    <input type="file" name="routine_file" required id="adminFile"
+                                        class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                                    <div id="fileBox"
+                                        class="w-full border-2 border-dashed border-white/20 rounded-3xl p-8 flex flex-col items-center justify-center group-hover:border-white transition-all bg-white/5">
+                                        <i
+                                            class="ri-cloud-line text-4xl text-indigo-200 group-hover:text-white mb-2"></i>
+                                        <span id="fileLabel"
+                                            class="text-sm font-bold text-indigo-200 group-hover:text-white">Choose
+                                            Routine File</span>
+                                    </div>
+                                </div>
+
+                                <button type="submit"
+                                    class="w-full py-4 bg-white text-indigo-600 rounded-2xl font-black shadow-xl hover:scale-[1.02] transition-all flex items-center justify-center gap-2">
+                                    <i class="ri-upload-cloud-2-line"></i> Publish Routine File
+                                </button>
+                            </form>
+                        </div>
+                        <i
+                            class="ri-file-search-line absolute -bottom-10 -right-10 text-[200px] opacity-10 rotate-[-15deg]"></i>
+                    </section>
+
+                    <div
+                        class="p-10 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm text-center">
+                        <div
+                            class="w-16 h-16 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-3xl mx-auto mb-6">
+                            <i class="ri-lightbulb-line"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-4">Pro Tip</h4>
+                        <p class="text-gray-500 text-sm leading-relaxed">Students can star their individual classes from
+                            the dashboard. Make sure to use clear, standardized subject names for best results.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../assets/js/theme.js"></script>
+    <script>
+        function updateDeptName(select) {
+            const nameInput = document.getElementById('deptNameInput');
+            const selectedOption = select.options[select.selectedIndex];
+            nameInput.value = selectedOption.getAttribute('data-name');
+        }
+
+        document.getElementById('adminFile').onchange = e => {
+            const label = document.getElementById('fileLabel');
+            const file = e.target.files[0];
+            if (file) {
+                label.textContent = file.name;
+                document.getElementById('fileBox').classList.add('border-white', 'bg-white/10');
+            }
+        };
+    </script>
+</body>
+
+</html>

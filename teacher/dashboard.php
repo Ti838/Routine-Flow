@@ -16,16 +16,16 @@ try {
     $stmt->execute([$dept_id]);
     $dept_name = $stmt->fetchColumn() ?: 'General Engineering';
 
-    // Fetch today's classes for this teacher's department (Broad Visibility)
+    // Fetch today's classes for this teacher (Personal Focus)
     $today = date('l');
     $stmt = $conn->prepare("
         SELECT * FROM routines 
-        WHERE (teacher_id = ? OR teacher_name = ? OR department_id = ?) 
+        WHERE (teacher_id = ? OR teacher_name = ?) 
         AND day_of_week = ? 
         AND status = 'active' 
         ORDER BY start_time ASC
     ");
-    $stmt->execute([$_SESSION['user_id'], $name, $dept_id, $today]);
+    $stmt->execute([$_SESSION['user_id'], $name, $today]);
     $today_classes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $classes_today_count = count($today_classes);
 
@@ -56,5 +56,5 @@ try {
 }
 
 // Presentation: Include the view
-include 'views/dashboard.html';
+include __DIR__ . '/dashboard.html';
 ?>

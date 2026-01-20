@@ -3,6 +3,9 @@
 
 function renderNavbar($role, $name)
 {
+    // Fix: Dynamic path prefix for subdirectory hosting
+    $depth = count(explode('/', $_SERVER['PHP_SELF'])) - 2;
+    $prefix = str_repeat('../', max(0, $depth - 1));
     ?>
     <nav
         class="navbar fixed top-0 w-full z-50 bg-white/80 dark:bg-[#0B1121]/80 backdrop-blur-xl border-b border-gray-100 dark:border-white/5 h-20">
@@ -12,8 +15,8 @@ function renderNavbar($role, $name)
                     class="lg:hidden w-10 h-10 rounded-xl bg-gray-50 dark:bg-white/5 flex items-center justify-center text-gray-500">
                     <i class="ri-menu-2-line text-2xl"></i>
                 </button>
-                <a href="../index.php" class="flex items-center gap-3">
-                    <img src="../assets/img/favicon.png" alt="RF"
+                <a href="<?php echo $prefix; ?>index.php" class="flex items-center gap-3">
+                    <img src="<?php echo $prefix; ?>assets/img/favicon.png" alt="RF"
                         class="w-10 h-10 rounded-xl shadow-lg shadow-indigo-500/20">
                     <span
                         class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 hidden sm:block">Routine
@@ -77,13 +80,13 @@ function renderNavbar($role, $name)
                             }
                             ?>
                         </div>
-                        <a href="../shared/notices.php"
+                        <a href="<?php echo $prefix; ?>shared/notices.php"
                             class="block p-3 text-center text-xs font-bold text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 transition-colors">
                             View All Notifications
                         </a>
                     </div>
                 </div>
-                <a href="../shared/profile.php"
+                <a href="<?php echo $prefix; ?>shared/profile.php"
                     class="flex items-center gap-4 pl-6 border-l border-gray-200 dark:border-white/10 hover:opacity-80 transition-opacity"
                     title="Edit Profile">
                     <div class="hidden md:block text-right">
@@ -96,7 +99,7 @@ function renderNavbar($role, $name)
                     </div>
                     <?php
                     // Fetch fresh profile pic if available (optional optimization, but reliable)
-                    $pic_path = isset($_SESSION['profile_pic']) && !empty($_SESSION['profile_pic']) ? '../assets/uploads/profiles/' . $_SESSION['profile_pic'] : "https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=" . urlencode($name);
+                    $pic_path = isset($_SESSION['profile_pic']) && !empty($_SESSION['profile_pic']) ? $prefix . 'assets/uploads/profiles/' . $_SESSION['profile_pic'] : "https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=" . urlencode($name);
 
                     // Note: To make session profile_pic dynamic, we should update session on login. 
                     // For now, we fallback to UI Avatars if not explicitly in session.
@@ -104,7 +107,7 @@ function renderNavbar($role, $name)
                     <img src="<?php echo $pic_path; ?>"
                         class="w-10 h-10 rounded-full bg-gray-100 dark:bg-dark-bg p-0.5 border border-indigo-500/30 object-cover">
                 </a>
-                <a href="../logout.php" id="logoutBtn"
+                <a href="<?php echo $prefix; ?>logout.php" id="logoutBtn"
                     class="p-2 text-red-500 hover:bg-red-500/10 rounded-lg transition-all" title="Logout">
                     <i class="ri-logout-box-line text-2xl"></i>
                 </a>
@@ -117,38 +120,42 @@ function renderNavbar($role, $name)
 
 function renderSidebar($role, $active_page)
 {
+    $depth = count(explode('/', $_SERVER['PHP_SELF'])) - 2;
+    $prefix = str_repeat('../', max(0, $depth - 1));
     $menu = [];
     if ($role === 'admin') {
         $menu = [
-            ['title' => 'Dashboard', 'icon' => 'ri-dashboard-line', 'link' => '../admin/dashboard.php'],
-            ['title' => 'User Management', 'icon' => 'ri-user-settings-line', 'link' => '../admin/users.php'],
-            ['title' => 'Departments', 'icon' => 'ri-building-line', 'link' => '../admin/departments.php'],
-            ['title' => 'Create Routine', 'icon' => 'ri-calendar-event-line', 'link' => '../admin/create-routine.php'],
-            ['title' => 'Routine Library', 'icon' => 'ri-list-settings-line', 'link' => '../admin/manage_routines.php'],
-            ['title' => 'Analytics', 'icon' => 'ri-bar-chart-2-line', 'link' => '../admin/analytics.php'],
-            ['title' => 'Bulletins', 'icon' => 'ri-notification-badge-line', 'link' => '../admin/notices.php'],
-            ['title' => 'Activity Log', 'icon' => 'ri-history-line', 'link' => '../admin/activity-log.php'],
+            ['title' => 'Dashboard', 'icon' => 'ri-dashboard-line', 'link' => $prefix . 'admin/dashboard.php'],
+            ['title' => 'User Management', 'icon' => 'ri-user-settings-line', 'link' => $prefix . 'admin/users.php'],
+            ['title' => 'Departments', 'icon' => 'ri-building-line', 'link' => $prefix . 'admin/departments.php'],
+            ['title' => 'Create Routine', 'icon' => 'ri-calendar-event-line', 'link' => $prefix . 'admin/create-routine.php'],
+            ['title' => 'Routine Library', 'icon' => 'ri-list-settings-line', 'link' => $prefix . 'admin/manage-routines.php'],
+            ['title' => 'Analytics', 'icon' => 'ri-bar-chart-2-line', 'link' => $prefix . 'admin/analytics.php'],
+            ['title' => 'Bulletins', 'icon' => 'ri-notification-badge-line', 'link' => $prefix . 'admin/notices.php'],
+            ['title' => 'Activity Log', 'icon' => 'ri-history-line', 'link' => $prefix . 'admin/activity-log.php'],
         ];
     } elseif ($role === 'teacher') {
         $menu = [
-            ['title' => 'Dashboard', 'icon' => 'ri-dashboard-line', 'link' => '../teacher/dashboard.php'],
-            ['title' => 'My Classes', 'icon' => 'ri-calendar-todo-line', 'link' => '../teacher/today.php'],
-            ['title' => 'Submit Routine', 'icon' => 'ri-upload-cloud-2-line', 'link' => '../teacher/create-routine.php'],
-            ['title' => 'Department View', 'icon' => 'ri-building-2-line', 'link' => '../teacher/department.php'],
+            ['title' => 'Dashboard', 'icon' => 'ri-dashboard-line', 'link' => $prefix . 'teacher/dashboard.php'],
+            ['title' => 'My Classes', 'icon' => 'ri-calendar-todo-line', 'link' => $prefix . 'teacher/today.php'],
+            ['title' => 'Submit Routine', 'icon' => 'ri-upload-cloud-2-line', 'link' => $prefix . 'teacher/create-routine.php'],
+            ['title' => 'Department View', 'icon' => 'ri-building-2-line', 'link' => $prefix . 'teacher/department.php'],
         ];
     } elseif ($role === 'student') {
         $menu = [
-            ['title' => 'Dashboard', 'icon' => 'ri-dashboard-line', 'link' => '../student/dashboard.php'],
-            ['title' => 'Today\'s Routine', 'icon' => 'ri-calendar-check-line', 'link' => '../student/today.php'],
-            ['title' => 'Weekly Planner', 'icon' => 'ri-calendar-2-line', 'link' => '../student/weekly.php'],
-            ['title' => 'Custom Builder', 'icon' => 'ri-equalizer-line', 'link' => '../student/custom-routine.php'],
+            ['title' => 'Overview', 'icon' => 'ri-dashboard-line', 'link' => $prefix . 'student/dashboard.php'],
+            ['title' => 'Today\'s Flow', 'icon' => 'ri-calendar-check-line', 'link' => $prefix . 'student/today.php'],
+            ['title' => 'Weekly Planner', 'icon' => 'ri-calendar-2-line', 'link' => $prefix . 'student/weekly.php'],
+            ['title' => 'Task Lab', 'icon' => 'ri-list-check-2', 'link' => $prefix . 'student/tasks.php'],
+            ['title' => 'Custom Architect', 'icon' => 'ri-magic-line', 'link' => $prefix . 'student/custom-routine.php'],
+            ['title' => 'Academic Notices', 'icon' => 'ri-notification-3-line', 'link' => $prefix . 'shared/notices.php'],
         ];
     }
 
     // Common settings for all roles
     $settings_menu = [
-        ['title' => 'My Profile', 'icon' => 'ri-user-3-line', 'link' => '../shared/profile.php'],
-        ['title' => 'Settings', 'icon' => 'ri-settings-4-line', 'link' => '../shared/settings.php'],
+        ['title' => 'My Profile', 'icon' => 'ri-user-3-line', 'link' => $prefix . 'shared/profile.php'],
+        ['title' => 'Settings', 'icon' => 'ri-settings-4-line', 'link' => $prefix . 'shared/settings.php'],
     ];
 
     ?>
@@ -161,7 +168,20 @@ function renderSidebar($role, $active_page)
                 </p>
                 <nav class="space-y-1">
                     <?php foreach ($menu as $item):
-                        $is_active = basename($_SERVER['PHP_SELF']) == basename($item['link']);
+                        // More robust active check: include folder name if possible
+                        $current_path = $_SERVER['PHP_SELF'];
+                        $target_path = $item['link'];
+
+                        // Strip dots and slashes for comparison
+                        $normalized_current = str_replace(['../', './'], '', $current_path);
+                        $normalized_target = str_replace(['../', './'], '', $target_path);
+
+                        $is_active = (strpos($normalized_current, $normalized_target) !== false);
+
+                        // Fallback for same filename in current folder
+                        if (!$is_active) {
+                            $is_active = basename($current_path) == basename($target_path) && (strpos($current_path, $role) !== false);
+                        }
                         ?>
                         <a href="<?php echo $item['link']; ?>"
                             class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all group <?php echo $is_active ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20' : 'text-gray-500 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-indigo-600'; ?>">

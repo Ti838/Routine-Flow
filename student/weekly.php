@@ -24,5 +24,5 @@ try {
 }
 
 // Presentation: Include the view
-include 'views/weekly.html';
+include __DIR__ . '/weekly.html';
 ?>
