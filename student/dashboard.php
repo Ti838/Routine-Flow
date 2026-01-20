@@ -70,7 +70,7 @@ try {
     $notices = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Fetch uploaded routine files for this department and semester
-    $stmt = $conn->prepare("SELECT * FROM routine_files WHERE (department = ? OR department IS NULL) AND (semester = ? OR semester IS NULL OR semester = 'Any') ORDER BY created_at DESC LIMIT 5");
+    $stmt = $conn->prepare("SELECT * FROM routine_files WHERE (department = ? OR department = 'Central' OR department = 'central' OR department IS NULL) AND (semester = ? OR semester IS NULL OR semester = 'Any' OR semester = 'All Semesters' OR semester = 'all') ORDER BY created_at DESC LIMIT 5");
     $stmt->execute([$dept_name, $semester]);
     $routine_files = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

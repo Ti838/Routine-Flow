@@ -186,8 +186,52 @@
                     </div>
                 </section>
 
-                <!-- Notices -->
+                <!-- Routine Files & Notices -->
                 <section class="space-y-6">
+                    <!-- Uploaded Routines (PDF/Images) -->
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-2xl font-black tracking-tight">Department Routines</h2>
+                    </div>
+
+                    <div class="space-y-4 mb-10">
+                        <?php if (empty($routine_files)): ?>
+                        <div
+                            class="p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 text-center text-gray-400 italic text-sm">
+                            No uploaded routine files found.
+                        </div>
+                        <?php else: ?>
+                        <?php foreach ($routine_files as $file): 
+                            $is_pdf = $file['file_type'] === 'pdf';
+                            $icon = $is_pdf ? 'ri-file-pdf-line' : 'ri-image-line';
+                            $color = $is_pdf ? 'text-red-500 bg-red-500/10' : 'text-blue-500 bg-blue-500/10';
+                        ?>
+                        <div
+                            class="flex items-center justify-between p-6 rounded-[30px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 hover:border-indigo-500/50 transition-all group">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-12 h-12 rounded-xl <?php echo $color; ?> flex items-center justify-center text-2xl">
+                                    <i class="<?php echo $icon; ?>"></i>
+                                </div>
+                                <div>
+                                    <h4
+                                        class="font-bold text-gray-900 dark:text-white group-hover:text-indigo-500 transition-colors">
+                                        <?php echo $is_pdf ? 'PDF Routine' : 'Image Routine'; ?>
+                                    </h4>
+                                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">
+                                        <?php echo date('M d, Y', strtotime($file['created_at'])); ?> •
+                                        <?php echo htmlspecialchars($file['semester']); ?>
+                                    </p>
+                                </div>
+                            </div>
+                            <a href="../<?php echo $file['file_path']; ?>" download target="_blank"
+                                class="w-10 h-10 rounded-full bg-gray-50 dark:bg-white/10 flex items-center justify-center text-gray-400 group-hover:text-indigo-500 group-hover:scale-110 transition-all">
+                                <i class="ri-download-2-line"></i>
+                            </a>
+                        </div>
+                        <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+
                     <h2 class="text-2xl font-black tracking-tight">Institutional Bulletins</h2>
                     <div class="space-y-4">
                         <?php if (empty($notices)): ?>

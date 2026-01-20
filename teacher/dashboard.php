@@ -34,6 +34,11 @@ try {
     $stmt->execute();
     $notices = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    // Fetch uploaded routine files for this department or Central
+    $stmt = $conn->prepare("SELECT * FROM routine_files WHERE (department = ? OR department = 'Central' OR department = 'central' OR department IS NULL) ORDER BY created_at DESC LIMIT 5");
+    $stmt->execute([$dept_name]);
+    $routine_files = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
     // Calculate next session for teacher
     $next_session_time = "Done Today";
     $next_session_subject = "No more classes";
