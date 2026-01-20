@@ -263,7 +263,7 @@ ADD FOREIGN KEY (routine_id) REFERENCES routines(id) ON DELETE CASCADE;
 
 ### Directory Organization
 
-```
+```text
 Routine Flow/
 │
 ├── Root Files (Authentication & Landing)
