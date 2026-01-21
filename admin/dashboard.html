@@ -2,25 +2,12 @@
 <html lang="en" data-theme="light">
 
 <head>
-
-    <style>
-        html.dark {
-            background: #0B1121 !important;
-        }
-
-        html.dark body {
-            background: #0B1121 !important;
-            color: white;
-        }
-    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Routine Flow</title>
     <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-    <script></script>
-    <script></script>
     <link rel="stylesheet" href="../assets/css/zoom-fix.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    //cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -39,6 +26,16 @@
                 }
             }
         }
+    </script>
+    <script>
+        (function () {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark' || saved === 'light') {
+                if (saved === 'dark') document.documentElement.classList.add('dark');
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
     </script>
 </head>
 
@@ -245,8 +242,6 @@
             </script>
         </main>
     </div>
-
-    <script></script>
     <script>
         function updateClock() {
             const now = new Date();

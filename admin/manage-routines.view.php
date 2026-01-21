@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Routines - Routine Flow</title>
-    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
-    <link rel="stylesheet" href="../assets/css/zoom-fix.css" />
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <link rel="stylesheet" href="../assets/css/zoom-fix.css">
+    //cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -28,14 +28,14 @@
         }
     </script>
     <script>
-            (function () {
-                const saved = localStorage.getItem('theme');
-                if (saved === 'dark' || saved === 'light') {
-                    if (saved === 'dark') document.documentElement.classList.add('dark');
-                } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    document.documentElement.classList.add('dark');
-                }
-            })();
+        (function () {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark' || saved === 'light') {
+                if (saved === 'dark') document.documentElement.classList.add('dark');
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
     </script>
 </head>
 

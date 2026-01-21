@@ -6,9 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Management - Routine Flow</title>
     <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-    <script></script>
     <link rel="stylesheet" href="../assets/css/zoom-fix.css">
-    <link href="https:
+    //cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            blue: '#4f46e5',
+                            dark: '#3730a3',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <script>
         (function () {
             const saved = localStorage.getItem('theme');
@@ -243,8 +261,6 @@
             </div>
         </div>
     </div>
-
-    <script></script>
     <script>
         function toggleRoleFields(role) {
             document.getElementById('studentFields').classList.toggle('hidden', role !== 'student');
