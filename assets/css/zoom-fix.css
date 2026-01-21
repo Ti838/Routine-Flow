@@ -1,15 +1,12 @@
-
-
-
 html {
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
     width: 100%;
 }
 
 body {
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
     width: 100%;
-    min-width: 320px; 
+    min-width: 320px;
 }
 
 
@@ -21,7 +18,7 @@ body {
 
 
 aside {
-    max-width: 288px; 
+    max-width: 288px;
     min-width: 0;
 }
 
@@ -89,17 +86,36 @@ a.button,
 
 
 @media (max-width: 640px) {
-    .p-10 { padding: 1.5rem !important; }
-    .p-8 { padding: 1.25rem !important; }
-    .p-6 { padding: 1rem !important; }
+    .p-10 {
+        padding: 1.5rem !important;
+    }
+
+    .p-8 {
+        padding: 1.25rem !important;
+    }
+
+    .p-6 {
+        padding: 1rem !important;
+    }
 }
 
 
 @media (min-resolution: 1.5dppx) {
-    .text-4xl { font-size: 2rem !important; }
-    .text-3xl { font-size: 1.75rem !important; }
-    .gap-10 { gap: 1.5rem !important; }
-    .gap-8 { gap: 1.25rem !important; }
+    .text-4xl {
+        font-size: 2rem !important;
+    }
+
+    .text-3xl {
+        font-size: 1.75rem !important;
+    }
+
+    .gap-10 {
+        gap: 1.5rem !important;
+    }
+
+    .gap-8 {
+        gap: 1.25rem !important;
+    }
 }
 
 
@@ -112,7 +128,5 @@ a.button,
 main,
 aside,
 nav {
-    transition: none; 
+    transition: none;
 }
-
-

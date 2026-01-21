@@ -18,5 +18,5 @@ $query = "SELECT r.*, d.code as dept_code
           ORDER BY r.day_of_week, r.start_time ASC";
 $routines = $conn->query($query)->fetchAll(PDO::FETCH_ASSOC);
 
-include __DIR__ . '/manage-routines.html';
+include __DIR__ . '/manage-routines.view.php';
 
