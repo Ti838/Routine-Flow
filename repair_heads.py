@@ -53,8 +53,8 @@ def repair_file(filepath):
         prefix = "../" * depth if depth > 0 else ""
         
         # 0. Basic check: Does it need repair?
-        # If it has truncated links OR empty scripts, we repair.
-        needs_repair = '<link href="https:' in content or '<script></script>' in content
+        # Force repair to fix damage from previous run
+        needs_repair = True # '<link href="https:' in content or '<script></script>' in content
         
         if not needs_repair:
             print(f"Skipping {filepath} (seems clean)")
@@ -76,8 +76,8 @@ def repair_file(filepath):
         # 4. Remove all empty script tags globally
         content = re.sub(r'\s*<script></script>', '', content)
         
-        # 5. Remove any leftover truncated link lines that might be outside text (unlikely but safe)
-        content = re.sub(r'<link href="https:\s*', '', content)
+        # 5. Remove any leftover truncated link lines that are exactly '<link href="https:"'
+        content = re.sub(r'<link href="https:"\s*', '', content)
 
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
