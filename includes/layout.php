@@ -159,9 +159,9 @@ function renderSidebar($role, $active_page)
     ];
 
     ?>
-    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden transition-opacity"></div>
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-[55] hidden lg:hidden transition-opacity"></div>
     <aside id="mainSidebar"
-        class="w-72 bg-white dark:bg-[#0B1121] border-r border-gray-100 dark:border-white/5 h-[calc(100vh-80px)] overflow-y-auto p-6 lg:block sticky top-20 z-40 transition-transform -translate-x-full lg:translate-x-0 fixed lg:sticky">
+        class="w-72 bg-white dark:bg-[#0B1121] border-r border-gray-100 dark:border-white/5 h-full lg:h-[calc(100vh-80px)] overflow-y-auto p-6 fixed lg:sticky top-0 lg:top-20 left-0 z-[60] lg:z-40 transition-transform -translate-x-full lg:translate-x-0">
         <div class="space-y-8">
             <div>
                 <p class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mb-4">Main Menu
