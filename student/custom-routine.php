@@ -14,7 +14,6 @@ $semester = $_SESSION['semester'] ?? '1st Year, 1st Sem';
 $success_msg = null;
 $error_msg = null;
 
-// Handle Image Upload
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_image'])) {
     if (isset($_FILES['routine_image']) && $_FILES['routine_image']['error'] === 0) {
         $upload_dir = '../assets/uploads/routines/';
@@ -39,7 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_image'])) {
     }
 }
 
-// Fetch Official Routines for personalization
 $stmt = $conn->prepare("
     SELECT r.*, src.color_code, src.is_starred 
     FROM routines r 
@@ -50,7 +48,6 @@ $stmt = $conn->prepare("
 $stmt->execute([$user_id, $dept_id, $semester]);
 $routines = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Fetch Personal Image Routines
 $stmt = $conn->prepare("SELECT * FROM routine_files WHERE user_id = ? AND role = 'student' ORDER BY created_at DESC");
 $stmt->execute([$user_id]);
 $personal_files = $stmt->fetchAll(PDO::FETCH_ASSOC);

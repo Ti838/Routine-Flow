@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analytics Dashboard - Routine Flow</title>
     <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="../assets/js/tailwind-config.js"></script>
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <script></script>
     <link rel="stylesheet" href="../assets/css/zoom-fix.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https:
+    <script></script>
     <script>
         (function () {
             const saved = localStorage.getItem('theme');
@@ -49,7 +49,7 @@
                 </div>
             </header>
 
-            <!-- Summary Statistics Cards -->
+            
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
                 <div
                     class="p-6 sm:p-8 rounded-[24px] sm:rounded-[32px] bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-xl">
@@ -104,7 +104,7 @@
             </div>
 
             <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
-                <!-- Room Usage Chart -->
+                
                 <div
                     class="p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm">
                     <h3 class="text-lg font-black uppercase tracking-widest text-gray-400 mb-6">Classroom Occupancy</h3>
@@ -113,7 +113,7 @@
                     </div>
                 </div>
 
-                <!-- Teacher Workload -->
+                
                 <div
                     class="p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm">
                     <h3 class="text-lg font-black uppercase tracking-widest text-gray-400 mb-6">Faculty Workload</h3>
@@ -122,7 +122,7 @@
                     </div>
                 </div>
 
-                <!-- Dept Distribution -->
+                
                 <div
                     class="p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm">
                     <h3 class="text-lg font-black uppercase tracking-widest text-gray-400 mb-6">Departmental Load</h3>
@@ -131,7 +131,7 @@
                     </div>
                 </div>
 
-                <!-- Daily Distribution -->
+                
                 <div class="p-8 rounded-[40px] bg-indigo-600 text-white shadow-xl shadow-indigo-600/20">
                     <h3 class="text-lg font-black uppercase tracking-widest text-indigo-200 mb-6">Weekly Distribution
                     </h3>
@@ -153,7 +153,7 @@
 
                 const data = result.data;
 
-                // Configure Charts
+                
                 const commonOptions = {
                     responsive: true,
                     maintainAspectRatio: false,
@@ -168,7 +168,7 @@
                     }
                 };
 
-                // 1. Room Chart (Bar)
+                
                 new Chart(document.getElementById('roomChart'), {
                     type: 'bar',
                     data: {
@@ -182,7 +182,7 @@
                     options: commonOptions
                 });
 
-                // 2. Teacher Chart (Horizontal Bar)
+                
                 new Chart(document.getElementById('teacherChart'), {
                     type: 'bar',
                     data: {
@@ -196,7 +196,7 @@
                     options: { ...commonOptions, indexAxis: 'y' }
                 });
 
-                // 3. Dept Chart (Professional Pie/Doughnut)
+                
                 new Chart(document.getElementById('deptChart'), {
                     type: 'doughnut',
                     data: {
@@ -204,14 +204,14 @@
                         datasets: [{
                             data: data.deptDistribution.map(i => i.value),
                             backgroundColor: [
-                                '#6366f1', // Indigo
-                                '#10b981', // Emerald
-                                '#f59e0b', // Amber
-                                '#ef4444', // Red
-                                '#8b5cf6', // Purple
-                                '#06b6d4', // Cyan
-                                '#ec4899', // Pink
-                                '#14b8a6'  // Teal
+                                '#6366f1', 
+                                '#10b981', 
+                                '#f59e0b', 
+                                '#ef4444', 
+                                '#8b5cf6', 
+                                '#06b6d4', 
+                                '#ec4899', 
+                                '#14b8a6'  
                             ],
                             borderWidth: 4,
                             borderColor: document.documentElement.classList.contains('dark') ? '#0B1121' : '#ffffff',
@@ -248,7 +248,7 @@
                     }
                 });
 
-                // 4. Daily Chart (Line)
+                
                 new Chart(document.getElementById('dailyChart'), {
                     type: 'line',
                     data: {
@@ -277,7 +277,958 @@
             }
         });
     </script>
-    <script src="../assets/js/theme.js"></script>
+    <script></script>
 </body>
 
 </html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <link rel="stylesheet" href="../assets/css/zoom-fix.css">
+    <link href="https:
+    <script></script>
+    <script>
+        (function () {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark' || saved === 'light') {
+                if (saved === 'dark') document.documentElement.classList.add('dark');
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+
+    <?php renderNavbar($role, $name); ?>
+
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'analytics.php'); ?>
+
+        <main class="flex-1 p-4 sm:p-6 lg:p-10 space-y-10">
+            <header class="flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div class="text-center sm:text-left">
+                    <h1
+                        class="text-3xl sm:text-4xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+                        System Insights
+                    </h1>
+                    <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm sm:text-base">Quantitative analysis of
+                        academic resources and
+                        scheduling patterns.</p>
+                </div>
+                <div class="flex gap-4">
+                    <button onclick="window.print()"
+                        class="px-5 py-2.5 sm:px-6 sm:py-3 bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl font-bold flex items-center gap-2 hover:bg-gray-50 transition-all text-xs sm:text-sm">
+                        <i class="ri-printer-line"></i> Print Report
+                    </button>
+                </div>
+            </header>
+
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                <div
+                    class="p-6 sm:p-8 rounded-[24px] sm:rounded-[32px] bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-white/20 flex items-center justify-center">
+                            <i class="ri-calendar-line text-2xl sm:text-3xl"></i>
+                        </div>
+                        <span class="text-3xl sm:text-4xl font-black">
+                            <?php echo $totalRoutines; ?>
+                        </span>
+                    </div>
+                    <h4 class="text-[10px] sm:text-sm font-bold text-white/80 uppercase tracking-widest">Active Classes
+                    </h4>
+                </div>
+
+                <div class="p-8 rounded-[32px] bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+                            <i class="ri-user-line text-3xl"></i>
+                        </div>
+                        <span class="text-4xl font-black">
+                            <?php echo $totalTeachers; ?>
+                        </span>
+                    </div>
+                    <h4 class="text-sm font-bold text-white/80 uppercase tracking-widest">Faculty Members</h4>
+                </div>
+
+                <div class="p-8 rounded-[32px] bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+                            <i class="ri-door-line text-3xl"></i>
+                        </div>
+                        <span class="text-4xl font-black">
+                            <?php echo $totalRooms; ?>
+                        </span>
+                    </div>
+                    <h4 class="text-sm font-bold text-white/80 uppercase tracking-widest">Classrooms Used</h4>
+                </div>
+
+                <div class="p-8 rounded-[32px] bg-gradient-to-br from-purple-500 to-pink-600 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+                            <i class="ri-building-line text-3xl"></i>
+                        </div>
+                        <span class="text-4xl font-black">
+                            <?php echo $totalDepartments; ?>
+                        </span>
+                    </div>
+                    <h4 class="text-sm font-bold text-white/80 uppercase tracking-widest">Departments</h4>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                
+                <div
+                    class="p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm">
+                    <h3 class="text-lg font-black uppercase tracking-widest text-gray-400 mb-6">Classroom Occupancy</h3>
+                    <div class="h-[300px] flex items-center justify-center">
+                        <canvas id="roomChart"></canvas>
+                    </div>
+                </div>
+
+                
+                <div
+                    class="p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm">
+                    <h3 class="text-lg font-black uppercase tracking-widest text-gray-400 mb-6">Faculty Workload</h3>
+                    <div class="h-[300px] flex items-center justify-center">
+                        <canvas id="teacherChart"></canvas>
+                    </div>
+                </div>
+
+                
+                <div
+                    class="p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm">
+                    <h3 class="text-lg font-black uppercase tracking-widest text-gray-400 mb-6">Departmental Load</h3>
+                    <div class="h-[300px] flex items-center justify-center">
+                        <canvas id="deptChart"></canvas>
+                    </div>
+                </div>
+
+                
+                <div class="p-8 rounded-[40px] bg-indigo-600 text-white shadow-xl shadow-indigo-600/20">
+                    <h3 class="text-lg font-black uppercase tracking-widest text-indigo-200 mb-6">Weekly Distribution
+                    </h3>
+                    <div class="h-[300px] flex items-center justify-center">
+                        <canvas id="dailyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('../api/get_analytics_data.php');
+                const result = await response.json();
+
+                if (!result.success) throw new Error(result.message);
+
+                const data = result.data;
+
+                
+                const commonOptions = {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } },
+                        x: { grid: { display: false } }
+                    }
+                };
+
+                
+                new Chart(document.getElementById('roomChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: data.roomUsage.map(i => 'RM-' + i.label),
+                        datasets: [{
+                            data: data.roomUsage.map(i => i.value),
+                            backgroundColor: '#6366f1',
+                            borderRadius: 12
+                        }]
+                    },
+                    options: commonOptions
+                });
+
+                
+                new Chart(document.getElementById('teacherChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: data.teacherWorkload.map(i => i.label),
+                        datasets: [{
+                            data: data.teacherWorkload.map(i => i.value),
+                            backgroundColor: '#10b981',
+                            borderRadius: 12
+                        }]
+                    },
+                    options: { ...commonOptions, indexAxis: 'y' }
+                });
+
+                
+                new Chart(document.getElementById('deptChart'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: data.deptDistribution.map(i => i.label),
+                        datasets: [{
+                            data: data.deptDistribution.map(i => i.value),
+                            backgroundColor: [
+                                '#6366f1', 
+                                '#10b981', 
+                                '#f59e0b', 
+                                '#ef4444', 
+                                '#8b5cf6', 
+                                '#06b6d4', 
+                                '#ec4899', 
+                                '#14b8a6'  
+                            ],
+                            borderWidth: 4,
+                            borderColor: document.documentElement.classList.contains('dark') ? '#0B1121' : '#ffffff',
+                            hoverOffset: 10
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'right',
+                                labels: {
+                                    padding: 15,
+                                    font: { size: 12, weight: 'bold' },
+                                    color: document.documentElement.classList.contains('dark') ? '#fff' : '#000',
+                                    usePointStyle: true,
+                                    pointStyle: 'circle'
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        const label = context.label || '';
+                                        const value = context.parsed || 0;
+                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        const percentage = ((value / total) * 100).toFixed(1);
+                                        return `${label}: ${value} classes (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                
+                new Chart(document.getElementById('dailyChart'), {
+                    type: 'line',
+                    data: {
+                        labels: data.dailyLoad.map(i => i.label),
+                        datasets: [{
+                            data: data.dailyLoad.map(i => i.value),
+                            borderColor: 'white',
+                            backgroundColor: 'rgba(255,255,255,0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 6,
+                            pointBackgroundColor: 'white'
+                        }]
+                    },
+                    options: {
+                        ...commonOptions,
+                        scales: {
+                            y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: 'white' } },
+                            x: { ticks: { color: 'white' } }
+                        }
+                    }
+                });
+
+            } catch (err) {
+                console.error('Analytics Error:', err);
+            }
+        });
+    </script>
+    <script></script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+    <link rel="stylesheet" href="../assets/css/zoom-fix.css">
+    <link href="https:
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <script>
+        (function () {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark' || saved === 'light') {
+                if (saved === 'dark') document.documentElement.classList.add('dark');
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+
+    <?php renderNavbar($role, $name); ?>
+
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'analytics.php'); ?>
+
+        <main class="flex-1 p-4 sm:p-6 lg:p-10 space-y-10">
+            <header class="flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div class="text-center sm:text-left">
+                    <h1
+                        class="text-3xl sm:text-4xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+                        System Insights
+                    </h1>
+                    <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm sm:text-base">Quantitative analysis of
+                        academic resources and
+                        scheduling patterns.</p>
+                </div>
+                <div class="flex gap-4">
+                    <button onclick="window.print()"
+                        class="px-5 py-2.5 sm:px-6 sm:py-3 bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl font-bold flex items-center gap-2 hover:bg-gray-50 transition-all text-xs sm:text-sm">
+                        <i class="ri-printer-line"></i> Print Report
+                    </button>
+                </div>
+            </header>
+
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                <div
+                    class="p-6 sm:p-8 rounded-[24px] sm:rounded-[32px] bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-white/20 flex items-center justify-center">
+                            <i class="ri-calendar-line text-2xl sm:text-3xl"></i>
+                        </div>
+                        <span class="text-3xl sm:text-4xl font-black">
+                            <?php echo $totalRoutines; ?>
+                        </span>
+                    </div>
+                    <h4 class="text-[10px] sm:text-sm font-bold text-white/80 uppercase tracking-widest">Active Classes
+                    </h4>
+                </div>
+
+                <div class="p-8 rounded-[32px] bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+                            <i class="ri-user-line text-3xl"></i>
+                        </div>
+                        <span class="text-4xl font-black">
+                            <?php echo $totalTeachers; ?>
+                        </span>
+                    </div>
+                    <h4 class="text-sm font-bold text-white/80 uppercase tracking-widest">Faculty Members</h4>
+                </div>
+
+                <div class="p-8 rounded-[32px] bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+                            <i class="ri-door-line text-3xl"></i>
+                        </div>
+                        <span class="text-4xl font-black">
+                            <?php echo $totalRooms; ?>
+                        </span>
+                    </div>
+                    <h4 class="text-sm font-bold text-white/80 uppercase tracking-widest">Classrooms Used</h4>
+                </div>
+
+                <div class="p-8 rounded-[32px] bg-gradient-to-br from-purple-500 to-pink-600 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+                            <i class="ri-building-line text-3xl"></i>
+                        </div>
+                        <span class="text-4xl font-black">
+                            <?php echo $totalDepartments; ?>
+                        </span>
+                    </div>
+                    <h4 class="text-sm font-bold text-white/80 uppercase tracking-widest">Departments</h4>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                
+                <div
+                    class="p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm">
+                    <h3 class="text-lg font-black uppercase tracking-widest text-gray-400 mb-6">Classroom Occupancy</h3>
+                    <div class="h-[300px] flex items-center justify-center">
+                        <canvas id="roomChart"></canvas>
+                    </div>
+                </div>
+
+                
+                <div
+                    class="p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm">
+                    <h3 class="text-lg font-black uppercase tracking-widest text-gray-400 mb-6">Faculty Workload</h3>
+                    <div class="h-[300px] flex items-center justify-center">
+                        <canvas id="teacherChart"></canvas>
+                    </div>
+                </div>
+
+                
+                <div
+                    class="p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm">
+                    <h3 class="text-lg font-black uppercase tracking-widest text-gray-400 mb-6">Departmental Load</h3>
+                    <div class="h-[300px] flex items-center justify-center">
+                        <canvas id="deptChart"></canvas>
+                    </div>
+                </div>
+
+                
+                <div class="p-8 rounded-[40px] bg-indigo-600 text-white shadow-xl shadow-indigo-600/20">
+                    <h3 class="text-lg font-black uppercase tracking-widest text-indigo-200 mb-6">Weekly Distribution
+                    </h3>
+                    <div class="h-[300px] flex items-center justify-center">
+                        <canvas id="dailyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('../api/get_analytics_data.php');
+                const result = await response.json();
+
+                if (!result.success) throw new Error(result.message);
+
+                const data = result.data;
+
+                
+                const commonOptions = {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } },
+                        x: { grid: { display: false } }
+                    }
+                };
+
+                
+                new Chart(document.getElementById('roomChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: data.roomUsage.map(i => 'RM-' + i.label),
+                        datasets: [{
+                            data: data.roomUsage.map(i => i.value),
+                            backgroundColor: '#6366f1',
+                            borderRadius: 12
+                        }]
+                    },
+                    options: commonOptions
+                });
+
+                
+                new Chart(document.getElementById('teacherChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: data.teacherWorkload.map(i => i.label),
+                        datasets: [{
+                            data: data.teacherWorkload.map(i => i.value),
+                            backgroundColor: '#10b981',
+                            borderRadius: 12
+                        }]
+                    },
+                    options: { ...commonOptions, indexAxis: 'y' }
+                });
+
+                
+                new Chart(document.getElementById('deptChart'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: data.deptDistribution.map(i => i.label),
+                        datasets: [{
+                            data: data.deptDistribution.map(i => i.value),
+                            backgroundColor: [
+                                '#6366f1', 
+                                '#10b981', 
+                                '#f59e0b', 
+                                '#ef4444', 
+                                '#8b5cf6', 
+                                '#06b6d4', 
+                                '#ec4899', 
+                                '#14b8a6'  
+                            ],
+                            borderWidth: 4,
+                            borderColor: document.documentElement.classList.contains('dark') ? '#0B1121' : '#ffffff',
+                            hoverOffset: 10
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'right',
+                                labels: {
+                                    padding: 15,
+                                    font: { size: 12, weight: 'bold' },
+                                    color: document.documentElement.classList.contains('dark') ? '#fff' : '#000',
+                                    usePointStyle: true,
+                                    pointStyle: 'circle'
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        const label = context.label || '';
+                                        const value = context.parsed || 0;
+                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        const percentage = ((value / total) * 100).toFixed(1);
+                                        return `${label}: ${value} classes (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                
+                new Chart(document.getElementById('dailyChart'), {
+                    type: 'line',
+                    data: {
+                        labels: data.dailyLoad.map(i => i.label),
+                        datasets: [{
+                            data: data.dailyLoad.map(i => i.value),
+                            borderColor: 'white',
+                            backgroundColor: 'rgba(255,255,255,0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 6,
+                            pointBackgroundColor: 'white'
+                        }]
+                    },
+                    options: {
+                        ...commonOptions,
+                        scales: {
+                            y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: 'white' } },
+                            x: { ticks: { color: 'white' } }
+                        }
+                    }
+                });
+
+            } catch (err) {
+                console.error('Analytics Error:', err);
+            }
+        });
+    </script>
+    <script></script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+
+    <?php renderNavbar($role, $name); ?>
+
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'analytics.php'); ?>
+
+        <main class="flex-1 p-4 sm:p-6 lg:p-10 space-y-10">
+            <header class="flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div class="text-center sm:text-left">
+                    <h1
+                        class="text-3xl sm:text-4xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+                        System Insights
+                    </h1>
+                    <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm sm:text-base">Quantitative analysis of
+                        academic resources and
+                        scheduling patterns.</p>
+                </div>
+                <div class="flex gap-4">
+                    <button onclick="window.print()"
+                        class="px-5 py-2.5 sm:px-6 sm:py-3 bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl font-bold flex items-center gap-2 hover:bg-gray-50 transition-all text-xs sm:text-sm">
+                        <i class="ri-printer-line"></i> Print Report
+                    </button>
+                </div>
+            </header>
+
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                <div
+                    class="p-6 sm:p-8 rounded-[24px] sm:rounded-[32px] bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-white/20 flex items-center justify-center">
+                            <i class="ri-calendar-line text-2xl sm:text-3xl"></i>
+                        </div>
+                        <span class="text-3xl sm:text-4xl font-black">
+                            <?php echo $totalRoutines; ?>
+                        </span>
+                    </div>
+                    <h4 class="text-[10px] sm:text-sm font-bold text-white/80 uppercase tracking-widest">Active Classes
+                    </h4>
+                </div>
+
+                <div class="p-8 rounded-[32px] bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+                            <i class="ri-user-line text-3xl"></i>
+                        </div>
+                        <span class="text-4xl font-black">
+                            <?php echo $totalTeachers; ?>
+                        </span>
+                    </div>
+                    <h4 class="text-sm font-bold text-white/80 uppercase tracking-widest">Faculty Members</h4>
+                </div>
+
+                <div class="p-8 rounded-[32px] bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+                            <i class="ri-door-line text-3xl"></i>
+                        </div>
+                        <span class="text-4xl font-black">
+                            <?php echo $totalRooms; ?>
+                        </span>
+                    </div>
+                    <h4 class="text-sm font-bold text-white/80 uppercase tracking-widest">Classrooms Used</h4>
+                </div>
+
+                <div class="p-8 rounded-[32px] bg-gradient-to-br from-purple-500 to-pink-600 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+                            <i class="ri-building-line text-3xl"></i>
+                        </div>
+                        <span class="text-4xl font-black">
+                            <?php echo $totalDepartments; ?>
+                        </span>
+                    </div>
+                    <h4 class="text-sm font-bold text-white/80 uppercase tracking-widest">Departments</h4>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                
+                <div
+                    class="p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm">
+                    <h3 class="text-lg font-black uppercase tracking-widest text-gray-400 mb-6">Classroom Occupancy</h3>
+                    <div class="h-[300px] flex items-center justify-center">
+                        <canvas id="roomChart"></canvas>
+                    </div>
+                </div>
+
+                
+                <div
+                    class="p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm">
+                    <h3 class="text-lg font-black uppercase tracking-widest text-gray-400 mb-6">Faculty Workload</h3>
+                    <div class="h-[300px] flex items-center justify-center">
+                        <canvas id="teacherChart"></canvas>
+                    </div>
+                </div>
+
+                
+                <div
+                    class="p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm">
+                    <h3 class="text-lg font-black uppercase tracking-widest text-gray-400 mb-6">Departmental Load</h3>
+                    <div class="h-[300px] flex items-center justify-center">
+                        <canvas id="deptChart"></canvas>
+                    </div>
+                </div>
+
+                
+                <div class="p-8 rounded-[40px] bg-indigo-600 text-white shadow-xl shadow-indigo-600/20">
+                    <h3 class="text-lg font-black uppercase tracking-widest text-indigo-200 mb-6">Weekly Distribution
+                    </h3>
+                    <div class="h-[300px] flex items-center justify-center">
+                        <canvas id="dailyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('../api/get_analytics_data.php');
+                const result = await response.json();
+
+                if (!result.success) throw new Error(result.message);
+
+                const data = result.data;
+
+                
+                const commonOptions = {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } },
+                        x: { grid: { display: false } }
+                    }
+                };
+
+                
+                new Chart(document.getElementById('roomChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: data.roomUsage.map(i => 'RM-' + i.label),
+                        datasets: [{
+                            data: data.roomUsage.map(i => i.value),
+                            backgroundColor: '#6366f1',
+                            borderRadius: 12
+                        }]
+                    },
+                    options: commonOptions
+                });
+
+                
+                new Chart(document.getElementById('teacherChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: data.teacherWorkload.map(i => i.label),
+                        datasets: [{
+                            data: data.teacherWorkload.map(i => i.value),
+                            backgroundColor: '#10b981',
+                            borderRadius: 12
+                        }]
+                    },
+                    options: { ...commonOptions, indexAxis: 'y' }
+                });
+
+                
+                new Chart(document.getElementById('deptChart'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: data.deptDistribution.map(i => i.label),
+                        datasets: [{
+                            data: data.deptDistribution.map(i => i.value),
+                            backgroundColor: [
+                                '#6366f1', 
+                                '#10b981', 
+                                '#f59e0b', 
+                                '#ef4444', 
+                                '#8b5cf6', 
+                                '#06b6d4', 
+                                '#ec4899', 
+                                '#14b8a6'  
+                            ],
+                            borderWidth: 4,
+                            borderColor: document.documentElement.classList.contains('dark') ? '#0B1121' : '#ffffff',
+                            hoverOffset: 10
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'right',
+                                labels: {
+                                    padding: 15,
+                                    font: { size: 12, weight: 'bold' },
+                                    color: document.documentElement.classList.contains('dark') ? '#fff' : '#000',
+                                    usePointStyle: true,
+                                    pointStyle: 'circle'
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        const label = context.label || '';
+                                        const value = context.parsed || 0;
+                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        const percentage = ((value / total) * 100).toFixed(1);
+                                        return `${label}: ${value} classes (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                
+                new Chart(document.getElementById('dailyChart'), {
+                    type: 'line',
+                    data: {
+                        labels: data.dailyLoad.map(i => i.label),
+                        datasets: [{
+                            data: data.dailyLoad.map(i => i.value),
+                            borderColor: 'white',
+                            backgroundColor: 'rgba(255,255,255,0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 6,
+                            pointBackgroundColor: 'white'
+                        }]
+                    },
+                    options: {
+                        ...commonOptions,
+                        scales: {
+                            y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: 'white' } },
+                            x: { ticks: { color: 'white' } }
+                        }
+                    }
+                });
+
+            } catch (err) {
+                console.error('Analytics Error:', err);
+            }
+        });
+    </script>
+    <script></script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+
+    <?php renderNavbar($role, $name); ?>
+
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'analytics.php'); ?>
+
+        <main class="flex-1 p-4 sm:p-6 lg:p-10 space-y-10">
+            <header class="flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div class="text-center sm:text-left">
+                    <h1
+                        class="text-3xl sm:text-4xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+                        System Insights
+                    </h1>
+                    <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm sm:text-base">Quantitative analysis of
+                        academic resources and
+                        scheduling patterns.</p>
+                </div>
+                <div class="flex gap-4">
+                    <button onclick="window.print()"
+                        class="px-5 py-2.5 sm:px-6 sm:py-3 bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl font-bold flex items-center gap-2 hover:bg-gray-50 transition-all text-xs sm:text-sm">
+                        <i class="ri-printer-line"></i> Print Report
+                    </button>
+                </div>
+            </header>
+
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                <div
+                    class="p-6 sm:p-8 rounded-[24px] sm:rounded-[32px] bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-white/20 flex items-center justify-center">
+                            <i class="ri-calendar-line text-2xl sm:text-3xl"></i>
+                        </div>
+                        <span class="text-3xl sm:text-4xl font-black">
+                            <?php echo $totalRoutines; ?>
+                        </span>
+                    </div>
+                    <h4 class="text-[10px] sm:text-sm font-bold text-white/80 uppercase tracking-widest">Active Classes
+                    </h4>
+                </div>
+
+                <div class="p-8 rounded-[32px] bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+                            <i class="ri-user-line text-3xl"></i>
+                        </div>
+                        <span class="text-4xl font-black">
+                            <?php echo $totalTeachers; ?>
+                        </span>
+                    </div>
+                    <h4 class="text-sm font-bold text-white/80 uppercase tracking-widest">Faculty Members</h4>
+                </div>
+
+                <div class="p-8 rounded-[32px] bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+                            <i class="ri-door-line text-3xl"></i>
+                        </div>
+                        <span class="text-4xl font-black">
+                            <?php echo $totalRooms; ?>
+                        </span>
+                    </div>
+                    <h4 class="text-sm font-bold text-white/80 uppercase tracking-widest">Classrooms Used</h4>
+                </div>
+
+                <div class="p-8 rounded-[32px] bg-gradient-to-br from-purple-500 to-pink-600 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+                            <i class="ri-building-line text-3xl"></i>
+                        </div>
+                        <span class="text-4xl font-black">
+                            <?php echo $totalDepartments; ?>
+                        </span>
+                    </div>
+                    <h4 class="text-sm font-bold text-white/80 uppercase tracking-widest">Departments</h4>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                
+                <div
+                    class="p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm">
+                    <h3 class="text-lg font-black uppercase tracking-widest text-gray-400 mb-6">Classroom Occupancy</h3>
+                    <div class="h-[300px] flex items-center justify-center">
+                        <canvas id="roomChart"></canvas>
+                    </div>
+                </div>
+
+                
+                <div
+                    class="p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm">
+                    <h3 class="text-lg font-black uppercase tracking-widest text-gray-400 mb-6">Faculty Workload</h3>
+                    <div class="h-[300px] flex items-center justify-center">
+                        <canvas id="teacherChart"></canvas>
+                    </div>
+                </div>
+
+                
+                <div
+                    class="p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm">
+                    <h3 class="text-lg font-black uppercase tracking-widest text-gray-400 mb-6">Departmental Load</h3>
+                    <div class="h-[300px] flex items-center justify-center">
+                        <canvas id="deptChart"></canvas>
+                    </div>
+                </div>
+
+                
+                <div class="p-8 rounded-[40px] bg-indigo-600 text-white shadow-xl shadow-indigo-600/20">
+                    <h3 class="text-lg font-black uppercase tracking-widest text-indigo-200 mb-6">Weekly Distribution
+                    </h3>
+                    <div class="h-[300px] flex items-center justify-center">
+                        <canvas id="dailyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <script></script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+</body>
+
+</html>
+
+
+

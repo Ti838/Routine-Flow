@@ -1,9 +1,7 @@
 <?php
-// layout.php
 
 function renderNavbar($role, $name)
 {
-    // Fix: Dynamic path prefix for subdirectory hosting
     $depth = count(explode('/', $_SERVER['PHP_SELF'])) - 2;
     $prefix = str_repeat('../', max(0, $depth - 1));
     ?>
@@ -25,7 +23,7 @@ function renderNavbar($role, $name)
             </div>
             <div class="flex items-center gap-6">
 
-                <!-- Theme Toggle -->
+                
                 <button onclick="toggleTheme()"
                     class="w-10 h-10 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center text-gray-500 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-white/10 transition-all"
                     title="Toggle Theme">
@@ -33,7 +31,7 @@ function renderNavbar($role, $name)
                     <i class="ri-moon-line dark:hidden text-xl"></i>
                 </button>
 
-                <!-- Notifications -->
+                
                 <div class="relative">
                     <button onclick="document.getElementById('notificationDropdown').classList.toggle('hidden')"
                         class="w-10 h-10 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 transition-all relative">
@@ -42,7 +40,7 @@ function renderNavbar($role, $name)
                             class="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500 border border-white dark:border-[#0B1121]"></span>
                     </button>
 
-                    <!-- Dropdown -->
+                    
                     <div id="notificationDropdown"
                         class="hidden absolute top-14 right-0 w-80 bg-white dark:bg-[#16213e] rounded-2xl shadow-2xl border border-gray-100 dark:border-white/5 overflow-hidden z-[60] animate-in fade-in slide-in-from-top-2">
                         <div
@@ -114,7 +112,7 @@ function renderNavbar($role, $name)
             </div>
         </div>
     </nav>
-    <div class="h-20"></div> <!-- Spacer for fixed navbar -->
+    <div class="h-20"></div> 
     <?php
 }
 

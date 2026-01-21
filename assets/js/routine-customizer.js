@@ -1,7 +1,4 @@
-/**
- * Routine Customizer Module
- * Handles color highlighting, star marking, and priority management
- */
+
 
 class RoutineCustomizer {
     constructor() {
@@ -49,13 +46,13 @@ class RoutineCustomizer {
             const routineCard = document.querySelector(`[data-routine-id="${routineId}"]`);
             if (!routineCard) return;
 
-            // Apply color
+            
             if (custom.color_code) {
                 routineCard.style.borderLeft = `4px solid ${custom.color_code}`;
                 routineCard.style.backgroundColor = `${custom.color_code}15`;
             }
 
-            // Apply star
+            
             if (custom.is_starred) {
                 const starBtn = routineCard.querySelector('.btn-star');
                 if (starBtn) {
@@ -64,7 +61,7 @@ class RoutineCustomizer {
                 }
             }
 
-            // Apply priority badge
+            
             if (custom.priority > 0) {
                 const priorityBadge = this.createPriorityBadge(custom.priority);
                 routineCard.querySelector('.routine-header')?.appendChild(priorityBadge);
@@ -73,17 +70,17 @@ class RoutineCustomizer {
     }
 
     attachEventListeners() {
-        // Color picker buttons
+        
         document.querySelectorAll('.btn-color-picker').forEach(btn => {
             btn.addEventListener('click', (e) => this.showColorPicker(e));
         });
 
-        // Star buttons
+        
         document.querySelectorAll('.btn-star').forEach(btn => {
             btn.addEventListener('click', (e) => this.toggleStar(e));
         });
 
-        // Priority buttons
+        
         document.querySelectorAll('.btn-priority').forEach(btn => {
             btn.addEventListener('click', (e) => this.showPriorityMenu(e));
         });
@@ -94,10 +91,10 @@ class RoutineCustomizer {
         const btn = event.currentTarget;
         const routineId = btn.closest('[data-routine-id]').dataset.routineId;
 
-        // Remove existing picker
+        
         document.querySelectorAll('.color-picker-popover').forEach(p => p.remove());
 
-        // Create color picker
+        
         const picker = document.createElement('div');
         picker.className = 'color-picker-popover';
         picker.innerHTML = `
@@ -119,14 +116,14 @@ class RoutineCustomizer {
             </div>
         `;
 
-        // Position picker
+        
         const rect = btn.getBoundingClientRect();
         picker.style.top = `${rect.bottom + 10}px`;
         picker.style.left = `${rect.left}px`;
 
         document.body.appendChild(picker);
 
-        // Add event listeners
+        
         picker.querySelectorAll('.color-option').forEach(option => {
             option.addEventListener('click', (e) => this.selectColor(e));
         });
@@ -135,7 +132,7 @@ class RoutineCustomizer {
             this.clearColor(e);
         });
 
-        // Close on outside click
+        
         setTimeout(() => {
             document.addEventListener('click', function closePickerHandler() {
                 picker.remove();
@@ -152,14 +149,14 @@ class RoutineCustomizer {
 
         await this.saveCustomization(routineId, { color_code: colorCode });
 
-        // Update UI
+        
         const routineCard = document.querySelector(`[data-routine-id="${routineId}"]`);
         if (routineCard) {
             routineCard.style.borderLeft = `4px solid ${colorCode}`;
             routineCard.style.backgroundColor = `${colorCode}15`;
         }
 
-        // Close picker
+        
         document.querySelector('.color-picker-popover')?.remove();
     }
 
@@ -169,7 +166,7 @@ class RoutineCustomizer {
 
         await this.saveCustomization(routineId, { color_code: null });
 
-        // Update UI
+        
         const routineCard = document.querySelector(`[data-routine-id="${routineId}"]`);
         if (routineCard) {
             routineCard.style.borderLeft = '';
@@ -187,7 +184,7 @@ class RoutineCustomizer {
 
         await this.saveCustomization(routineId, { is_starred: !isStarred });
 
-        // Update UI
+        
         btn.classList.toggle('starred');
         const icon = btn.querySelector('i');
         icon.className = isStarred ? 'ri-star-line' : 'ri-star-fill';
@@ -198,7 +195,7 @@ class RoutineCustomizer {
         const btn = event.currentTarget;
         const routineId = btn.closest('[data-routine-id]').dataset.routineId;
 
-        // Create priority menu
+        
         const menu = document.createElement('div');
         menu.className = 'priority-menu-popover';
         menu.innerHTML = `
@@ -242,7 +239,7 @@ class RoutineCustomizer {
 
         await this.saveCustomization(routineId, { priority });
 
-        // Update UI - add priority badge
+        
         const routineCard = document.querySelector(`[data-routine-id="${routineId}"]`);
         if (routineCard) {
             const existingBadge = routineCard.querySelector('.priority-badge');
@@ -267,10 +264,10 @@ class RoutineCustomizer {
 
     async saveCustomization(routineId, data) {
         try {
-            // Get existing customization
+            
             const existing = this.customizations.get(routineId) || {};
 
-            // Merge with new data
+            
             const customization = {
                 routine_id: routineId,
                 color_code: data.color_code !== undefined ? data.color_code : existing.color_code,
@@ -316,8 +313,10 @@ class RoutineCustomizer {
     }
 }
 
-// Initialize on page load
+
 let routineCustomizer;
 document.addEventListener('DOMContentLoaded', () => {
     routineCustomizer = new RoutineCustomizer();
 });
+
+

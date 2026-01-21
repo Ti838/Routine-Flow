@@ -10,7 +10,6 @@ $role = $_SESSION['user_role'];
 $dept_id = $_SESSION['department_id'];
 $semester = $_SESSION['semester'];
 
-// Logic: Fetch today's classes from database
 $today = date('l');
 $classes = [];
 try {
@@ -24,9 +23,7 @@ try {
     $stmt->execute([$_SESSION['user_id'], $dept_id, $semester, $today]);
     $classes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    //
 }
 
-// Presentation: Include the view
 include __DIR__ . '/today.html';
 ?>

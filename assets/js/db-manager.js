@@ -1,7 +1,4 @@
-/**
- * Simple Mock Database & Session Manager
- * Uses localStorage to persist user data and session state.
- */
+
 
 const DB = {
     users: [
@@ -11,13 +8,13 @@ const DB = {
             username: 'timon_dev',
             email: 'timon@example.com',
             password: 'password123',
-            role: 'student', // or 'teacher', 'admin'
-            profile_pic: '', // filename or URL
+            role: 'student', 
+            profile_pic: '', 
             gender: 'Male',
-            // Student specific
+            
             student_id: '2023001',
             semester: '3rd Year, 1st Sem',
-            // Teacher specific
+            
             teacher_id: '',
             department: '',
             created_at: new Date().toISOString()
@@ -28,7 +25,7 @@ const DB = {
         if (!localStorage.getItem('rf_users')) {
             localStorage.setItem('rf_users', JSON.stringify(this.users));
         }
-        // Auto-login the first user if no session exists (FOR DEVELOPMENT CONVENIENCE)
+        
         if (!localStorage.getItem('rf_session')) {
             this.login('timon@example.com', 'password123');
         }
@@ -60,7 +57,7 @@ const DB = {
 
     logout() {
         localStorage.removeItem('rf_session');
-        // Redirect to server-side logout (use absolute root path which exists in this repo)
+        
         window.location.href = '/logout.php';
     },
 
@@ -80,7 +77,7 @@ const DB = {
             users[index] = { ...users[index], ...updateData };
             this.saveUsers(users);
 
-            // Update session if name changed
+            
             const session = JSON.parse(localStorage.getItem('rf_session'));
             if (session && session.user_id === userId) {
                 session.name = users[index].name;
@@ -92,7 +89,7 @@ const DB = {
         return { success: false, message: 'User not found' };
     },
 
-    // Calculate profile completion percentage
+    
     calculateCompletion(user) {
         if (!user) return 0;
         const fields = ['name', 'email', 'gender', 'profile_pic'];
@@ -108,8 +105,10 @@ const DB = {
     }
 };
 
-// Initialize on load
+
 DB.init();
 
-// Expose globally
+
 window.DB = DB;
+
+

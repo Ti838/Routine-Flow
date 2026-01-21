@@ -16,3 +16,4 @@ if (isset($_GET['id'])) {
         echo json_encode(['success' => false, 'message' => 'Cannot delete department: ' . $e->getMessage()]);
     }
 }
+

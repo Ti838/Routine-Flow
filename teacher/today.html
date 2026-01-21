@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Today's Schedule - Routine Flow</title>
     <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="../assets/js/tailwind-config.js"></script>
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <script></script>
     <link rel="stylesheet" href="../assets/css/zoom-fix.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="https:
     <script>
         (function () {
             const saved = localStorage.getItem('theme');
@@ -20,9 +20,9 @@
             }
         })();
     </script>
-    <!-- Core Modules -->
-    <script src='../assets/js/db-manager.js'></script>
-    <script src='../assets/js/component-loader.js'></script>
+    
+    <script></script>
+    <script></script>
 </head>
 
 <body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
@@ -91,7 +91,7 @@
             </div>
         </main>
     </div>
-    <script src="../assets/js/theme.js"></script>
+    <script></script>
     <script>
         function updateClock() {
             const now = new Date();
@@ -108,3 +108,471 @@
 </body>
 
 </html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <link rel="stylesheet" href="../assets/css/zoom-fix.css">
+    <link href="https:
+    <script>
+        (function () {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark' || saved === 'light') {
+                if (saved === 'dark') document.documentElement.classList.add('dark');
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    
+    <script></script>
+    <script></script>
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+    <?php renderNavbar($role, $name); ?>
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'today.php'); ?>
+        <main class="flex-1 p-6 lg:p-10 space-y-10">
+            <header class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-extrabold tracking-tight">Today's Sessions</h1>
+                    <p id="liveDate" class="text-gray-500 dark:text-gray-400 mt-2">
+                        <?php echo date('l, F j, Y'); ?>
+                    </p>
+                </div>
+                <div id="liveClock" class="text-3xl font-black text-indigo-600">
+                    <?php echo date('H:i:s'); ?>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                <?php if (empty($classes)): ?>
+                <div
+                    class="md:col-span-2 xl:col-span-3 p-20 text-center rounded-[40px] bg-white dark:bg-white/5 border border-dashed border-gray-200 dark:border-white/10 italic text-gray-400">
+                    No classes scheduled for today. Enjoy your day!
+                </div>
+                <?php else: ?>
+                <?php foreach ($classes as $class): 
+                    $color = $class['color_tag'] ?? 'indigo';
+                ?>
+                <div
+                    class="p-8 rounded-[32px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-xl transition-all group border-l-8 border-l-<?php echo $color; ?>-500">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div
+                            class="w-14 h-14 rounded-2xl bg-<?php echo $color; ?>-600/10 text-<?php echo $color; ?>-600 flex items-center justify-center text-2xl font-black">
+                            <?php echo substr($class['subject_name'], 0, 1); ?>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold group-hover:text-<?php echo $color; ?>-600 transition-colors">
+                                <?php echo htmlspecialchars($class['subject_name']); ?>
+                            </h3>
+                            <span
+                                class="text-[10px] font-bold text-<?php echo $color; ?>-500 bg-<?php echo $color; ?>-500/10 px-3 py-1 rounded-full uppercase tracking-widest">
+                                <?php echo htmlspecialchars($class['semester']); ?>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 py-6 border-y border-gray-50 dark:border-white/5">
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-400 font-bold uppercase tracking-widest text-[10px]">Timing</span>
+                            <span class="font-black">
+                                <?php echo date('H:i', strtotime($class['start_time'])); ?> -
+                                <?php echo date('H:i', strtotime($class['end_time'])); ?>
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-400 font-bold uppercase tracking-widest text-[10px]">Location</span>
+                            <span class="font-black text-emerald-500">
+                                <?php echo htmlspecialchars($class['room_number']); ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </main>
+    </div>
+    <script></script>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+            const dateOptions = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+            const dateStr = now.toLocaleDateString('en-US', dateOptions);
+
+            document.getElementById('liveClock').textContent = timeStr;
+            document.getElementById('liveDate').textContent = dateStr;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+    <link rel="stylesheet" href="../assets/css/zoom-fix.css">
+    <link href="https:
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    
+    <script></script>
+    <script></script>
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+    <?php renderNavbar($role, $name); ?>
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'today.php'); ?>
+        <main class="flex-1 p-6 lg:p-10 space-y-10">
+            <header class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-extrabold tracking-tight">Today's Sessions</h1>
+                    <p id="liveDate" class="text-gray-500 dark:text-gray-400 mt-2">
+                        <?php echo date('l, F j, Y'); ?>
+                    </p>
+                </div>
+                <div id="liveClock" class="text-3xl font-black text-indigo-600">
+                    <?php echo date('H:i:s'); ?>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                <?php if (empty($classes)): ?>
+                <div
+                    class="md:col-span-2 xl:col-span-3 p-20 text-center rounded-[40px] bg-white dark:bg-white/5 border border-dashed border-gray-200 dark:border-white/10 italic text-gray-400">
+                    No classes scheduled for today. Enjoy your day!
+                </div>
+                <?php else: ?>
+                <?php foreach ($classes as $class): 
+                    $color = $class['color_tag'] ?? 'indigo';
+                ?>
+                <div
+                    class="p-8 rounded-[32px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-xl transition-all group border-l-8 border-l-<?php echo $color; ?>-500">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div
+                            class="w-14 h-14 rounded-2xl bg-<?php echo $color; ?>-600/10 text-<?php echo $color; ?>-600 flex items-center justify-center text-2xl font-black">
+                            <?php echo substr($class['subject_name'], 0, 1); ?>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold group-hover:text-<?php echo $color; ?>-600 transition-colors">
+                                <?php echo htmlspecialchars($class['subject_name']); ?>
+                            </h3>
+                            <span
+                                class="text-[10px] font-bold text-<?php echo $color; ?>-500 bg-<?php echo $color; ?>-500/10 px-3 py-1 rounded-full uppercase tracking-widest">
+                                <?php echo htmlspecialchars($class['semester']); ?>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 py-6 border-y border-gray-50 dark:border-white/5">
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-400 font-bold uppercase tracking-widest text-[10px]">Timing</span>
+                            <span class="font-black">
+                                <?php echo date('H:i', strtotime($class['start_time'])); ?> -
+                                <?php echo date('H:i', strtotime($class['end_time'])); ?>
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-400 font-bold uppercase tracking-widest text-[10px]">Location</span>
+                            <span class="font-black text-emerald-500">
+                                <?php echo htmlspecialchars($class['room_number']); ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </main>
+    </div>
+    <script></script>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+            const dateOptions = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+            const dateStr = now.toLocaleDateString('en-US', dateOptions);
+
+            document.getElementById('liveClock').textContent = timeStr;
+            document.getElementById('liveDate').textContent = dateStr;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+    
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <script></script>
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+    <?php renderNavbar($role, $name); ?>
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'today.php'); ?>
+        <main class="flex-1 p-6 lg:p-10 space-y-10">
+            <header class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-extrabold tracking-tight">Today's Sessions</h1>
+                    <p id="liveDate" class="text-gray-500 dark:text-gray-400 mt-2">
+                        <?php echo date('l, F j, Y'); ?>
+                    </p>
+                </div>
+                <div id="liveClock" class="text-3xl font-black text-indigo-600">
+                    <?php echo date('H:i:s'); ?>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                <?php if (empty($classes)): ?>
+                <div
+                    class="md:col-span-2 xl:col-span-3 p-20 text-center rounded-[40px] bg-white dark:bg-white/5 border border-dashed border-gray-200 dark:border-white/10 italic text-gray-400">
+                    No classes scheduled for today. Enjoy your day!
+                </div>
+                <?php else: ?>
+                <?php foreach ($classes as $class): 
+                    $color = $class['color_tag'] ?? 'indigo';
+                ?>
+                <div
+                    class="p-8 rounded-[32px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-xl transition-all group border-l-8 border-l-<?php echo $color; ?>-500">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div
+                            class="w-14 h-14 rounded-2xl bg-<?php echo $color; ?>-600/10 text-<?php echo $color; ?>-600 flex items-center justify-center text-2xl font-black">
+                            <?php echo substr($class['subject_name'], 0, 1); ?>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold group-hover:text-<?php echo $color; ?>-600 transition-colors">
+                                <?php echo htmlspecialchars($class['subject_name']); ?>
+                            </h3>
+                            <span
+                                class="text-[10px] font-bold text-<?php echo $color; ?>-500 bg-<?php echo $color; ?>-500/10 px-3 py-1 rounded-full uppercase tracking-widest">
+                                <?php echo htmlspecialchars($class['semester']); ?>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 py-6 border-y border-gray-50 dark:border-white/5">
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-400 font-bold uppercase tracking-widest text-[10px]">Timing</span>
+                            <span class="font-black">
+                                <?php echo date('H:i', strtotime($class['start_time'])); ?> -
+                                <?php echo date('H:i', strtotime($class['end_time'])); ?>
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-400 font-bold uppercase tracking-widest text-[10px]">Location</span>
+                            <span class="font-black text-emerald-500">
+                                <?php echo htmlspecialchars($class['room_number']); ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </main>
+    </div>
+    <script></script>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+            const dateOptions = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+            const dateStr = now.toLocaleDateString('en-US', dateOptions);
+
+            document.getElementById('liveClock').textContent = timeStr;
+            document.getElementById('liveDate').textContent = dateStr;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+    <?php renderNavbar($role, $name); ?>
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'today.php'); ?>
+        <main class="flex-1 p-6 lg:p-10 space-y-10">
+            <header class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-extrabold tracking-tight">Today's Sessions</h1>
+                    <p id="liveDate" class="text-gray-500 dark:text-gray-400 mt-2">
+                        <?php echo date('l, F j, Y'); ?>
+                    </p>
+                </div>
+                <div id="liveClock" class="text-3xl font-black text-indigo-600">
+                    <?php echo date('H:i:s'); ?>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                <?php if (empty($classes)): ?>
+                <div
+                    class="md:col-span-2 xl:col-span-3 p-20 text-center rounded-[40px] bg-white dark:bg-white/5 border border-dashed border-gray-200 dark:border-white/10 italic text-gray-400">
+                    No classes scheduled for today. Enjoy your day!
+                </div>
+                <?php else: ?>
+                <?php foreach ($classes as $class): 
+                    $color = $class['color_tag'] ?? 'indigo';
+                ?>
+                <div
+                    class="p-8 rounded-[32px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-xl transition-all group border-l-8 border-l-<?php echo $color; ?>-500">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div
+                            class="w-14 h-14 rounded-2xl bg-<?php echo $color; ?>-600/10 text-<?php echo $color; ?>-600 flex items-center justify-center text-2xl font-black">
+                            <?php echo substr($class['subject_name'], 0, 1); ?>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold group-hover:text-<?php echo $color; ?>-600 transition-colors">
+                                <?php echo htmlspecialchars($class['subject_name']); ?>
+                            </h3>
+                            <span
+                                class="text-[10px] font-bold text-<?php echo $color; ?>-500 bg-<?php echo $color; ?>-500/10 px-3 py-1 rounded-full uppercase tracking-widest">
+                                <?php echo htmlspecialchars($class['semester']); ?>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 py-6 border-y border-gray-50 dark:border-white/5">
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-400 font-bold uppercase tracking-widest text-[10px]">Timing</span>
+                            <span class="font-black">
+                                <?php echo date('H:i', strtotime($class['start_time'])); ?> -
+                                <?php echo date('H:i', strtotime($class['end_time'])); ?>
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-400 font-bold uppercase tracking-widest text-[10px]">Location</span>
+                            <span class="font-black text-emerald-500">
+                                <?php echo htmlspecialchars($class['room_number']); ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </main>
+    </div>
+    <script></script>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+            const dateOptions = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+            const dateStr = now.toLocaleDateString('en-US', dateOptions);
+
+            document.getElementById('liveClock').textContent = timeStr;
+            document.getElementById('liveDate').textContent = dateStr;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+    <?php renderNavbar($role, $name); ?>
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'today.php'); ?>
+        <main class="flex-1 p-6 lg:p-10 space-y-10">
+            <header class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-extrabold tracking-tight">Today's Sessions</h1>
+                    <p id="liveDate" class="text-gray-500 dark:text-gray-400 mt-2">
+                        <?php echo date('l, F j, Y'); ?>
+                    </p>
+                </div>
+                <div id="liveClock" class="text-3xl font-black text-indigo-600">
+                    <?php echo date('H:i:s'); ?>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                <?php if (empty($classes)): ?>
+                <div
+                    class="md:col-span-2 xl:col-span-3 p-20 text-center rounded-[40px] bg-white dark:bg-white/5 border border-dashed border-gray-200 dark:border-white/10 italic text-gray-400">
+                    No classes scheduled for today. Enjoy your day!
+                </div>
+                <?php else: ?>
+                <?php foreach ($classes as $class): 
+                    $color = $class['color_tag'] ?? 'indigo';
+                ?>
+                <div
+                    class="p-8 rounded-[32px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-xl transition-all group border-l-8 border-l-<?php echo $color; ?>-500">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div
+                            class="w-14 h-14 rounded-2xl bg-<?php echo $color; ?>-600/10 text-<?php echo $color; ?>-600 flex items-center justify-center text-2xl font-black">
+                            <?php echo substr($class['subject_name'], 0, 1); ?>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold group-hover:text-<?php echo $color; ?>-600 transition-colors">
+                                <?php echo htmlspecialchars($class['subject_name']); ?>
+                            </h3>
+                            <span
+                                class="text-[10px] font-bold text-<?php echo $color; ?>-500 bg-<?php echo $color; ?>-500/10 px-3 py-1 rounded-full uppercase tracking-widest">
+                                <?php echo htmlspecialchars($class['semester']); ?>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 py-6 border-y border-gray-50 dark:border-white/5">
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-400 font-bold uppercase tracking-widest text-[10px]">Timing</span>
+                            <span class="font-black">
+                                <?php echo date('H:i', strtotime($class['start_time'])); ?> -
+                                <?php echo date('H:i', strtotime($class['end_time'])); ?>
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-400 font-bold uppercase tracking-widest text-[10px]">Location</span>
+                            <span class="font-black text-emerald-500">
+                                <?php echo htmlspecialchars($class['room_number']); ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </main>
+    </div>
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+            const dateOptions = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+            const dateStr = now.toLocaleDateString('en-US', dateOptions);
+
+            document.getElementById('liveClock').textContent = timeStr;
+            document.getElementById('liveDate').textContent = dateStr;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+</body>
+
+</html>
+
+
+

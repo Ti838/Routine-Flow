@@ -10,7 +10,6 @@ $role = $_SESSION['user_role'];
 $dept_id = $_SESSION['department_id'];
 $semester = $_SESSION['semester'];
 
-// Logic: Fetch weekly routine
 $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 $routine_data = [];
 try {
@@ -20,9 +19,7 @@ try {
         $routine_data[$row['day_of_week']][] = $row;
     }
 } catch (PDOException $e) {
-    //
 }
 
-// Presentation: Include the view
 include __DIR__ . '/weekly.html';
 ?>

@@ -18,3 +18,4 @@ if (setSystemSetting('maintenance_mode', $new)) {
 } else {
     echo json_encode(['success' => false]);
 }
+

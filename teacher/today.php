@@ -19,3 +19,4 @@ try {
 }
 
 include __DIR__ . '/today.html';
+

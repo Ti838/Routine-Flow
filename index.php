@@ -4,7 +4,6 @@ require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/core.php';
 handleMaintenance();
 
-// Prepare variables for dynamic sectors
 try {
     $dept_count = $conn->query("SELECT COUNT(*) FROM departments")->fetchColumn();
     $user_count = $conn->query("SELECT (SELECT COUNT(*) FROM students) + (SELECT COUNT(*) FROM teachers) + (SELECT COUNT(*) FROM admins)")->fetchColumn();
@@ -13,7 +12,6 @@ try {
     $user_count = 1200;
 }
 
-// Presentation: Load template and handle dynamic elements
 $template = file_get_contents('index.html');
 
 $placeholders = [
@@ -21,8 +19,7 @@ $placeholders = [
     '{{USER_COUNT}}' => number_format($user_count)
 ];
 
-// Handle Navigation Button replacement
-$login_btn_html = '<!-- {{NAV_ACTION_BTN}} -->
+$login_btn_html = '
                     <a href="login.php" id="nav-action-btn" class="bg-primary-blue text-white px-6 py-2.5 rounded-xl font-bold hover:bg-primary-dark transition-all shadow-lg shadow-indigo-500/20">Login</a>';
 
 if (isset($_SESSION['user_id'])) {

@@ -2,7 +2,7 @@ let teacherOptions = [];
 
 document.addEventListener('DOMContentLoaded', async function () {
     await fetchTeachers();
-    addRow(); // Add one row by default
+    addRow(); 
 
     document.getElementById('addClassBtn').addEventListener('click', addRow);
     document.getElementById('createRoutineForm').addEventListener('submit', submitRoutine);
@@ -26,7 +26,7 @@ function addRow() {
     const tbody = document.getElementById('routineList');
     const rowId = 'row-' + Date.now();
 
-    // Generate Teacher Options HTML
+    
     let teacherSelectHtml = '<option value="">Select Teacher</option>';
     teacherOptions.forEach(t => {
         teacherSelectHtml += `<option value="${t.id}">${t.name} (${t.department})</option>`;
@@ -103,7 +103,7 @@ async function submitRoutine(e) {
         return;
     }
 
-    // Send to API
+    
     try {
         const response = await fetch('../api/create_routine.php', {
             method: 'POST',
@@ -123,3 +123,5 @@ async function submitRoutine(e) {
         alert('An error occurred. Please try again.');
     }
 }
+
+

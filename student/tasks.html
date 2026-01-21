@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Lab - Routine Flow</title>
     <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="../assets/js/tailwind-config.js"></script>
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <script></script>
     <link rel="stylesheet" href="../assets/css/zoom-fix.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="https:
     <script>
         (function () {
             const saved = localStorage.getItem('theme');
@@ -92,7 +92,7 @@
             </header>
 
             <div class="grid grid-cols-1 xl:grid-cols-3 gap-10">
-                <!-- Left: Timer Section -->
+                
                 <div class="xl:col-span-1 space-y-10">
                     <section
                         class="p-6 sm:p-10 rounded-[32px] sm:rounded-[40px] glass-card border-none shadow-2xl relative overflow-hidden text-center space-y-6 sm:space-y-8">
@@ -114,7 +114,7 @@
                                 id="taskStatusLabel">Ready for ignition</p>
                         </div>
 
-                        <!-- Circular Timer -->
+                        
                         <div class="relative w-48 h-48 sm:w-64 sm:h-64 mx-auto">
                             <svg class="w-full h-full transform -rotate-90">
                                 <circle cx="50%" cy="50%" r="45%" stroke="currentColor" stroke-width="8"
@@ -150,7 +150,7 @@
                     </section>
                 </div>
 
-                <!-- Right: Task List -->
+                
                 <div class="xl:col-span-2 space-y-10">
                     <section class="space-y-6">
                         <div class="flex items-center justify-between">
@@ -164,7 +164,7 @@
                         </div>
 
                         <div id="taskList" class="grid grid-cols-1 gap-6">
-                            <!-- Tasks will be injected here -->
+                            
                         </div>
                     </section>
                 </div>
@@ -172,7 +172,7 @@
         </main>
     </div>
 
-    <!-- Modals -->
+    
     <div id="taskModal" class="fixed inset-0 z-[100] hidden">
         <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" onclick="closeModal('taskModal')"></div>
         <div
@@ -200,7 +200,7 @@
         </div>
     </div>
 
-    <script src="../assets/js/theme.js"></script>
+    <script></script>
     <script>
         let tasks = [];
         let activeTaskId = null;
@@ -208,7 +208,7 @@
         let timerInterval = null;
         let isTimerRunning = false;
 
-        // API Interactions
+        
         async function fetchTasks() {
             try {
                 const res = await fetch('../api/student_tasks.php');
@@ -268,7 +268,7 @@
             document.getElementById('tasksDoneCount').textContent = done;
         }
 
-        // Timer Logic
+        
         function selectTask(task) {
             if (activeTaskId === task.id) return;
             if (isTimerRunning && !confirm('Stop current focus session?')) return;
@@ -279,7 +279,7 @@
             document.getElementById('taskStatusLabel').textContent = 'Objective Locked';
             document.getElementById('spentTimeDisplay').textContent = formatTimeWide(task.spent_time);
 
-            // Set initial timer based on estimation or default
+            
             timerSeconds = task.estimated_time * 60;
             updateTimerDisplay();
             renderTaskList();
@@ -303,9 +303,9 @@
                     updateTimerDisplay();
                     if (timerSeconds <= 0) {
                         clearInterval(timerInterval);
-                        syncTimeWithServer(timerSeconds % 10); // Final sync
+                        syncTimeWithServer(timerSeconds % 10); 
                         isTimerRunning = false;
-                        new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3').play();
+                        new Audio('https:
                         alert('Focus session complete!');
                     }
                 }, 1000);
@@ -326,12 +326,12 @@
             const s = timerSeconds % 60;
             document.getElementById('timerDisplay').textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
 
-            // Circle Progress
+            
             const circle = document.getElementById('timerCircle');
             const radius = circle.r.baseVal.valueInSpecifiedUnits;
-            // Since we use 45% of the SVG size, let's calculate circumference based on actual pixels if possible, 
-            // but SVG percentages can be tricky. Standardizing to a fixed radius for calculation is safer.
-            // Let's use 110 (from original) as a logical unit. 
+            
+            
+            
             const circumference = 2 * Math.PI * 110;
             circle.style.strokeDasharray = circumference;
 
@@ -358,7 +358,7 @@
             return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
         }
 
-        // CRUD Operations
+        
         async function completeTask(e, id) {
             e.stopPropagation();
             if (!confirm('Mark this mission as complete?')) return;
@@ -413,3 +413,1213 @@
 </body>
 
 </html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <link rel="stylesheet" href="../assets/css/zoom-fix.css">
+    <link href="https:
+    <script>
+        (function () {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark' || saved === 'light') {
+                if (saved === 'dark') document.documentElement.classList.add('dark');
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+        }
+
+        @keyframes progress-pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+        }
+
+        .timer-glow {
+            filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.4));
+        }
+
+        .check-sign {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: sign 0.6s ease-out forwards;
+        }
+
+        @keyframes sign {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+
+    <?php renderNavbar($role, $name); ?>
+
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'tasks.php'); ?>
+
+        <main class="flex-1 p-4 sm:p-6 lg:p-10 space-y-10">
+            <header class="flex items-center justify-between">
+                <div>
+                    <h1
+                        class="text-4xl font-extrabold tracking-tight underline decoration-indigo-500 decoration-4 underline-offset-8">
+                        Focus Lab</h1>
+                    <p class="text-gray-500 dark:text-gray-400 mt-4 font-bold uppercase tracking-widest text-xs">
+                        Micro-manage your success with deep focus</p>
+                </div>
+                <div class="flex gap-4">
+                    <button onclick="openModal('taskModal')"
+                        class="px-4 py-3 sm:px-6 sm:py-3 bg-indigo-600 text-white rounded-2xl font-black shadow-xl shadow-indigo-600/20 hover:scale-105 transition-all flex items-center gap-2 text-sm sm:text-base">
+                        <i class="ri-add-line text-lg sm:text-xl"></i> <span class="hidden sm:inline">Create
+                            Objective</span><span class="sm:hidden">New</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-10">
+                
+                <div class="xl:col-span-1 space-y-10">
+                    <section
+                        class="p-6 sm:p-10 rounded-[32px] sm:rounded-[40px] glass-card border-none shadow-2xl relative overflow-hidden text-center space-y-6 sm:space-y-8">
+                        <div class="absolute top-0 left-0 w-full h-2 bg-indigo-600 opacity-20">
+                            <div id="topProgressBar" class="h-full bg-indigo-600 transition-all duration-1000"
+                                style="width: 0%"></div>
+                        </div>
+
+                        <div class="flex items-center justify-center mb-4">
+                            <div
+                                class="w-16 h-16 rounded-2xl bg-indigo-600/10 text-indigo-600 flex items-center justify-center text-3xl">
+                                <i class="ri-focus-3-line"></i>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-2xl font-black" id="activeTaskTitle">Select a Task</h3>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mt-2"
+                                id="taskStatusLabel">Ready for ignition</p>
+                        </div>
+
+                        
+                        <div class="relative w-48 h-48 sm:w-64 sm:h-64 mx-auto">
+                            <svg class="w-full h-full transform -rotate-90">
+                                <circle cx="50%" cy="50%" r="45%" stroke="currentColor" stroke-width="8"
+                                    fill="transparent" class="text-gray-100 dark:text-white/5"></circle>
+                                <circle cx="50%" cy="50%" r="45%" stroke="currentColor" stroke-width="8"
+                                    fill="transparent" class="text-indigo-600 timer-glow transition-all duration-500"
+                                    stroke-dasharray="0" id="timerCircle"></circle>
+                            </svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                <span class="text-4xl sm:text-6xl font-black tracking-tighter tabular-nums"
+                                    id="timerDisplay">25:00</span>
+                                <span
+                                    class="text-[8px] sm:text-[10px] font-bold text-gray-400 uppercase tracking-widest">Minutes</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-center gap-4 pt-4">
+                            <button id="timerToggle" onclick="toggleTimer()"
+                                class="w-16 h-16 rounded-full bg-indigo-600 text-white flex items-center justify-center text-3xl shadow-xl shadow-indigo-600/40 hover:scale-110 transition-all">
+                                <i class="ri-play-fill" id="timerIcon"></i>
+                            </button>
+                            <button onclick="resetTimer()"
+                                class="w-12 h-12 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center text-xl hover:text-red-500 transition-all">
+                                <i class="ri-restart-line"></i>
+                            </button>
+                        </div>
+
+                        <div
+                            class="bg-gray-50 dark:bg-white/5 p-4 rounded-3xl flex items-center justify-between text-xs font-black">
+                            <span class="text-gray-400 uppercase tracking-widest">Accumulated Depth</span>
+                            <span id="spentTimeDisplay">00:00:00</span>
+                        </div>
+                    </section>
+                </div>
+
+                
+                <div class="xl:col-span-2 space-y-10">
+                    <section class="space-y-6">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-2xl font-black">Operational Objectives</h3>
+                            <div class="flex gap-2">
+                                <span
+                                    class="px-4 py-2 rounded-xl bg-emerald-500/10 text-emerald-500 text-[10px] font-bold uppercase tracking-widest">
+                                    <span id="tasksDoneCount">0</span> Completed
+                                </span>
+                            </div>
+                        </div>
+
+                        <div id="taskList" class="grid grid-cols-1 gap-6">
+                            
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    
+    <div id="taskModal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" onclick="closeModal('taskModal')"></div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg p-10 bg-white dark:bg-[#16213e] rounded-[40px] shadow-2xl border border-white/10">
+            <h2 class="text-3xl font-black mb-2">New Objective</h2>
+            <p class="text-gray-500 mb-8">Define a specific task and estimated focus time.</p>
+            <form id="createTaskForm" class="space-y-6">
+                <input type="hidden" name="action" value="add">
+                <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Objective
+                        Title</label>
+                    <input type="text" name="title" required placeholder="e.g. Research Quantum Computing"
+                        class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none font-bold">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Estimation
+                        (Minutes)</label>
+                    <input type="number" name="estimated_time" value="25" min="5"
+                        class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none font-bold">
+                </div>
+                <button type="submit"
+                    class="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-lg shadow-xl shadow-indigo-600/20 hover:bg-indigo-700 transition-all">Launch
+                    Task</button>
+            </form>
+        </div>
+    </div>
+
+    <script></script>
+    <script>
+        let tasks = [];
+        let activeTaskId = null;
+        let timerSeconds = 25 * 60;
+        let timerInterval = null;
+        let isTimerRunning = false;
+
+        
+        async function fetchTasks() {
+            try {
+                const res = await fetch('../api/student_tasks.php');
+                const json = await res.json();
+                if (json.success) {
+                    tasks = json.data;
+                    renderTaskList();
+                }
+            } catch (e) { console.error('Failed to fetch tasks'); }
+        }
+
+        function renderTaskList() {
+            const list = document.getElementById('taskList');
+            list.innerHTML = '';
+            let done = 0;
+
+            tasks.forEach(task => {
+                const isPending = task.status === 'pending';
+                if (!isPending) done++;
+
+                const card = document.createElement('div');
+                card.className = `group p-8 rounded-[32px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 hover:shadow-2xl transition-all cursor-pointer ${activeTaskId == task.id ? 'ring-4 ring-indigo-500/20 border-indigo-500/50' : ''}`;
+                card.onclick = () => selectTask(task);
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-6">
+                            <div class="w-14 h-14 rounded-2xl ${isPending ? 'bg-indigo-500/10 text-indigo-600' : 'bg-emerald-500/10 text-emerald-500'} flex items-center justify-center text-2xl transition-all">
+                                <i class="${isPending ? (activeTaskId == task.id ? 'ri-loader-4-line animate-spin' : 'ri-quill-pen-line') : 'ri-checkbox-circle-fill'}"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-black ${!isPending ? 'line-through opacity-40' : ''}">${task.title}</h4>
+                                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">
+                                    Estimation: ${task.estimated_time}m | Session Spent: ${Math.floor(task.spent_time / 60)}m
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            ${isPending ? `
+                                <button onclick="completeTask(event, ${task.id})" class="px-6 py-2 rounded-xl bg-gray-50 dark:bg-white/10 text-xs font-black uppercase tracking-widest hover:bg-emerald-500 hover:text-white transition-all">
+                                    Sign Off
+                                </button>
+                            ` : `
+                                <svg class="w-8 h-8 text-emerald-500" viewBox="0 0 24 24">
+                                    <path class="check-sign" fill="none" stroke="currentColor" stroke-width="3" d="M5 13l4 4L19 7" />
+                                </svg>
+                            `}
+                            <button onclick="deleteTask(event, ${task.id})" class="w-10 h-10 rounded-xl bg-gray-50 dark:bg-white/5 text-gray-300 hover:text-red-500 transition-all">
+                                <i class="ri-delete-bin-line"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+
+            document.getElementById('tasksDoneCount').textContent = done;
+        }
+
+        
+        function selectTask(task) {
+            if (activeTaskId === task.id) return;
+            if (isTimerRunning && !confirm('Stop current focus session?')) return;
+
+            resetTimer();
+            activeTaskId = task.id;
+            document.getElementById('activeTaskTitle').textContent = task.title;
+            document.getElementById('taskStatusLabel').textContent = 'Objective Locked';
+            document.getElementById('spentTimeDisplay').textContent = formatTimeWide(task.spent_time);
+
+            
+            timerSeconds = task.estimated_time * 60;
+            updateTimerDisplay();
+            renderTaskList();
+        }
+
+        function toggleTimer() {
+            if (!activeTaskId) return alert('Select an objective first');
+
+            if (isTimerRunning) {
+                clearInterval(timerInterval);
+                isTimerRunning = false;
+                document.getElementById('timerIcon').className = 'ri-play-fill';
+                document.getElementById('taskStatusLabel').textContent = 'Session Paused';
+            } else {
+                isTimerRunning = true;
+                document.getElementById('timerIcon').className = 'ri-pause-fill';
+                document.getElementById('taskStatusLabel').textContent = 'Deep Focus Active';
+                timerInterval = setInterval(() => {
+                    timerSeconds--;
+                    if (timerSeconds % 10 === 0) syncTimeWithServer(10);
+                    updateTimerDisplay();
+                    if (timerSeconds <= 0) {
+                        clearInterval(timerInterval);
+                        syncTimeWithServer(timerSeconds % 10); 
+                        isTimerRunning = false;
+                        new Audio('https:
+                        alert('Focus session complete!');
+                    }
+                }, 1000);
+            }
+        }
+
+        async function syncTimeWithServer(seconds) {
+            try {
+                await fetch('../api/student_tasks.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'update_time', id: activeTaskId, seconds: seconds })
+                });
+            } catch (e) { }
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timerSeconds / 60);
+            const s = timerSeconds % 60;
+            document.getElementById('timerDisplay').textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+
+            
+            const circle = document.getElementById('timerCircle');
+            const radius = circle.r.baseVal.valueInSpecifiedUnits;
+            
+            
+            
+            const circumference = 2 * Math.PI * 110;
+            circle.style.strokeDasharray = circumference;
+
+            const limit = 25 * 60;
+            const offset = circumference - (timerSeconds / limit) * circumference;
+            circle.style.strokeDashoffset = -offset;
+
+            const progress = ((limit - timerSeconds) / limit) * 100;
+            document.getElementById('topProgressBar').style.width = progress + '%';
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            document.getElementById('timerIcon').className = 'ri-play-fill';
+            timerSeconds = 25 * 60;
+            updateTimerDisplay();
+        }
+
+        function formatTimeWide(sec) {
+            const h = Math.floor(sec / 3600);
+            const m = Math.floor((sec % 3600) / 60);
+            const s = sec % 60;
+            return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }
+
+        
+        async function completeTask(e, id) {
+            e.stopPropagation();
+            if (!confirm('Mark this mission as complete?')) return;
+            try {
+                const res = await fetch('../api/student_tasks.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'complete', id: id })
+                });
+                if ((await res.json()).success) fetchTasks();
+            } catch (e) { }
+        }
+
+        async function deleteTask(e, id) {
+            e.stopPropagation();
+            if (!confirm('Abort this mission?')) return;
+            try {
+                const res = await fetch('../api/student_tasks.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'delete', id: id })
+                });
+                if ((await res.json()).success) {
+                    if (activeTaskId === id) {
+                        activeTaskId = null;
+                        document.getElementById('activeTaskTitle').textContent = 'Select a Task';
+                        resetTimer();
+                    }
+                    fetchTasks();
+                }
+            } catch (e) { }
+        }
+
+        document.getElementById('createTaskForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(e.target));
+            try {
+                const res = await fetch('../api/student_tasks.php', {
+                    method: 'POST',
+                    body: JSON.stringify(data)
+                });
+                if ((await res.json()).success) {
+                    closeModal('taskModal');
+                    fetchTasks();
+                }
+            } catch (e) { }
+        };
+
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+        fetchTasks();
+    </script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+    <link rel="stylesheet" href="../assets/css/zoom-fix.css">
+    <link href="https:
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+        }
+
+        @keyframes progress-pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+        }
+
+        .timer-glow {
+            filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.4));
+        }
+
+        .check-sign {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: sign 0.6s ease-out forwards;
+        }
+
+        @keyframes sign {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+
+    <?php renderNavbar($role, $name); ?>
+
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'tasks.php'); ?>
+
+        <main class="flex-1 p-4 sm:p-6 lg:p-10 space-y-10">
+            <header class="flex items-center justify-between">
+                <div>
+                    <h1
+                        class="text-4xl font-extrabold tracking-tight underline decoration-indigo-500 decoration-4 underline-offset-8">
+                        Focus Lab</h1>
+                    <p class="text-gray-500 dark:text-gray-400 mt-4 font-bold uppercase tracking-widest text-xs">
+                        Micro-manage your success with deep focus</p>
+                </div>
+                <div class="flex gap-4">
+                    <button onclick="openModal('taskModal')"
+                        class="px-4 py-3 sm:px-6 sm:py-3 bg-indigo-600 text-white rounded-2xl font-black shadow-xl shadow-indigo-600/20 hover:scale-105 transition-all flex items-center gap-2 text-sm sm:text-base">
+                        <i class="ri-add-line text-lg sm:text-xl"></i> <span class="hidden sm:inline">Create
+                            Objective</span><span class="sm:hidden">New</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-10">
+                
+                <div class="xl:col-span-1 space-y-10">
+                    <section
+                        class="p-6 sm:p-10 rounded-[32px] sm:rounded-[40px] glass-card border-none shadow-2xl relative overflow-hidden text-center space-y-6 sm:space-y-8">
+                        <div class="absolute top-0 left-0 w-full h-2 bg-indigo-600 opacity-20">
+                            <div id="topProgressBar" class="h-full bg-indigo-600 transition-all duration-1000"
+                                style="width: 0%"></div>
+                        </div>
+
+                        <div class="flex items-center justify-center mb-4">
+                            <div
+                                class="w-16 h-16 rounded-2xl bg-indigo-600/10 text-indigo-600 flex items-center justify-center text-3xl">
+                                <i class="ri-focus-3-line"></i>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-2xl font-black" id="activeTaskTitle">Select a Task</h3>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mt-2"
+                                id="taskStatusLabel">Ready for ignition</p>
+                        </div>
+
+                        
+                        <div class="relative w-48 h-48 sm:w-64 sm:h-64 mx-auto">
+                            <svg class="w-full h-full transform -rotate-90">
+                                <circle cx="50%" cy="50%" r="45%" stroke="currentColor" stroke-width="8"
+                                    fill="transparent" class="text-gray-100 dark:text-white/5"></circle>
+                                <circle cx="50%" cy="50%" r="45%" stroke="currentColor" stroke-width="8"
+                                    fill="transparent" class="text-indigo-600 timer-glow transition-all duration-500"
+                                    stroke-dasharray="0" id="timerCircle"></circle>
+                            </svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                <span class="text-4xl sm:text-6xl font-black tracking-tighter tabular-nums"
+                                    id="timerDisplay">25:00</span>
+                                <span
+                                    class="text-[8px] sm:text-[10px] font-bold text-gray-400 uppercase tracking-widest">Minutes</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-center gap-4 pt-4">
+                            <button id="timerToggle" onclick="toggleTimer()"
+                                class="w-16 h-16 rounded-full bg-indigo-600 text-white flex items-center justify-center text-3xl shadow-xl shadow-indigo-600/40 hover:scale-110 transition-all">
+                                <i class="ri-play-fill" id="timerIcon"></i>
+                            </button>
+                            <button onclick="resetTimer()"
+                                class="w-12 h-12 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center text-xl hover:text-red-500 transition-all">
+                                <i class="ri-restart-line"></i>
+                            </button>
+                        </div>
+
+                        <div
+                            class="bg-gray-50 dark:bg-white/5 p-4 rounded-3xl flex items-center justify-between text-xs font-black">
+                            <span class="text-gray-400 uppercase tracking-widest">Accumulated Depth</span>
+                            <span id="spentTimeDisplay">00:00:00</span>
+                        </div>
+                    </section>
+                </div>
+
+                
+                <div class="xl:col-span-2 space-y-10">
+                    <section class="space-y-6">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-2xl font-black">Operational Objectives</h3>
+                            <div class="flex gap-2">
+                                <span
+                                    class="px-4 py-2 rounded-xl bg-emerald-500/10 text-emerald-500 text-[10px] font-bold uppercase tracking-widest">
+                                    <span id="tasksDoneCount">0</span> Completed
+                                </span>
+                            </div>
+                        </div>
+
+                        <div id="taskList" class="grid grid-cols-1 gap-6">
+                            
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    
+    <div id="taskModal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" onclick="closeModal('taskModal')"></div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg p-10 bg-white dark:bg-[#16213e] rounded-[40px] shadow-2xl border border-white/10">
+            <h2 class="text-3xl font-black mb-2">New Objective</h2>
+            <p class="text-gray-500 mb-8">Define a specific task and estimated focus time.</p>
+            <form id="createTaskForm" class="space-y-6">
+                <input type="hidden" name="action" value="add">
+                <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Objective
+                        Title</label>
+                    <input type="text" name="title" required placeholder="e.g. Research Quantum Computing"
+                        class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none font-bold">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Estimation
+                        (Minutes)</label>
+                    <input type="number" name="estimated_time" value="25" min="5"
+                        class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none font-bold">
+                </div>
+                <button type="submit"
+                    class="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-lg shadow-xl shadow-indigo-600/20 hover:bg-indigo-700 transition-all">Launch
+                    Task</button>
+            </form>
+        </div>
+    </div>
+
+    <script></script>
+    <script>
+        let tasks = [];
+        let activeTaskId = null;
+        let timerSeconds = 25 * 60;
+        let timerInterval = null;
+        let isTimerRunning = false;
+
+        
+        async function fetchTasks() {
+            try {
+                const res = await fetch('../api/student_tasks.php');
+                const json = await res.json();
+                if (json.success) {
+                    tasks = json.data;
+                    renderTaskList();
+                }
+            } catch (e) { console.error('Failed to fetch tasks'); }
+        }
+
+        function renderTaskList() {
+            const list = document.getElementById('taskList');
+            list.innerHTML = '';
+            let done = 0;
+
+            tasks.forEach(task => {
+                const isPending = task.status === 'pending';
+                if (!isPending) done++;
+
+                const card = document.createElement('div');
+                card.className = `group p-8 rounded-[32px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 hover:shadow-2xl transition-all cursor-pointer ${activeTaskId == task.id ? 'ring-4 ring-indigo-500/20 border-indigo-500/50' : ''}`;
+                card.onclick = () => selectTask(task);
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-6">
+                            <div class="w-14 h-14 rounded-2xl ${isPending ? 'bg-indigo-500/10 text-indigo-600' : 'bg-emerald-500/10 text-emerald-500'} flex items-center justify-center text-2xl transition-all">
+                                <i class="${isPending ? (activeTaskId == task.id ? 'ri-loader-4-line animate-spin' : 'ri-quill-pen-line') : 'ri-checkbox-circle-fill'}"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-black ${!isPending ? 'line-through opacity-40' : ''}">${task.title}</h4>
+                                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">
+                                    Estimation: ${task.estimated_time}m | Session Spent: ${Math.floor(task.spent_time / 60)}m
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            ${isPending ? `
+                                <button onclick="completeTask(event, ${task.id})" class="px-6 py-2 rounded-xl bg-gray-50 dark:bg-white/10 text-xs font-black uppercase tracking-widest hover:bg-emerald-500 hover:text-white transition-all">
+                                    Sign Off
+                                </button>
+                            ` : `
+                                <svg class="w-8 h-8 text-emerald-500" viewBox="0 0 24 24">
+                                    <path class="check-sign" fill="none" stroke="currentColor" stroke-width="3" d="M5 13l4 4L19 7" />
+                                </svg>
+                            `}
+                            <button onclick="deleteTask(event, ${task.id})" class="w-10 h-10 rounded-xl bg-gray-50 dark:bg-white/5 text-gray-300 hover:text-red-500 transition-all">
+                                <i class="ri-delete-bin-line"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+
+            document.getElementById('tasksDoneCount').textContent = done;
+        }
+
+        
+        function selectTask(task) {
+            if (activeTaskId === task.id) return;
+            if (isTimerRunning && !confirm('Stop current focus session?')) return;
+
+            resetTimer();
+            activeTaskId = task.id;
+            document.getElementById('activeTaskTitle').textContent = task.title;
+            document.getElementById('taskStatusLabel').textContent = 'Objective Locked';
+            document.getElementById('spentTimeDisplay').textContent = formatTimeWide(task.spent_time);
+
+            
+            timerSeconds = task.estimated_time * 60;
+            updateTimerDisplay();
+            renderTaskList();
+        }
+
+        function toggleTimer() {
+            if (!activeTaskId) return alert('Select an objective first');
+
+            if (isTimerRunning) {
+                clearInterval(timerInterval);
+                isTimerRunning = false;
+                document.getElementById('timerIcon').className = 'ri-play-fill';
+                document.getElementById('taskStatusLabel').textContent = 'Session Paused';
+            } else {
+                isTimerRunning = true;
+                document.getElementById('timerIcon').className = 'ri-pause-fill';
+                document.getElementById('taskStatusLabel').textContent = 'Deep Focus Active';
+                timerInterval = setInterval(() => {
+                    timerSeconds--;
+                    if (timerSeconds % 10 === 0) syncTimeWithServer(10);
+                    updateTimerDisplay();
+                    if (timerSeconds <= 0) {
+                        clearInterval(timerInterval);
+                        syncTimeWithServer(timerSeconds % 10); 
+                        isTimerRunning = false;
+                        new Audio('https:
+                        alert('Focus session complete!');
+                    }
+                }, 1000);
+            }
+        }
+
+        async function syncTimeWithServer(seconds) {
+            try {
+                await fetch('../api/student_tasks.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'update_time', id: activeTaskId, seconds: seconds })
+                });
+            } catch (e) { }
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timerSeconds / 60);
+            const s = timerSeconds % 60;
+            document.getElementById('timerDisplay').textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+
+            
+            const circle = document.getElementById('timerCircle');
+            const radius = circle.r.baseVal.valueInSpecifiedUnits;
+            
+            
+            
+            const circumference = 2 * Math.PI * 110;
+            circle.style.strokeDasharray = circumference;
+
+            const limit = 25 * 60;
+            const offset = circumference - (timerSeconds / limit) * circumference;
+            circle.style.strokeDashoffset = -offset;
+
+            const progress = ((limit - timerSeconds) / limit) * 100;
+            document.getElementById('topProgressBar').style.width = progress + '%';
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            document.getElementById('timerIcon').className = 'ri-play-fill';
+            timerSeconds = 25 * 60;
+            updateTimerDisplay();
+        }
+
+        function formatTimeWide(sec) {
+            const h = Math.floor(sec / 3600);
+            const m = Math.floor((sec % 3600) / 60);
+            const s = sec % 60;
+            return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }
+
+        
+        async function completeTask(e, id) {
+            e.stopPropagation();
+            if (!confirm('Mark this mission as complete?')) return;
+            try {
+                const res = await fetch('../api/student_tasks.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'complete', id: id })
+                });
+                if ((await res.json()).success) fetchTasks();
+            } catch (e) { }
+        }
+
+        async function deleteTask(e, id) {
+            e.stopPropagation();
+            if (!confirm('Abort this mission?')) return;
+            try {
+                const res = await fetch('../api/student_tasks.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'delete', id: id })
+                });
+                if ((await res.json()).success) {
+                    if (activeTaskId === id) {
+                        activeTaskId = null;
+                        document.getElementById('activeTaskTitle').textContent = 'Select a Task';
+                        resetTimer();
+                    }
+                    fetchTasks();
+                }
+            } catch (e) { }
+        }
+
+        document.getElementById('createTaskForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(e.target));
+            try {
+                const res = await fetch('../api/student_tasks.php', {
+                    method: 'POST',
+                    body: JSON.stringify(data)
+                });
+                if ((await res.json()).success) {
+                    closeModal('taskModal');
+                    fetchTasks();
+                }
+            } catch (e) { }
+        };
+
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+        fetchTasks();
+    </script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+        }
+
+        @keyframes progress-pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+        }
+
+        .timer-glow {
+            filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.4));
+        }
+
+        .check-sign {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: sign 0.6s ease-out forwards;
+        }
+
+        @keyframes sign {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+
+    <?php renderNavbar($role, $name); ?>
+
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'tasks.php'); ?>
+
+        <main class="flex-1 p-4 sm:p-6 lg:p-10 space-y-10">
+            <header class="flex items-center justify-between">
+                <div>
+                    <h1
+                        class="text-4xl font-extrabold tracking-tight underline decoration-indigo-500 decoration-4 underline-offset-8">
+                        Focus Lab</h1>
+                    <p class="text-gray-500 dark:text-gray-400 mt-4 font-bold uppercase tracking-widest text-xs">
+                        Micro-manage your success with deep focus</p>
+                </div>
+                <div class="flex gap-4">
+                    <button onclick="openModal('taskModal')"
+                        class="px-4 py-3 sm:px-6 sm:py-3 bg-indigo-600 text-white rounded-2xl font-black shadow-xl shadow-indigo-600/20 hover:scale-105 transition-all flex items-center gap-2 text-sm sm:text-base">
+                        <i class="ri-add-line text-lg sm:text-xl"></i> <span class="hidden sm:inline">Create
+                            Objective</span><span class="sm:hidden">New</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-10">
+                
+                <div class="xl:col-span-1 space-y-10">
+                    <section
+                        class="p-6 sm:p-10 rounded-[32px] sm:rounded-[40px] glass-card border-none shadow-2xl relative overflow-hidden text-center space-y-6 sm:space-y-8">
+                        <div class="absolute top-0 left-0 w-full h-2 bg-indigo-600 opacity-20">
+                            <div id="topProgressBar" class="h-full bg-indigo-600 transition-all duration-1000"
+                                style="width: 0%"></div>
+                        </div>
+
+                        <div class="flex items-center justify-center mb-4">
+                            <div
+                                class="w-16 h-16 rounded-2xl bg-indigo-600/10 text-indigo-600 flex items-center justify-center text-3xl">
+                                <i class="ri-focus-3-line"></i>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-2xl font-black" id="activeTaskTitle">Select a Task</h3>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mt-2"
+                                id="taskStatusLabel">Ready for ignition</p>
+                        </div>
+
+                        
+                        <div class="relative w-48 h-48 sm:w-64 sm:h-64 mx-auto">
+                            <svg class="w-full h-full transform -rotate-90">
+                                <circle cx="50%" cy="50%" r="45%" stroke="currentColor" stroke-width="8"
+                                    fill="transparent" class="text-gray-100 dark:text-white/5"></circle>
+                                <circle cx="50%" cy="50%" r="45%" stroke="currentColor" stroke-width="8"
+                                    fill="transparent" class="text-indigo-600 timer-glow transition-all duration-500"
+                                    stroke-dasharray="0" id="timerCircle"></circle>
+                            </svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                <span class="text-4xl sm:text-6xl font-black tracking-tighter tabular-nums"
+                                    id="timerDisplay">25:00</span>
+                                <span
+                                    class="text-[8px] sm:text-[10px] font-bold text-gray-400 uppercase tracking-widest">Minutes</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-center gap-4 pt-4">
+                            <button id="timerToggle" onclick="toggleTimer()"
+                                class="w-16 h-16 rounded-full bg-indigo-600 text-white flex items-center justify-center text-3xl shadow-xl shadow-indigo-600/40 hover:scale-110 transition-all">
+                                <i class="ri-play-fill" id="timerIcon"></i>
+                            </button>
+                            <button onclick="resetTimer()"
+                                class="w-12 h-12 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center text-xl hover:text-red-500 transition-all">
+                                <i class="ri-restart-line"></i>
+                            </button>
+                        </div>
+
+                        <div
+                            class="bg-gray-50 dark:bg-white/5 p-4 rounded-3xl flex items-center justify-between text-xs font-black">
+                            <span class="text-gray-400 uppercase tracking-widest">Accumulated Depth</span>
+                            <span id="spentTimeDisplay">00:00:00</span>
+                        </div>
+                    </section>
+                </div>
+
+                
+                <div class="xl:col-span-2 space-y-10">
+                    <section class="space-y-6">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-2xl font-black">Operational Objectives</h3>
+                            <div class="flex gap-2">
+                                <span
+                                    class="px-4 py-2 rounded-xl bg-emerald-500/10 text-emerald-500 text-[10px] font-bold uppercase tracking-widest">
+                                    <span id="tasksDoneCount">0</span> Completed
+                                </span>
+                            </div>
+                        </div>
+
+                        <div id="taskList" class="grid grid-cols-1 gap-6">
+                            
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    
+    <div id="taskModal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" onclick="closeModal('taskModal')"></div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg p-10 bg-white dark:bg-[#16213e] rounded-[40px] shadow-2xl border border-white/10">
+            <h2 class="text-3xl font-black mb-2">New Objective</h2>
+            <p class="text-gray-500 mb-8">Define a specific task and estimated focus time.</p>
+            <form id="createTaskForm" class="space-y-6">
+                <input type="hidden" name="action" value="add">
+                <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Objective
+                        Title</label>
+                    <input type="text" name="title" required placeholder="e.g. Research Quantum Computing"
+                        class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none font-bold">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Estimation
+                        (Minutes)</label>
+                    <input type="number" name="estimated_time" value="25" min="5"
+                        class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none font-bold">
+                </div>
+                <button type="submit"
+                    class="w-full py-5 bg-indigo-600 text-white rounded-[24px] font-black text-lg shadow-xl shadow-indigo-600/20 hover:bg-indigo-700 transition-all">Launch
+                    Task</button>
+            </form>
+        </div>
+    </div>
+
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <script>
+        let tasks = [];
+        let activeTaskId = null;
+        let timerSeconds = 25 * 60;
+        let timerInterval = null;
+        let isTimerRunning = false;
+
+        
+        async function fetchTasks() {
+            try {
+                const res = await fetch('../api/student_tasks.php');
+                const json = await res.json();
+                if (json.success) {
+                    tasks = json.data;
+                    renderTaskList();
+                }
+            } catch (e) { console.error('Failed to fetch tasks'); }
+        }
+
+        function renderTaskList() {
+            const list = document.getElementById('taskList');
+            list.innerHTML = '';
+            let done = 0;
+
+            tasks.forEach(task => {
+                const isPending = task.status === 'pending';
+                if (!isPending) done++;
+
+                const card = document.createElement('div');
+                card.className = `group p-8 rounded-[32px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 hover:shadow-2xl transition-all cursor-pointer ${activeTaskId == task.id ? 'ring-4 ring-indigo-500/20 border-indigo-500/50' : ''}`;
+                card.onclick = () => selectTask(task);
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-6">
+                            <div class="w-14 h-14 rounded-2xl ${isPending ? 'bg-indigo-500/10 text-indigo-600' : 'bg-emerald-500/10 text-emerald-500'} flex items-center justify-center text-2xl transition-all">
+                                <i class="${isPending ? (activeTaskId == task.id ? 'ri-loader-4-line animate-spin' : 'ri-quill-pen-line') : 'ri-checkbox-circle-fill'}"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-black ${!isPending ? 'line-through opacity-40' : ''}">${task.title}</h4>
+                                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">
+                                    Estimation: ${task.estimated_time}m | Session Spent: ${Math.floor(task.spent_time / 60)}m
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            ${isPending ? `
+                                <button onclick="completeTask(event, ${task.id})" class="px-6 py-2 rounded-xl bg-gray-50 dark:bg-white/10 text-xs font-black uppercase tracking-widest hover:bg-emerald-500 hover:text-white transition-all">
+                                    Sign Off
+                                </button>
+                            ` : `
+                                <svg class="w-8 h-8 text-emerald-500" viewBox="0 0 24 24">
+                                    <path class="check-sign" fill="none" stroke="currentColor" stroke-width="3" d="M5 13l4 4L19 7" />
+                                </svg>
+                            `}
+                            <button onclick="deleteTask(event, ${task.id})" class="w-10 h-10 rounded-xl bg-gray-50 dark:bg-white/5 text-gray-300 hover:text-red-500 transition-all">
+                                <i class="ri-delete-bin-line"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+
+            document.getElementById('tasksDoneCount').textContent = done;
+        }
+
+        
+        function selectTask(task) {
+            if (activeTaskId === task.id) return;
+            if (isTimerRunning && !confirm('Stop current focus session?')) return;
+
+            resetTimer();
+            activeTaskId = task.id;
+            document.getElementById('activeTaskTitle').textContent = task.title;
+            document.getElementById('taskStatusLabel').textContent = 'Objective Locked';
+            document.getElementById('spentTimeDisplay').textContent = formatTimeWide(task.spent_time);
+
+            
+            timerSeconds = task.estimated_time * 60;
+            updateTimerDisplay();
+            renderTaskList();
+        }
+
+        function toggleTimer() {
+            if (!activeTaskId) return alert('Select an objective first');
+
+            if (isTimerRunning) {
+                clearInterval(timerInterval);
+                isTimerRunning = false;
+                document.getElementById('timerIcon').className = 'ri-play-fill';
+                document.getElementById('taskStatusLabel').textContent = 'Session Paused';
+            } else {
+                isTimerRunning = true;
+                document.getElementById('timerIcon').className = 'ri-pause-fill';
+                document.getElementById('taskStatusLabel').textContent = 'Deep Focus Active';
+                timerInterval = setInterval(() => {
+                    timerSeconds--;
+                    if (timerSeconds % 10 === 0) syncTimeWithServer(10);
+                    updateTimerDisplay();
+                    if (timerSeconds <= 0) {
+                        clearInterval(timerInterval);
+                        syncTimeWithServer(timerSeconds % 10); 
+                        isTimerRunning = false;
+                        new Audio('https:
+                        alert('Focus session complete!');
+                    }
+                }, 1000);
+            }
+        }
+
+        async function syncTimeWithServer(seconds) {
+            try {
+                await fetch('../api/student_tasks.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'update_time', id: activeTaskId, seconds: seconds })
+                });
+            } catch (e) { }
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timerSeconds / 60);
+            const s = timerSeconds % 60;
+            document.getElementById('timerDisplay').textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+
+            
+            const circle = document.getElementById('timerCircle');
+            const radius = circle.r.baseVal.valueInSpecifiedUnits;
+            
+            
+            
+            const circumference = 2 * Math.PI * 110;
+            circle.style.strokeDasharray = circumference;
+
+            const limit = 25 * 60;
+            const offset = circumference - (timerSeconds / limit) * circumference;
+            circle.style.strokeDashoffset = -offset;
+
+            const progress = ((limit - timerSeconds) / limit) * 100;
+            document.getElementById('topProgressBar').style.width = progress + '%';
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            document.getElementById('timerIcon').className = 'ri-play-fill';
+            timerSeconds = 25 * 60;
+            updateTimerDisplay();
+        }
+
+        function formatTimeWide(sec) {
+            const h = Math.floor(sec / 3600);
+            const m = Math.floor((sec % 3600) / 60);
+            const s = sec % 60;
+            return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }
+
+        
+        async function completeTask(e, id) {
+            e.stopPropagation();
+            if (!confirm('Mark this mission as complete?')) return;
+            try {
+                const res = await fetch('../api/student_tasks.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'complete', id: id })
+                });
+                if ((await res.json()).success) fetchTasks();
+            } catch (e) { }
+        }
+
+        async function deleteTask(e, id) {
+            e.stopPropagation();
+            if (!confirm('Abort this mission?')) return;
+            try {
+                const res = await fetch('../api/student_tasks.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'delete', id: id })
+                });
+                if ((await res.json()).success) {
+                    if (activeTaskId === id) {
+                        activeTaskId = null;
+                        document.getElementById('activeTaskTitle').textContent = 'Select a Task';
+                        resetTimer();
+                    }
+                    fetchTasks();
+                }
+            } catch (e) { }
+        }
+
+        document.getElementById('createTaskForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(e.target));
+            try {
+                const res = await fetch('../api/student_tasks.php', {
+                    method: 'POST',
+                    body: JSON.stringify(data)
+                });
+                if ((await res.json()).success) {
+                    closeModal('taskModal');
+                    fetchTasks();
+                }
+            } catch (e) { }
+        };
+
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+        fetchTasks();
+    </script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+</body>
+
+</html>
+
+
+

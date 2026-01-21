@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - Routine Flow</title>
     <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="../assets/js/tailwind-config.js"></script>
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <script></script>
     <link rel="stylesheet" href="../assets/css/zoom-fix.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="https:
     <script>
         (function () {
             const saved = localStorage.getItem('theme');
@@ -58,7 +58,7 @@
                     <div
                         class="p-6 sm:p-8 rounded-[32px] sm:rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm text-center">
                         <div class="relative inline-block group">
-                            <img src="<?php echo !empty($user_data['profile_pic']) ? '/assets/uploads/profiles/' . $user_data['profile_pic'] : 'https://ui-avatars.com/api/?background=random&color=fff&size=200&name=' . urlencode($name); ?>"
+                            <img src="<?php echo !empty($user_data['profile_pic']) ? '/assets/uploads/profiles/' . $user_data['profile_pic'] : 'https:
                                 class="w-40 h-40 rounded-full border-4 border-indigo-500/10 p-1 mx-auto object-cover relative z-10">
                         </div>
                         <button onclick="openModal('profileModal')"
@@ -194,7 +194,7 @@
         </main>
     </div>
 
-    <!-- Edit Profile Modal -->
+    
     <div id="profileModal" class="fixed inset-0 z-[100] hidden">
         <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" onclick="closeModal('profileModal')"></div>
         <div
@@ -204,10 +204,10 @@
             <form method="POST" enctype="multipart/form-data" class="space-y-6">
                 <input type="hidden" name="update_profile" value="1">
 
-                <!-- Profile Pic Upload -->
+                
                 <div class="flex justify-center mb-6">
                     <div class="relative group cursor-pointer" onclick="document.getElementById('picInput').click()">
-                        <img src="<?php echo !empty($user_data['profile_pic']) ? '/assets/uploads/profiles/' . $user_data['profile_pic'] : 'https://ui-avatars.com/api/?background=random&color=fff&size=128&name=' . urlencode($name); ?>"
+                        <img src="<?php echo !empty($user_data['profile_pic']) ? '/assets/uploads/profiles/' . $user_data['profile_pic'] : 'https:
                             class="w-24 h-24 rounded-full border-4 border-indigo-500/20 object-cover">
                         <div
                             class="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-white">
@@ -320,7 +320,7 @@
         </div>
     </div>
 
-    <!-- Password Modal -->
+    
     <div id="passwordModal" class="fixed inset-0 z-[100] hidden">
         <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" onclick="closeModal('passwordModal')"></div>
         <div
@@ -346,13 +346,13 @@
         </div>
     </div>
 
-    <script src="../assets/js/theme.js"></script>
+    <script></script>
     <script>
         function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
     </script>
     <script>
-        // Smoothly initialize progress bars to avoid CSS/PHP lint errors
+        
         document.querySelectorAll('.profile-progress-bar').forEach(bar => {
             const progress = bar.dataset.progress || 0;
             setTimeout(() => {
@@ -363,3 +363,1077 @@
 </body>
 
 </html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <link rel="stylesheet" href="../assets/css/zoom-fix.css">
+    <link href="https:
+    <script>
+        (function () {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark' || saved === 'light') {
+                if (saved === 'dark') document.documentElement.classList.add('dark');
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+
+    <?php renderNavbar($role, $name); ?>
+
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'profile.php'); ?>
+
+        <main class="flex-1 p-4 sm:p-6 lg:p-10 space-y-10">
+            <header class="text-center sm:text-left">
+                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Account Identity</h1>
+                <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm sm:text-base">Manage your personal information
+                    and academic
+                    credentials.</p>
+            </header>
+
+            <?php if (isset($success_msg)): ?>
+            <div
+                class="p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 rounded-2xl font-bold flex items-center gap-3 animate-in fade-in slide-in-from-top-2">
+                <i class="ri-checkbox-circle-line text-xl"></i>
+                <?php echo $success_msg; ?>
+            </div>
+            <?php endif; ?>
+
+            <?php if (isset($error_msg)): ?>
+            <div
+                class="p-4 bg-red-500/10 border border-red-500/20 text-red-500 rounded-2xl font-bold flex items-center gap-3 animate-in fade-in slide-in-from-top-2">
+                <i class="ri-error-warning-line text-xl"></i>
+                <?php echo $error_msg; ?>
+            </div>
+            <?php endif; ?>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <div class="lg:col-span-1">
+                    <div
+                        class="p-6 sm:p-8 rounded-[32px] sm:rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm text-center">
+                        <div class="relative inline-block group">
+                            <img src="<?php echo !empty($user_data['profile_pic']) ? '/assets/uploads/profiles/' . $user_data['profile_pic'] : 'https:
+                                class="w-40 h-40 rounded-full border-4 border-indigo-500/10 p-1 mx-auto object-cover relative z-10">
+                        </div>
+                        <button onclick="openModal('profileModal')"
+                            class="mt-6 w-full py-4 bg-white dark:bg-white/5 border border-indigo-500/20 text-indigo-500 rounded-3xl font-bold hover:bg-indigo-500 hover:text-white transition-all flex items-center justify-center gap-2 shadow-sm">
+                            <i class="ri-edit-line"></i> Edit Profile
+                        </button>
+                        <h3 class="text-2xl font-black mt-6">
+                            <?php echo htmlspecialchars($name); ?>
+                        </h3>
+                        <p class="text-sm font-bold text-gray-400 uppercase tracking-widest mt-1">
+                            <?php echo ucfirst($role); ?>
+                        </p>
+
+                        <div class="mt-6 px-8">
+                            <div class="flex justify-between text-xs font-bold mb-2">
+                                <span class="text-gray-400 uppercase tracking-widest">Profile Completion</span>
+                                <span class="text-indigo-600">
+                                    <?php echo $completion_percent; ?>%
+                                </span>
+                            </div>
+                            <div class="w-full bg-gray-100 dark:bg-white/10 rounded-full h-2">
+                                <div class="bg-indigo-600 h-2 rounded-full transition-all duration-1000 profile-progress-bar"
+                                    data-progress="<?php echo (int)$completion_percent; ?>"></div>
+                            </div>
+                        </div>
+
+                        <div class="mt-10 py-8 border-y border-gray-50 dark:border-white/5 space-y-4">
+                            <div class="flex items-center justify-between text-xs font-bold px-4 text-gray-400">
+                                <span class="uppercase tracking-widest">Account Status</span>
+                                <span class="text-emerald-500">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2 space-y-8">
+                    <section
+                        class="p-6 sm:p-10 rounded-[32px] sm:rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm space-y-8 text-center sm:text-left">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-bold">Personal Credentials</h3>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="space-y-1">
+                                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Legal
+                                    Full Name</span>
+                                <p
+                                    class="p-4 rounded-2xl bg-gray-50 dark:bg-black/20 font-bold border border-transparent">
+                                    <?php echo htmlspecialchars($name); ?>
+                                </p>
+                            </div>
+                            <div class="space-y-1">
+                                <span
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Academic
+                                    Email</span>
+                                <p
+                                    class="p-4 rounded-2xl bg-gray-50 dark:bg-black/20 font-bold border border-transparent">
+                                    <?php echo htmlspecialchars($user_data['email']); ?>
+                                </p>
+                            </div>
+                            <div class="space-y-1">
+                                <span
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Gender</span>
+                                <p
+                                    class="p-4 rounded-2xl bg-gray-50 dark:bg-black/20 font-bold border border-transparent">
+                                    <?php echo !empty($user_data['gender']) ? ucfirst($user_data['gender']) : 'Not Set'; ?>
+                                </p>
+                            </div>
+                        </div>
+
+                        <?php if ($role === 'student'): ?>
+                        <div
+                            class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4 border-t border-gray-50 dark:border-white/5">
+                            <div class="space-y-1">
+                                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Student
+                                    ID</span>
+                                <p
+                                    class="p-4 rounded-2xl bg-indigo-50 dark:bg-indigo-500/10 font-black text-indigo-600 border border-transparent text-center">
+                                    <?php echo !empty($user_data['student_id']) ? htmlspecialchars($user_data['student_id']) : 'Not Set'; ?>
+                                </p>
+                            </div>
+                            <div class="space-y-1">
+                                <span
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Enrolled
+                                    Semester</span>
+                                <p
+                                    class="p-4 rounded-2xl bg-gray-50 dark:bg-black/20 font-bold border border-transparent">
+                                    <?php echo !empty($user_data['semester']) ? htmlspecialchars($user_data['semester']) : 'Not Set'; ?>
+                                </p>
+                            </div>
+                        </div>
+                        <?php elseif ($role === 'teacher'): ?>
+                        <div
+                            class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4 border-t border-gray-50 dark:border-white/5">
+                            <div class="space-y-1">
+                                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Faculty
+                                    ID</span>
+                                <p
+                                    class="p-4 rounded-2xl bg-indigo-50 dark:bg-indigo-500/10 font-black text-indigo-600 border border-transparent text-center">
+                                    <?php echo !empty($user_data['teacher_id']) ? htmlspecialchars($user_data['teacher_id']) : 'Not Set'; ?>
+                                </p>
+                            </div>
+                            <div class="space-y-1">
+                                <span
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Assigned
+                                    Department</span>
+                                <p
+                                    class="p-4 rounded-2xl bg-gray-50 dark:bg-black/20 font-bold border border-transparent">
+                                    <?php echo !empty($user_data['department']) ? htmlspecialchars($user_data['department']) : 'Not Set'; ?>
+                                </p>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+                    </section>
+
+                    <section
+                        class="p-10 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm space-y-8">
+                        <h3 class="text-xl font-bold">Security Shield</h3>
+                        <div
+                            class="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0 p-6 rounded-3xl bg-red-500/5 border border-red-500/10">
+                            <div class="text-center sm:text-left">
+                                <h4 class="font-bold text-red-500">Security Credentials</h4>
+                                <p class="text-xs text-gray-400 mt-1 uppercase tracking-widest font-bold">Recommended
+                                    every 90 days</p>
+                            </div>
+                            <button onclick="openModal('passwordModal')"
+                                class="w-full sm:w-auto px-6 py-3 bg-red-500 text-white rounded-xl font-bold shadow-lg shadow-red-500/20 hover:scale-105 transition-all">Update
+                                Password</button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    
+    <div id="profileModal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" onclick="closeModal('profileModal')"></div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg p-10 bg-white dark:bg-[#16213e] rounded-[40px] shadow-2xl border border-white/10 max-h-[90vh] overflow-y-auto">
+            <h2 class="text-3xl font-black mb-2">Refine Identity</h2>
+            <p class="text-gray-500 dark:text-gray-400 mb-8">Update your public profile information.</p>
+            <form method="POST" enctype="multipart/form-data" class="space-y-6">
+                <input type="hidden" name="update_profile" value="1">
+
+                
+                <div class="flex justify-center mb-6">
+                    <div class="relative group cursor-pointer" onclick="document.getElementById('picInput').click()">
+                        <img src="<?php echo !empty($user_data['profile_pic']) ? '/assets/uploads/profiles/' . $user_data['profile_pic'] : 'https:
+                            class="w-24 h-24 rounded-full border-4 border-indigo-500/20 object-cover">
+                        <div
+                            class="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-white">
+                            <i class="ri-upload-2-line"></i>
+                        </div>
+                    </div>
+                </div>
+                <input type="file" name="profile_pic" id="picInput" class="hidden" accept="image/*">
+
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Full Name</label>
+                    <input type="text" name="full_name" value="<?php echo htmlspecialchars($name); ?>" required
+                        class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Username</label>
+                    <input type="text" name="username"
+                        value="<?php echo htmlspecialchars($user_data['username'] ?? ''); ?>" required
+                        pattern="[a-zA-Z0-9_]{3,20}" title="3-20 characters, letters, numbers, and underscores only"
+                        class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Email
+                        Address</label>
+                    <input type="email" name="email" value="<?php echo htmlspecialchars($user_data['email']); ?>"
+                        required
+                        class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Gender</label>
+                    <select name="gender"
+                        class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                        <option value="">Select Gender</option>
+                        <option value="Male" <?php echo ($user_data['gender'] ?? '' )==='Male' ? 'selected' : '' ; ?>
+                            >Male</option>
+                        <option value="Female" <?php echo ($user_data['gender'] ?? '' )==='Female' ? 'selected' : '' ;
+                            ?>>Female</option>
+                        <option value="Other" <?php echo ($user_data['gender'] ?? '' )==='Other' ? 'selected' : '' ; ?>
+                            >Other</option>
+                    </select>
+                </div>
+
+                <?php if ($role === 'student'): ?>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Student
+                            ID</label>
+                        <input type="text" name="student_id"
+                            value="<?php echo htmlspecialchars($user_data['student_id'] ?? ''); ?>"
+                            placeholder="Auto/Manual"
+                            class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                    </div>
+                    <div class="space-y-2">
+                        <label
+                            class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Semester</label>
+                        <select name="semester"
+                            class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                            <option value="">Select Sem</option>
+                            <option value="1st Year, 1st Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='1st Year, 1st Sem' ? 'selected' : '' ; ?>>1-1</option>
+                            <option value="1st Year, 2nd Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='1st Year, 2nd Sem' ? 'selected' : '' ; ?>>1-2</option>
+                            <option value="2nd Year, 1st Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='2nd Year, 1st Sem' ? 'selected' : '' ; ?>>2-1</option>
+                            <option value="2nd Year, 2nd Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='2nd Year, 2nd Sem' ? 'selected' : '' ; ?>>2-2</option>
+                            <option value="3rd Year, 1st Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='3rd Year, 1st Sem' ? 'selected' : '' ; ?>>3-1</option>
+                            <option value="3rd Year, 2nd Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='3rd Year, 2nd Sem' ? 'selected' : '' ; ?>>3-2</option>
+                            <option value="4th Year, 1st Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='4th Year, 1st Sem' ? 'selected' : '' ; ?>>4-1</option>
+                            <option value="4th Year, 2nd Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='4th Year, 2nd Sem' ? 'selected' : '' ; ?>>4-2</option>
+                        </select>
+                    </div>
+                </div>
+                <?php elseif ($role === 'teacher'): ?>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Faculty
+                            ID</label>
+                        <input type="text" name="teacher_id"
+                            value="<?php echo htmlspecialchars($user_data['teacher_id'] ?? ''); ?>"
+                            placeholder="e.g. T-101"
+                            class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Assigned
+                            Department</label>
+                        <input type="text" name="department"
+                            value="<?php echo htmlspecialchars($user_data['department'] ?? ''); ?>"
+                            placeholder="e.g. CSE"
+                            class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                    </div>
+                </div>
+                <?php endif; ?>
+
+                <div class="pt-4 flex gap-4">
+                    <button type="button" onclick="closeModal('profileModal')"
+                        class="flex-1 py-4 bg-gray-100 dark:bg-white/5 rounded-2xl font-bold uppercase tracking-widest hover:bg-gray-200 transition-all">Cancel</button>
+                    <button type="submit"
+                        class="flex-1 py-4 bg-indigo-600 text-white rounded-2xl font-bold uppercase tracking-widest shadow-lg shadow-indigo-600/30 hover:bg-indigo-700 transition-all">Save
+                        Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+    <div id="passwordModal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" onclick="closeModal('passwordModal')"></div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg p-10 bg-white dark:bg-[#16213e] rounded-[40px] shadow-2xl border border-white/10">
+            <h2 class="text-3xl font-black mb-2">Security Update</h2>
+            <p class="text-gray-500 dark:text-gray-400 mb-8">Set a new secure password for your account.</p>
+            <form method="POST" class="space-y-6">
+                <input type="hidden" name="update_password" value="1">
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">New
+                        Password</label>
+                    <input type="password" name="password" required minlength="6" placeholder="••••••••"
+                        class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                </div>
+                <div class="pt-4 flex gap-4">
+                    <button type="button" onclick="closeModal('passwordModal')"
+                        class="flex-1 py-4 bg-gray-100 dark:bg-white/5 rounded-2xl font-bold uppercase tracking-widest hover:bg-gray-200 transition-all">Cancel</button>
+                    <button type="submit"
+                        class="flex-1 py-4 bg-red-500 text-white rounded-2xl font-bold uppercase tracking-widest shadow-lg shadow-red-500/30 hover:bg-red-600 transition-all">Update
+                        Shield</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script></script>
+    <script>
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+    </script>
+    <script>
+        
+        document.querySelectorAll('.profile-progress-bar').forEach(bar => {
+            const progress = bar.dataset.progress || 0;
+            setTimeout(() => {
+                bar.style.width = progress + '%';
+            }, 100);
+        });
+    </script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+    <link rel="stylesheet" href="../assets/css/zoom-fix.css">
+    <link href="https:
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+
+    <?php renderNavbar($role, $name); ?>
+
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'profile.php'); ?>
+
+        <main class="flex-1 p-4 sm:p-6 lg:p-10 space-y-10">
+            <header class="text-center sm:text-left">
+                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Account Identity</h1>
+                <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm sm:text-base">Manage your personal information
+                    and academic
+                    credentials.</p>
+            </header>
+
+            <?php if (isset($success_msg)): ?>
+            <div
+                class="p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 rounded-2xl font-bold flex items-center gap-3 animate-in fade-in slide-in-from-top-2">
+                <i class="ri-checkbox-circle-line text-xl"></i>
+                <?php echo $success_msg; ?>
+            </div>
+            <?php endif; ?>
+
+            <?php if (isset($error_msg)): ?>
+            <div
+                class="p-4 bg-red-500/10 border border-red-500/20 text-red-500 rounded-2xl font-bold flex items-center gap-3 animate-in fade-in slide-in-from-top-2">
+                <i class="ri-error-warning-line text-xl"></i>
+                <?php echo $error_msg; ?>
+            </div>
+            <?php endif; ?>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <div class="lg:col-span-1">
+                    <div
+                        class="p-6 sm:p-8 rounded-[32px] sm:rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm text-center">
+                        <div class="relative inline-block group">
+                            <img src="<?php echo !empty($user_data['profile_pic']) ? '/assets/uploads/profiles/' . $user_data['profile_pic'] : 'https:
+                                class="w-40 h-40 rounded-full border-4 border-indigo-500/10 p-1 mx-auto object-cover relative z-10">
+                        </div>
+                        <button onclick="openModal('profileModal')"
+                            class="mt-6 w-full py-4 bg-white dark:bg-white/5 border border-indigo-500/20 text-indigo-500 rounded-3xl font-bold hover:bg-indigo-500 hover:text-white transition-all flex items-center justify-center gap-2 shadow-sm">
+                            <i class="ri-edit-line"></i> Edit Profile
+                        </button>
+                        <h3 class="text-2xl font-black mt-6">
+                            <?php echo htmlspecialchars($name); ?>
+                        </h3>
+                        <p class="text-sm font-bold text-gray-400 uppercase tracking-widest mt-1">
+                            <?php echo ucfirst($role); ?>
+                        </p>
+
+                        <div class="mt-6 px-8">
+                            <div class="flex justify-between text-xs font-bold mb-2">
+                                <span class="text-gray-400 uppercase tracking-widest">Profile Completion</span>
+                                <span class="text-indigo-600">
+                                    <?php echo $completion_percent; ?>%
+                                </span>
+                            </div>
+                            <div class="w-full bg-gray-100 dark:bg-white/10 rounded-full h-2">
+                                <div class="bg-indigo-600 h-2 rounded-full transition-all duration-1000 profile-progress-bar"
+                                    data-progress="<?php echo (int)$completion_percent; ?>"></div>
+                            </div>
+                        </div>
+
+                        <div class="mt-10 py-8 border-y border-gray-50 dark:border-white/5 space-y-4">
+                            <div class="flex items-center justify-between text-xs font-bold px-4 text-gray-400">
+                                <span class="uppercase tracking-widest">Account Status</span>
+                                <span class="text-emerald-500">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2 space-y-8">
+                    <section
+                        class="p-6 sm:p-10 rounded-[32px] sm:rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm space-y-8 text-center sm:text-left">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-bold">Personal Credentials</h3>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="space-y-1">
+                                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Legal
+                                    Full Name</span>
+                                <p
+                                    class="p-4 rounded-2xl bg-gray-50 dark:bg-black/20 font-bold border border-transparent">
+                                    <?php echo htmlspecialchars($name); ?>
+                                </p>
+                            </div>
+                            <div class="space-y-1">
+                                <span
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Academic
+                                    Email</span>
+                                <p
+                                    class="p-4 rounded-2xl bg-gray-50 dark:bg-black/20 font-bold border border-transparent">
+                                    <?php echo htmlspecialchars($user_data['email']); ?>
+                                </p>
+                            </div>
+                            <div class="space-y-1">
+                                <span
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Gender</span>
+                                <p
+                                    class="p-4 rounded-2xl bg-gray-50 dark:bg-black/20 font-bold border border-transparent">
+                                    <?php echo !empty($user_data['gender']) ? ucfirst($user_data['gender']) : 'Not Set'; ?>
+                                </p>
+                            </div>
+                        </div>
+
+                        <?php if ($role === 'student'): ?>
+                        <div
+                            class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4 border-t border-gray-50 dark:border-white/5">
+                            <div class="space-y-1">
+                                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Student
+                                    ID</span>
+                                <p
+                                    class="p-4 rounded-2xl bg-indigo-50 dark:bg-indigo-500/10 font-black text-indigo-600 border border-transparent text-center">
+                                    <?php echo !empty($user_data['student_id']) ? htmlspecialchars($user_data['student_id']) : 'Not Set'; ?>
+                                </p>
+                            </div>
+                            <div class="space-y-1">
+                                <span
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Enrolled
+                                    Semester</span>
+                                <p
+                                    class="p-4 rounded-2xl bg-gray-50 dark:bg-black/20 font-bold border border-transparent">
+                                    <?php echo !empty($user_data['semester']) ? htmlspecialchars($user_data['semester']) : 'Not Set'; ?>
+                                </p>
+                            </div>
+                        </div>
+                        <?php elseif ($role === 'teacher'): ?>
+                        <div
+                            class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4 border-t border-gray-50 dark:border-white/5">
+                            <div class="space-y-1">
+                                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Faculty
+                                    ID</span>
+                                <p
+                                    class="p-4 rounded-2xl bg-indigo-50 dark:bg-indigo-500/10 font-black text-indigo-600 border border-transparent text-center">
+                                    <?php echo !empty($user_data['teacher_id']) ? htmlspecialchars($user_data['teacher_id']) : 'Not Set'; ?>
+                                </p>
+                            </div>
+                            <div class="space-y-1">
+                                <span
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Assigned
+                                    Department</span>
+                                <p
+                                    class="p-4 rounded-2xl bg-gray-50 dark:bg-black/20 font-bold border border-transparent">
+                                    <?php echo !empty($user_data['department']) ? htmlspecialchars($user_data['department']) : 'Not Set'; ?>
+                                </p>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+                    </section>
+
+                    <section
+                        class="p-10 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm space-y-8">
+                        <h3 class="text-xl font-bold">Security Shield</h3>
+                        <div
+                            class="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0 p-6 rounded-3xl bg-red-500/5 border border-red-500/10">
+                            <div class="text-center sm:text-left">
+                                <h4 class="font-bold text-red-500">Security Credentials</h4>
+                                <p class="text-xs text-gray-400 mt-1 uppercase tracking-widest font-bold">Recommended
+                                    every 90 days</p>
+                            </div>
+                            <button onclick="openModal('passwordModal')"
+                                class="w-full sm:w-auto px-6 py-3 bg-red-500 text-white rounded-xl font-bold shadow-lg shadow-red-500/20 hover:scale-105 transition-all">Update
+                                Password</button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    
+    <div id="profileModal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" onclick="closeModal('profileModal')"></div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg p-10 bg-white dark:bg-[#16213e] rounded-[40px] shadow-2xl border border-white/10 max-h-[90vh] overflow-y-auto">
+            <h2 class="text-3xl font-black mb-2">Refine Identity</h2>
+            <p class="text-gray-500 dark:text-gray-400 mb-8">Update your public profile information.</p>
+            <form method="POST" enctype="multipart/form-data" class="space-y-6">
+                <input type="hidden" name="update_profile" value="1">
+
+                
+                <div class="flex justify-center mb-6">
+                    <div class="relative group cursor-pointer" onclick="document.getElementById('picInput').click()">
+                        <img src="<?php echo !empty($user_data['profile_pic']) ? '/assets/uploads/profiles/' . $user_data['profile_pic'] : 'https:
+                            class="w-24 h-24 rounded-full border-4 border-indigo-500/20 object-cover">
+                        <div
+                            class="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-white">
+                            <i class="ri-upload-2-line"></i>
+                        </div>
+                    </div>
+                </div>
+                <input type="file" name="profile_pic" id="picInput" class="hidden" accept="image/*">
+
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Full Name</label>
+                    <input type="text" name="full_name" value="<?php echo htmlspecialchars($name); ?>" required
+                        class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Username</label>
+                    <input type="text" name="username"
+                        value="<?php echo htmlspecialchars($user_data['username'] ?? ''); ?>" required
+                        pattern="[a-zA-Z0-9_]{3,20}" title="3-20 characters, letters, numbers, and underscores only"
+                        class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Email
+                        Address</label>
+                    <input type="email" name="email" value="<?php echo htmlspecialchars($user_data['email']); ?>"
+                        required
+                        class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Gender</label>
+                    <select name="gender"
+                        class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                        <option value="">Select Gender</option>
+                        <option value="Male" <?php echo ($user_data['gender'] ?? '' )==='Male' ? 'selected' : '' ; ?>
+                            >Male</option>
+                        <option value="Female" <?php echo ($user_data['gender'] ?? '' )==='Female' ? 'selected' : '' ;
+                            ?>>Female</option>
+                        <option value="Other" <?php echo ($user_data['gender'] ?? '' )==='Other' ? 'selected' : '' ; ?>
+                            >Other</option>
+                    </select>
+                </div>
+
+                <?php if ($role === 'student'): ?>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Student
+                            ID</label>
+                        <input type="text" name="student_id"
+                            value="<?php echo htmlspecialchars($user_data['student_id'] ?? ''); ?>"
+                            placeholder="Auto/Manual"
+                            class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                    </div>
+                    <div class="space-y-2">
+                        <label
+                            class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Semester</label>
+                        <select name="semester"
+                            class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                            <option value="">Select Sem</option>
+                            <option value="1st Year, 1st Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='1st Year, 1st Sem' ? 'selected' : '' ; ?>>1-1</option>
+                            <option value="1st Year, 2nd Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='1st Year, 2nd Sem' ? 'selected' : '' ; ?>>1-2</option>
+                            <option value="2nd Year, 1st Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='2nd Year, 1st Sem' ? 'selected' : '' ; ?>>2-1</option>
+                            <option value="2nd Year, 2nd Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='2nd Year, 2nd Sem' ? 'selected' : '' ; ?>>2-2</option>
+                            <option value="3rd Year, 1st Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='3rd Year, 1st Sem' ? 'selected' : '' ; ?>>3-1</option>
+                            <option value="3rd Year, 2nd Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='3rd Year, 2nd Sem' ? 'selected' : '' ; ?>>3-2</option>
+                            <option value="4th Year, 1st Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='4th Year, 1st Sem' ? 'selected' : '' ; ?>>4-1</option>
+                            <option value="4th Year, 2nd Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='4th Year, 2nd Sem' ? 'selected' : '' ; ?>>4-2</option>
+                        </select>
+                    </div>
+                </div>
+                <?php elseif ($role === 'teacher'): ?>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Faculty
+                            ID</label>
+                        <input type="text" name="teacher_id"
+                            value="<?php echo htmlspecialchars($user_data['teacher_id'] ?? ''); ?>"
+                            placeholder="e.g. T-101"
+                            class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Assigned
+                            Department</label>
+                        <input type="text" name="department"
+                            value="<?php echo htmlspecialchars($user_data['department'] ?? ''); ?>"
+                            placeholder="e.g. CSE"
+                            class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                    </div>
+                </div>
+                <?php endif; ?>
+
+                <div class="pt-4 flex gap-4">
+                    <button type="button" onclick="closeModal('profileModal')"
+                        class="flex-1 py-4 bg-gray-100 dark:bg-white/5 rounded-2xl font-bold uppercase tracking-widest hover:bg-gray-200 transition-all">Cancel</button>
+                    <button type="submit"
+                        class="flex-1 py-4 bg-indigo-600 text-white rounded-2xl font-bold uppercase tracking-widest shadow-lg shadow-indigo-600/30 hover:bg-indigo-700 transition-all">Save
+                        Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+    <div id="passwordModal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" onclick="closeModal('passwordModal')"></div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg p-10 bg-white dark:bg-[#16213e] rounded-[40px] shadow-2xl border border-white/10">
+            <h2 class="text-3xl font-black mb-2">Security Update</h2>
+            <p class="text-gray-500 dark:text-gray-400 mb-8">Set a new secure password for your account.</p>
+            <form method="POST" class="space-y-6">
+                <input type="hidden" name="update_password" value="1">
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">New
+                        Password</label>
+                    <input type="password" name="password" required minlength="6" placeholder="••••••••"
+                        class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                </div>
+                <div class="pt-4 flex gap-4">
+                    <button type="button" onclick="closeModal('passwordModal')"
+                        class="flex-1 py-4 bg-gray-100 dark:bg-white/5 rounded-2xl font-bold uppercase tracking-widest hover:bg-gray-200 transition-all">Cancel</button>
+                    <button type="submit"
+                        class="flex-1 py-4 bg-red-500 text-white rounded-2xl font-bold uppercase tracking-widest shadow-lg shadow-red-500/30 hover:bg-red-600 transition-all">Update
+                        Shield</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script></script>
+    <script>
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+    </script>
+    <script>
+        
+        document.querySelectorAll('.profile-progress-bar').forEach(bar => {
+            const progress = bar.dataset.progress || 0;
+            setTimeout(() => {
+                bar.style.width = progress + '%';
+            }, 100);
+        });
+    </script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+
+    <?php renderNavbar($role, $name); ?>
+
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'profile.php'); ?>
+
+        <main class="flex-1 p-4 sm:p-6 lg:p-10 space-y-10">
+            <header class="text-center sm:text-left">
+                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Account Identity</h1>
+                <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm sm:text-base">Manage your personal information
+                    and academic
+                    credentials.</p>
+            </header>
+
+            <?php if (isset($success_msg)): ?>
+            <div
+                class="p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 rounded-2xl font-bold flex items-center gap-3 animate-in fade-in slide-in-from-top-2">
+                <i class="ri-checkbox-circle-line text-xl"></i>
+                <?php echo $success_msg; ?>
+            </div>
+            <?php endif; ?>
+
+            <?php if (isset($error_msg)): ?>
+            <div
+                class="p-4 bg-red-500/10 border border-red-500/20 text-red-500 rounded-2xl font-bold flex items-center gap-3 animate-in fade-in slide-in-from-top-2">
+                <i class="ri-error-warning-line text-xl"></i>
+                <?php echo $error_msg; ?>
+            </div>
+            <?php endif; ?>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <div class="lg:col-span-1">
+                    <div
+                        class="p-6 sm:p-8 rounded-[32px] sm:rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm text-center">
+                        <div class="relative inline-block group">
+                            <img src="<?php echo !empty($user_data['profile_pic']) ? '/assets/uploads/profiles/' . $user_data['profile_pic'] : 'https:
+                                class="w-40 h-40 rounded-full border-4 border-indigo-500/10 p-1 mx-auto object-cover relative z-10">
+                        </div>
+                        <button onclick="openModal('profileModal')"
+                            class="mt-6 w-full py-4 bg-white dark:bg-white/5 border border-indigo-500/20 text-indigo-500 rounded-3xl font-bold hover:bg-indigo-500 hover:text-white transition-all flex items-center justify-center gap-2 shadow-sm">
+                            <i class="ri-edit-line"></i> Edit Profile
+                        </button>
+                        <h3 class="text-2xl font-black mt-6">
+                            <?php echo htmlspecialchars($name); ?>
+                        </h3>
+                        <p class="text-sm font-bold text-gray-400 uppercase tracking-widest mt-1">
+                            <?php echo ucfirst($role); ?>
+                        </p>
+
+                        <div class="mt-6 px-8">
+                            <div class="flex justify-between text-xs font-bold mb-2">
+                                <span class="text-gray-400 uppercase tracking-widest">Profile Completion</span>
+                                <span class="text-indigo-600">
+                                    <?php echo $completion_percent; ?>%
+                                </span>
+                            </div>
+                            <div class="w-full bg-gray-100 dark:bg-white/10 rounded-full h-2">
+                                <div class="bg-indigo-600 h-2 rounded-full transition-all duration-1000 profile-progress-bar"
+                                    data-progress="<?php echo (int)$completion_percent; ?>"></div>
+                            </div>
+                        </div>
+
+                        <div class="mt-10 py-8 border-y border-gray-50 dark:border-white/5 space-y-4">
+                            <div class="flex items-center justify-between text-xs font-bold px-4 text-gray-400">
+                                <span class="uppercase tracking-widest">Account Status</span>
+                                <span class="text-emerald-500">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2 space-y-8">
+                    <section
+                        class="p-6 sm:p-10 rounded-[32px] sm:rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm space-y-8 text-center sm:text-left">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-bold">Personal Credentials</h3>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="space-y-1">
+                                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Legal
+                                    Full Name</span>
+                                <p
+                                    class="p-4 rounded-2xl bg-gray-50 dark:bg-black/20 font-bold border border-transparent">
+                                    <?php echo htmlspecialchars($name); ?>
+                                </p>
+                            </div>
+                            <div class="space-y-1">
+                                <span
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Academic
+                                    Email</span>
+                                <p
+                                    class="p-4 rounded-2xl bg-gray-50 dark:bg-black/20 font-bold border border-transparent">
+                                    <?php echo htmlspecialchars($user_data['email']); ?>
+                                </p>
+                            </div>
+                            <div class="space-y-1">
+                                <span
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Gender</span>
+                                <p
+                                    class="p-4 rounded-2xl bg-gray-50 dark:bg-black/20 font-bold border border-transparent">
+                                    <?php echo !empty($user_data['gender']) ? ucfirst($user_data['gender']) : 'Not Set'; ?>
+                                </p>
+                            </div>
+                        </div>
+
+                        <?php if ($role === 'student'): ?>
+                        <div
+                            class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4 border-t border-gray-50 dark:border-white/5">
+                            <div class="space-y-1">
+                                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Student
+                                    ID</span>
+                                <p
+                                    class="p-4 rounded-2xl bg-indigo-50 dark:bg-indigo-500/10 font-black text-indigo-600 border border-transparent text-center">
+                                    <?php echo !empty($user_data['student_id']) ? htmlspecialchars($user_data['student_id']) : 'Not Set'; ?>
+                                </p>
+                            </div>
+                            <div class="space-y-1">
+                                <span
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Enrolled
+                                    Semester</span>
+                                <p
+                                    class="p-4 rounded-2xl bg-gray-50 dark:bg-black/20 font-bold border border-transparent">
+                                    <?php echo !empty($user_data['semester']) ? htmlspecialchars($user_data['semester']) : 'Not Set'; ?>
+                                </p>
+                            </div>
+                        </div>
+                        <?php elseif ($role === 'teacher'): ?>
+                        <div
+                            class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4 border-t border-gray-50 dark:border-white/5">
+                            <div class="space-y-1">
+                                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Faculty
+                                    ID</span>
+                                <p
+                                    class="p-4 rounded-2xl bg-indigo-50 dark:bg-indigo-500/10 font-black text-indigo-600 border border-transparent text-center">
+                                    <?php echo !empty($user_data['teacher_id']) ? htmlspecialchars($user_data['teacher_id']) : 'Not Set'; ?>
+                                </p>
+                            </div>
+                            <div class="space-y-1">
+                                <span
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">Assigned
+                                    Department</span>
+                                <p
+                                    class="p-4 rounded-2xl bg-gray-50 dark:bg-black/20 font-bold border border-transparent">
+                                    <?php echo !empty($user_data['department']) ? htmlspecialchars($user_data['department']) : 'Not Set'; ?>
+                                </p>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+                    </section>
+
+                    <section
+                        class="p-10 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm space-y-8">
+                        <h3 class="text-xl font-bold">Security Shield</h3>
+                        <div
+                            class="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0 p-6 rounded-3xl bg-red-500/5 border border-red-500/10">
+                            <div class="text-center sm:text-left">
+                                <h4 class="font-bold text-red-500">Security Credentials</h4>
+                                <p class="text-xs text-gray-400 mt-1 uppercase tracking-widest font-bold">Recommended
+                                    every 90 days</p>
+                            </div>
+                            <button onclick="openModal('passwordModal')"
+                                class="w-full sm:w-auto px-6 py-3 bg-red-500 text-white rounded-xl font-bold shadow-lg shadow-red-500/20 hover:scale-105 transition-all">Update
+                                Password</button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    
+    <div id="profileModal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" onclick="closeModal('profileModal')"></div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg p-10 bg-white dark:bg-[#16213e] rounded-[40px] shadow-2xl border border-white/10 max-h-[90vh] overflow-y-auto">
+            <h2 class="text-3xl font-black mb-2">Refine Identity</h2>
+            <p class="text-gray-500 dark:text-gray-400 mb-8">Update your public profile information.</p>
+            <form method="POST" enctype="multipart/form-data" class="space-y-6">
+                <input type="hidden" name="update_profile" value="1">
+
+                
+                <div class="flex justify-center mb-6">
+                    <div class="relative group cursor-pointer" onclick="document.getElementById('picInput').click()">
+                        <img src="<?php echo !empty($user_data['profile_pic']) ? '/assets/uploads/profiles/' . $user_data['profile_pic'] : 'https:
+                            class="w-24 h-24 rounded-full border-4 border-indigo-500/20 object-cover">
+                        <div
+                            class="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-white">
+                            <i class="ri-upload-2-line"></i>
+                        </div>
+                    </div>
+                </div>
+                <input type="file" name="profile_pic" id="picInput" class="hidden" accept="image/*">
+
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Full Name</label>
+                    <input type="text" name="full_name" value="<?php echo htmlspecialchars($name); ?>" required
+                        class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Username</label>
+                    <input type="text" name="username"
+                        value="<?php echo htmlspecialchars($user_data['username'] ?? ''); ?>" required
+                        pattern="[a-zA-Z0-9_]{3,20}" title="3-20 characters, letters, numbers, and underscores only"
+                        class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Email
+                        Address</label>
+                    <input type="email" name="email" value="<?php echo htmlspecialchars($user_data['email']); ?>"
+                        required
+                        class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Gender</label>
+                    <select name="gender"
+                        class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                        <option value="">Select Gender</option>
+                        <option value="Male" <?php echo ($user_data['gender'] ?? '' )==='Male' ? 'selected' : '' ; ?>
+                            >Male</option>
+                        <option value="Female" <?php echo ($user_data['gender'] ?? '' )==='Female' ? 'selected' : '' ;
+                            ?>>Female</option>
+                        <option value="Other" <?php echo ($user_data['gender'] ?? '' )==='Other' ? 'selected' : '' ; ?>
+                            >Other</option>
+                    </select>
+                </div>
+
+                <?php if ($role === 'student'): ?>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Student
+                            ID</label>
+                        <input type="text" name="student_id"
+                            value="<?php echo htmlspecialchars($user_data['student_id'] ?? ''); ?>"
+                            placeholder="Auto/Manual"
+                            class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                    </div>
+                    <div class="space-y-2">
+                        <label
+                            class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Semester</label>
+                        <select name="semester"
+                            class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                            <option value="">Select Sem</option>
+                            <option value="1st Year, 1st Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='1st Year, 1st Sem' ? 'selected' : '' ; ?>>1-1</option>
+                            <option value="1st Year, 2nd Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='1st Year, 2nd Sem' ? 'selected' : '' ; ?>>1-2</option>
+                            <option value="2nd Year, 1st Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='2nd Year, 1st Sem' ? 'selected' : '' ; ?>>2-1</option>
+                            <option value="2nd Year, 2nd Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='2nd Year, 2nd Sem' ? 'selected' : '' ; ?>>2-2</option>
+                            <option value="3rd Year, 1st Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='3rd Year, 1st Sem' ? 'selected' : '' ; ?>>3-1</option>
+                            <option value="3rd Year, 2nd Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='3rd Year, 2nd Sem' ? 'selected' : '' ; ?>>3-2</option>
+                            <option value="4th Year, 1st Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='4th Year, 1st Sem' ? 'selected' : '' ; ?>>4-1</option>
+                            <option value="4th Year, 2nd Sem" <?php echo ($user_data['semester'] ?? ''
+                                )==='4th Year, 2nd Sem' ? 'selected' : '' ; ?>>4-2</option>
+                        </select>
+                    </div>
+                </div>
+                <?php elseif ($role === 'teacher'): ?>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Faculty
+                            ID</label>
+                        <input type="text" name="teacher_id"
+                            value="<?php echo htmlspecialchars($user_data['teacher_id'] ?? ''); ?>"
+                            placeholder="e.g. T-101"
+                            class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">Assigned
+                            Department</label>
+                        <input type="text" name="department"
+                            value="<?php echo htmlspecialchars($user_data['department'] ?? ''); ?>"
+                            placeholder="e.g. CSE"
+                            class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                    </div>
+                </div>
+                <?php endif; ?>
+
+                <div class="pt-4 flex gap-4">
+                    <button type="button" onclick="closeModal('profileModal')"
+                        class="flex-1 py-4 bg-gray-100 dark:bg-white/5 rounded-2xl font-bold uppercase tracking-widest hover:bg-gray-200 transition-all">Cancel</button>
+                    <button type="submit"
+                        class="flex-1 py-4 bg-indigo-600 text-white rounded-2xl font-bold uppercase tracking-widest shadow-lg shadow-indigo-600/30 hover:bg-indigo-700 transition-all">Save
+                        Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+    <div id="passwordModal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" onclick="closeModal('passwordModal')"></div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg p-10 bg-white dark:bg-[#16213e] rounded-[40px] shadow-2xl border border-white/10">
+            <h2 class="text-3xl font-black mb-2">Security Update</h2>
+            <p class="text-gray-500 dark:text-gray-400 mb-8">Set a new secure password for your account.</p>
+            <form method="POST" class="space-y-6">
+                <input type="hidden" name="update_password" value="1">
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-4">New
+                        Password</label>
+                    <input type="password" name="password" required minlength="6" placeholder="••••••••"
+                        class="w-full px-8 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-indigo-500 rounded-3xl outline-none transition-all font-bold">
+                </div>
+                <div class="pt-4 flex gap-4">
+                    <button type="button" onclick="closeModal('passwordModal')"
+                        class="flex-1 py-4 bg-gray-100 dark:bg-white/5 rounded-2xl font-bold uppercase tracking-widest hover:bg-gray-200 transition-all">Cancel</button>
+                    <button type="submit"
+                        class="flex-1 py-4 bg-red-500 text-white rounded-2xl font-bold uppercase tracking-widest shadow-lg shadow-red-500/30 hover:bg-red-600 transition-all">Update
+                        Shield</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <script>
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+    </script>
+    <script>
+        
+        document.querySelectorAll('.profile-progress-bar').forEach(bar => {
+            const progress = bar.dataset.progress || 0;
+            setTimeout(() => {
+                bar.style.width = progress + '%';
+            }, 100);
+        });
+    </script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <script>
+        
+        document.querySelectorAll('.profile-progress-bar').forEach(bar => {
+            const progress = bar.dataset.progress || 0;
+            setTimeout(() => {
+                bar.style.width = progress + '%';
+            }, 100);
+        });
+    </script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+</body>
+
+</html>
+
+
+

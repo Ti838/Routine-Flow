@@ -6,27 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Routine Flow - Access Portal</title>
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
-    <script>
-        (function () {
-            const saved = localStorage.getItem('theme');
-            if (saved === 'dark' || saved === 'light') {
-                if (saved === 'dark') document.documentElement.classList.add('dark');
-            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.documentElement.classList.add('dark');
-            }
-        })();
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="assets/js/tailwind-config.js"></script>
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <script></script>
+    <script></script>
     <link rel="stylesheet" href="assets/css/zoom-fix.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https:
+    <link href="https:
 </head>
 
 <body
     class="bg-[#f3f4f6] dark:bg-[#0b1121] min-h-screen flex items-center justify-center p-4 sm:p-5 overflow-y-auto sm:overflow-hidden font-['Inter']">
 
-    <!-- Top Bar -->
+    
     <div class="absolute top-0 left-0 w-full p-8 flex justify-between items-center z-50">
         <a href="index.php"
             class="flex items-center gap-2 text-gray-500 hover:text-[#667eea] transition-all font-bold group">
@@ -39,16 +30,16 @@
         </button>
     </div>
 
-    <!-- Auth Wrapper -->
+    
     <div class="relative w-full max-w-[900px] min-h-[500px] h-auto md:h-[90vh] md:max-h-[700px] overflow-hidden border border-gray-400 dark:border-white/20 shadow-[0_0_25px_rgba(102,126,234,0.1)] rounded-3xl bg-white dark:bg-[#16213e] group transition-all duration-300 my-20 md:my-0"
         id="authWrapper">
 
-        <!-- Decorative Shape -->
+        
         <div
             class="absolute right-0 top-0 h-full w-[52%] bg-gradient-to-br from-[#764ba2] to-[#667eea] -skew-x-[10deg] translate-x-[50px] transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] z-10 group-[.toggled]:translate-x-[-500px] hidden md:block">
         </div>
 
-        <!-- Sign In Panel -->
+        
         <div
             class="absolute top-0 left-0 w-full md:w-1/2 h-full flex flex-col justify-center px-6 sm:px-10 py-5 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] z-20 overflow-y-auto scrollbar-hide group-[.toggled]:-left-1/2 group-[.toggled]:opacity-0 group-[.toggled]:pointer-events-none">
             <h2 class="text-2xl sm:text-3xl font-extrabold mb-6 text-gray-900 dark:text-white">Sign In</h2>
@@ -87,7 +78,7 @@
             </form>
         </div>
 
-        <!-- Welcome Content (Sign In side) -->
+        
         <div
             class="absolute top-0 right-0 w-1/2 h-full flex flex-col justify-center p-16 z-30 text-white text-right transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-[.toggled]:right-[-50%] group-[.toggled]:opacity-0 hidden md:flex">
             <img src="assets/img/favicon.png" class="w-16 h-16 mb-6 rounded-2xl bg-white shadow-xl p-2 ml-auto">
@@ -95,7 +86,7 @@
             <p class="text-gray-200">The next generation of academic scheduling and task management.</p>
         </div>
 
-        <!-- Sign Up Panel -->
+        
         <div
             class="absolute top-0 right-[-50%] w-full md:w-1/2 h-full flex flex-col justify-center px-10 py-5 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] opacity-0 pointer-events-none z-20 overflow-y-auto scrollbar-hide group-[.toggled]:right-0 group-[.toggled]:opacity-100 group-[.toggled]:pointer-events-auto">
             <h2 class="text-xl font-extrabold mb-3 text-gray-900 dark:text-white">Join Us</h2>
@@ -187,7 +178,7 @@
             </form>
         </div>
 
-        <!-- Welcome Content (Sign Up side) -->
+        
         <div
             class="absolute top-0 left-[-50%] w-1/2 h-full flex flex-col justify-center p-16 z-30 text-white transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] opacity-0 group-[.toggled]:left-0 group-[.toggled]:opacity-100 hidden md:flex">
             <img src="assets/img/favicon.png" class="w-16 h-16 mb-6 rounded-2xl bg-white shadow-xl p-2">
@@ -196,7 +187,7 @@
         </div>
     </div>
 
-    <!-- Captcha Modal -->
+    
     <div id="captchaModal"
         class="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 [&.active]:opacity-100 [&.active]:pointer-events-auto">
         <div
@@ -217,7 +208,7 @@
                 </div>
             </div>
 
-            <!-- Hidden inputs -->
+            
             <input type="hidden" id="captcha-n1">
             <input type="hidden" id="captcha-n2">
 
@@ -229,9 +220,9 @@
         </div>
     </div>
 
-    <script src="assets/js/theme.js"></script>
+    <script></script>
     <script>
-        // Captcha Logic
+        
         function generateCaptcha() {
             const n1 = Math.floor(Math.random() * 9) + 1;
             const n2 = Math.floor(Math.random() * 9) + 1;
@@ -243,7 +234,7 @@
             if (n2El) n2El.value = n2;
         }
 
-        // Department Data
+        
         const departments = [
             { id: 1, name: 'Computer Science & Engineering' },
             { id: 2, name: 'Electrical & Electronic Engineering' },
@@ -358,3 +349,1041 @@
 </body>
 
 </html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <script></script>
+    <link rel="stylesheet" href="assets/css/zoom-fix.css">
+    <link href="https:
+    <link href="https:
+</head>
+
+<body
+    class="bg-[#f3f4f6] dark:bg-[#0b1121] min-h-screen flex items-center justify-center p-4 sm:p-5 overflow-y-auto sm:overflow-hidden font-['Inter']">
+
+    
+    <div class="absolute top-0 left-0 w-full p-8 flex justify-between items-center z-50">
+        <a href="index.php"
+            class="flex items-center gap-2 text-gray-500 hover:text-[#667eea] transition-all font-bold group">
+            <i class="ri-arrow-left-line group-hover:-translate-x-1 transition-transform"></i> Back home
+        </a>
+        <button onclick="toggleTheme()"
+            class="w-12 h-12 rounded-2xl bg-white dark:bg-white/5 shadow-xl flex items-center justify-center text-gray-500 dark:text-yellow-400 hover:scale-110 transition-all">
+            <i class="ri-sun-line hidden dark:block text-2xl"></i>
+            <i class="ri-moon-line dark:hidden text-2xl"></i>
+        </button>
+    </div>
+
+    
+    <div class="relative w-full max-w-[900px] min-h-[500px] h-auto md:h-[90vh] md:max-h-[700px] overflow-hidden border border-gray-400 dark:border-white/20 shadow-[0_0_25px_rgba(102,126,234,0.1)] rounded-3xl bg-white dark:bg-[#16213e] group transition-all duration-300 my-20 md:my-0"
+        id="authWrapper">
+
+        
+        <div
+            class="absolute right-0 top-0 h-full w-[52%] bg-gradient-to-br from-[#764ba2] to-[#667eea] -skew-x-[10deg] translate-x-[50px] transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] z-10 group-[.toggled]:translate-x-[-500px] hidden md:block">
+        </div>
+
+        
+        <div
+            class="absolute top-0 left-0 w-full md:w-1/2 h-full flex flex-col justify-center px-6 sm:px-10 py-5 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] z-20 overflow-y-auto scrollbar-hide group-[.toggled]:-left-1/2 group-[.toggled]:opacity-0 group-[.toggled]:pointer-events-none">
+            <h2 class="text-2xl sm:text-3xl font-extrabold mb-6 text-gray-900 dark:text-white">Sign In</h2>
+            <p
+                class="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-6 uppercase tracking-widest font-black">
+                Login with your credentials</p>
+            <form action="login.php" method="POST">
+                <div class="relative mb-2">
+                    <input type="text" name="identifier" id="loginId"
+                        class="peer w-full py-2 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none placeholder-transparent text-gray-900 dark:text-gray-100 font-medium transition-colors"
+                        placeholder="Username" required>
+                    <label for="loginId"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2 peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] pointer-events-none">Username
+                        or Email</label>
+                </div>
+                <div class="relative mb-6">
+                    <input type="password" name="password" id="loginPass"
+                        class="peer w-full py-2 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none placeholder-transparent text-gray-900 dark:text-gray-100 font-medium transition-colors"
+                        placeholder="Password" required>
+                    <label for="loginPass"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2 peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] pointer-events-none">Password</label>
+                </div>
+
+                <div class="flex justify-end mb-6">
+                    <a href="forgot_password.php"
+                        class="text-xs font-bold text-gray-500 hover:text-[#667eea] transition-colors">Forgot
+                        Password?</a>
+                </div>
+
+                <button type="submit" name="login"
+                    class="w-full py-3.5 bg-gradient-to-br from-[#667eea] to-[#764ba2] text-white rounded-xl font-semibold shadow-[0_4px_15px_rgba(102,126,234,0.3)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(102,126,234,0.5)] transition-all mb-6">Sign
+                    In</button>
+                <p class="text-center text-sm text-gray-500">
+                    New here? <a href="#" onclick="toggleAuth(true)" class="text-[#667eea] font-bold">Create Account</a>
+                </p>
+            </form>
+        </div>
+
+        
+        <div
+            class="absolute top-0 right-0 w-1/2 h-full flex flex-col justify-center p-16 z-30 text-white text-right transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-[.toggled]:right-[-50%] group-[.toggled]:opacity-0 hidden md:flex">
+            <img src="assets/img/favicon.png" class="w-16 h-16 mb-6 rounded-2xl bg-white shadow-xl p-2 ml-auto">
+            <h1 class="text-4xl font-bold mb-4">Routine Flow</h1>
+            <p class="text-gray-200">The next generation of academic scheduling and task management.</p>
+        </div>
+
+        
+        <div
+            class="absolute top-0 right-[-50%] w-full md:w-1/2 h-full flex flex-col justify-center px-10 py-5 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] opacity-0 pointer-events-none z-20 overflow-y-auto scrollbar-hide group-[.toggled]:right-0 group-[.toggled]:opacity-100 group-[.toggled]:pointer-events-auto">
+            <h2 class="text-xl font-extrabold mb-3 text-gray-900 dark:text-white">Join Us</h2>
+            <form action="register.php" method="POST" id="signupForm">
+                <div class="relative mb-2">
+                    <input type="text" name="name" id="regName"
+                        class="peer w-full py-1.5 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none placeholder-transparent text-gray-900 dark:text-gray-100 text-sm font-medium transition-colors"
+                        placeholder="Full Name" required>
+                    <label for="regName"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-1.5 peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] pointer-events-none">Full
+                        Name</label>
+                </div>
+                <div class="relative mb-2">
+                    <input type="text" name="username" id="regUser"
+                        class="peer w-full py-1.5 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none placeholder-transparent text-gray-900 dark:text-gray-100 text-sm font-medium transition-colors"
+                        placeholder="Username" required pattern="[a-zA-Z0-9_]{3,20}"
+                        title="3-20 characters, letters, numbers, and underscores only">
+                    <label for="regUser"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-1.5 peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] pointer-events-none">Username</label>
+                </div>
+                <div class="relative mb-2">
+                    <input type="email" name="email" id="regEmail"
+                        class="peer w-full py-1.5 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none placeholder-transparent text-gray-900 dark:text-gray-100 text-sm font-medium transition-colors"
+                        placeholder="Email" required>
+                    <label for="regEmail"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-1.5 peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] pointer-events-none">Email
+                        Address</label>
+                </div>
+                <div class="relative mb-2">
+                    <input type="password" name="password" id="regPass"
+                        class="peer w-full py-1.5 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none placeholder-transparent text-gray-900 dark:text-gray-100 text-sm font-medium transition-colors"
+                        placeholder="Password" required>
+                    <label for="regPass"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-1.5 peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] pointer-events-none">Password</label>
+                </div>
+
+                <div class="relative mb-2">
+                    <select name="gender" id="regGender"
+                        class="peer w-full py-1.5 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none text-gray-900 dark:text-gray-100 text-sm font-medium transition-colors appearance-none [&:invalid]:text-transparent"
+                        required>
+                        <option value="" disabled selected></option>
+                        <option value="Male" class="text-gray-900">Male</option>
+                        <option value="Female" class="text-gray-900">Female</option>
+                        <option value="Other" class="text-gray-900">Other</option>
+                    </select>
+                    <label for="regGender"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-valid:-top-2.5 peer-valid:text-[11px] peer-valid:text-[#667eea] peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] top-1.5 text-sm text-gray-500 pointer-events-none">Gender</label>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2 mb-4">
+                    <label class="cursor-pointer">
+                        <input type="radio" name="role" value="Student" class="sr-only peer" checked>
+                        <div
+                            class="text-center py-1.5 rounded-xl bg-gray-100 dark:bg-white/5 text-[10px] font-bold text-gray-900 dark:text-gray-400 peer-checked:bg-[#667eea] peer-checked:text-white transition-all uppercase tracking-widest">
+                            Student</div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input type="radio" name="role" value="Teacher" class="sr-only peer">
+                        <div
+                            class="text-center py-1.5 rounded-xl bg-gray-100 dark:bg-white/5 text-[10px] font-bold text-gray-900 dark:text-gray-400 peer-checked:bg-[#667eea] peer-checked:text-white transition-all uppercase tracking-widest">
+                            Teacher</div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input type="radio" name="role" value="Admin" class="sr-only peer">
+                        <div
+                            class="text-center py-1.5 rounded-xl bg-gray-100 dark:bg-white/5 text-[10px] font-bold text-gray-900 dark:text-gray-400 peer-checked:bg-[#667eea] peer-checked:text-white transition-all uppercase tracking-widest">
+                            Admin</div>
+                    </label>
+                </div>
+
+                <div class="relative mb-4" id="deptField">
+                    <select name="department_id" id="regDept"
+                        class="peer w-full py-1.5 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none text-gray-900 dark:text-gray-100 text-sm font-medium transition-colors appearance-none [&:invalid]:text-transparent"
+                        required>
+                        <option value="" disabled selected></option>
+                    </select>
+                    <label for="regDept"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-valid:-top-2.5 peer-valid:text-[11px] peer-valid:text-[#667eea] peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] top-1.5 text-sm text-gray-500 pointer-events-none">Select
+                        Department</label>
+                </div>
+
+                <button type="button" onclick="openCaptchaModal()"
+                    class="w-full py-3 bg-gradient-to-br from-[#667eea] to-[#764ba2] text-white rounded-xl font-bold uppercase tracking-widest text-sm shadow-[0_4px_15px_rgba(102,126,234,0.3)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(102,126,234,0.5)] transition-all mb-3">Create
+                    Account</button>
+                <p class="text-center text-sm text-gray-500">
+                    Already have an account? <a href="#" onclick="toggleAuth(false)"
+                        class="text-[#667eea] font-bold">Login</a>
+                </p>
+            </form>
+        </div>
+
+        
+        <div
+            class="absolute top-0 left-[-50%] w-1/2 h-full flex flex-col justify-center p-16 z-30 text-white transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] opacity-0 group-[.toggled]:left-0 group-[.toggled]:opacity-100 hidden md:flex">
+            <img src="assets/img/favicon.png" class="w-16 h-16 mb-6 rounded-2xl bg-white shadow-xl p-2">
+            <h1 class="text-4xl font-bold mb-4">Empowering Education</h1>
+            <p class="text-gray-200">Join for streamlining daily schedules.</p>
+        </div>
+    </div>
+
+    
+    <div id="captchaModal"
+        class="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 [&.active]:opacity-100 [&.active]:pointer-events-auto">
+        <div
+            class="bg-white dark:bg-[#16213e] p-8 rounded-3xl w-[90%] max-w-[400px] shadow-[0_10px_30px_rgba(0,0,0,0.2)] border border-gray-400 dark:border-white/20 transform scale-90 transition-transform duration-300 ease-[cubic-bezier(0.68,-0.55,0.265,1.55)] [.active_&]:scale-100">
+            <h3 class="text-xl font-bold mb-4 text-gray-900 dark:text-white text-center">Security Check</h3>
+            <p class="text-sm text-gray-500 mb-6 text-center">Please solve this simple math problem to continue.</p>
+
+            <div class="mb-6">
+                <div class="flex items-center gap-4 justify-center bg-gray-50 dark:bg-white/5 p-4 rounded-xl">
+                    <span class="text-lg font-bold text-gray-700 dark:text-gray-200 select-none">
+                        <span id="captcha-question"></span> = ?
+                    </span>
+                    <div class="relative w-24">
+                        <input type="number" id="captcha-input"
+                            class="w-full text-center text-gray-900 dark:text-gray-100 bg-white dark:bg-black/20 rounded-lg px-2 py-2 text-lg border border-gray-200 dark:border-white/10 focus:border-[#667eea] outline-none transition-all"
+                            placeholder="?" required>
+                    </div>
+                </div>
+            </div>
+
+            
+            <input type="hidden" id="captcha-n1">
+            <input type="hidden" id="captcha-n2">
+
+            <button onclick="verifyAndRegister()"
+                class="w-full py-3 bg-gradient-to-br from-[#667eea] to-[#764ba2] text-white rounded-xl font-semibold shadow-[0_4px_15px_rgba(102,126,234,0.3)] hover:-translate-y-0.5 transition-all mb-3">Verify
+                & Register</button>
+            <button onclick="closeCaptchaModal()"
+                class="w-full py-3 text-sm font-semibold text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">Cancel</button>
+        </div>
+    </div>
+
+    <script></script>
+    <script>
+        
+        function generateCaptcha() {
+            const n1 = Math.floor(Math.random() * 9) + 1;
+            const n2 = Math.floor(Math.random() * 9) + 1;
+            const qEl = document.getElementById('captcha-question');
+            if (qEl) qEl.textContent = `${n1} + ${n2}`;
+            const n1El = document.getElementById('captcha-n1');
+            if (n1El) n1El.value = n1;
+            const n2El = document.getElementById('captcha-n2');
+            if (n2El) n2El.value = n2;
+        }
+
+        
+        const departments = [
+            { id: 1, name: 'Computer Science & Engineering' },
+            { id: 2, name: 'Electrical & Electronic Engineering' },
+            { id: 3, name: 'Mechanical Engineering' },
+            { id: 4, name: 'Civil Engineering' },
+            { id: 5, name: 'Electronics & Communication Engineering' },
+            { id: 6, name: 'Chemical Engineering' },
+            { id: 7, name: 'Industrial & Production Engineering' },
+            { id: 8, name: 'Textile Engineering' },
+            { id: 9, name: 'Software Engineering' },
+            { id: 10, name: 'Biomedical Engineering' },
+            { id: 11, name: 'Aerospace Engineering' },
+            { id: 12, name: 'Environmental Engineering' }
+        ];
+
+        function toggleAuth(isSignup) {
+            const wrapper = document.getElementById('authWrapper');
+            if (isSignup) {
+                wrapper.classList.add('toggled');
+                generateCaptcha();
+            } else {
+                wrapper.classList.remove('toggled');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            generateCaptcha();
+
+            const deptSelect = document.querySelector('select[name="department_id"]');
+            if (deptSelect) {
+                while (deptSelect.options.length > 1) {
+                    deptSelect.remove(1);
+                }
+                departments.forEach(dept => {
+                    const option = document.createElement('option');
+                    option.value = dept.id;
+                    option.textContent = dept.name;
+                    option.classList.add('text-gray-900');
+                    deptSelect.appendChild(option);
+                });
+            }
+
+            const roleRadios = document.querySelectorAll('input[name="role"]');
+            const deptField = document.getElementById('deptField');
+            const deptSelectElement = deptField ? deptField.querySelector('select') : null;
+
+            if (roleRadios.length > 0 && deptField && deptSelectElement) {
+                roleRadios.forEach(radio => {
+                    radio.addEventListener('change', () => {
+                        if (radio.value === 'Admin') {
+                            deptField.classList.add('hidden');
+                            deptSelectElement.removeAttribute('required');
+                        } else {
+                            deptField.classList.remove('hidden');
+                            deptSelectElement.setAttribute('required', '');
+                        }
+                    });
+                    if (radio.checked) {
+                        radio.dispatchEvent(new Event('change'));
+                    }
+                });
+            }
+
+            window.verifyAndRegister = function () {
+                const n1 = parseInt(document.getElementById('captcha-n1').value);
+                const n2 = parseInt(document.getElementById('captcha-n2').value);
+                const answer = parseInt(document.getElementById('captcha-input').value);
+                const signupForm = document.getElementById('signupForm');
+
+                if (!signupForm.checkValidity()) {
+                    closeCaptchaModal();
+                    signupForm.reportValidity();
+                    return;
+                }
+
+                if (answer === (n1 + n2)) {
+                    const existingN1 = signupForm.querySelector('input[name="captcha_n1"]');
+                    if (!existingN1) {
+                        const i1 = document.createElement('input'); i1.type = 'hidden'; i1.name = 'captcha_n1'; i1.value = n1; signupForm.appendChild(i1);
+                        const i2 = document.createElement('input'); i2.type = 'hidden'; i2.name = 'captcha_n2'; i2.value = n2; signupForm.appendChild(i2);
+                        const i3 = document.createElement('input'); i3.type = 'hidden'; i3.name = 'captcha_input'; i3.value = answer; signupForm.appendChild(i3);
+                    }
+                    const submitBtn = document.createElement('input');
+                    submitBtn.type = 'hidden';
+                    submitBtn.name = 'register';
+                    submitBtn.value = 'true';
+                    signupForm.appendChild(submitBtn);
+                    signupForm.submit();
+                } else {
+                    alert('Incorrect Math Answer. Please try again.');
+                    generateCaptcha();
+                    document.getElementById('captcha-input').value = '';
+                }
+            };
+
+            window.openCaptchaModal = function () {
+                const signupForm = document.getElementById('signupForm');
+                if (signupForm.checkValidity()) {
+                    document.getElementById('captchaModal').classList.add('active');
+                    generateCaptcha();
+                    document.getElementById('captcha-input').focus();
+                } else {
+                    signupForm.reportValidity();
+                }
+            };
+
+            window.closeCaptchaModal = function () {
+                document.getElementById('captchaModal').classList.remove('active');
+            };
+        });
+    </script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <link rel="stylesheet" href="assets/css/zoom-fix.css">
+    <link href="https:
+    <link href="https:
+</head>
+
+<body
+    class="bg-[#f3f4f6] dark:bg-[#0b1121] min-h-screen flex items-center justify-center p-4 sm:p-5 overflow-y-auto sm:overflow-hidden font-['Inter']">
+
+    
+    <div class="absolute top-0 left-0 w-full p-8 flex justify-between items-center z-50">
+        <a href="index.php"
+            class="flex items-center gap-2 text-gray-500 hover:text-[#667eea] transition-all font-bold group">
+            <i class="ri-arrow-left-line group-hover:-translate-x-1 transition-transform"></i> Back home
+        </a>
+        <button onclick="toggleTheme()"
+            class="w-12 h-12 rounded-2xl bg-white dark:bg-white/5 shadow-xl flex items-center justify-center text-gray-500 dark:text-yellow-400 hover:scale-110 transition-all">
+            <i class="ri-sun-line hidden dark:block text-2xl"></i>
+            <i class="ri-moon-line dark:hidden text-2xl"></i>
+        </button>
+    </div>
+
+    
+    <div class="relative w-full max-w-[900px] min-h-[500px] h-auto md:h-[90vh] md:max-h-[700px] overflow-hidden border border-gray-400 dark:border-white/20 shadow-[0_0_25px_rgba(102,126,234,0.1)] rounded-3xl bg-white dark:bg-[#16213e] group transition-all duration-300 my-20 md:my-0"
+        id="authWrapper">
+
+        
+        <div
+            class="absolute right-0 top-0 h-full w-[52%] bg-gradient-to-br from-[#764ba2] to-[#667eea] -skew-x-[10deg] translate-x-[50px] transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] z-10 group-[.toggled]:translate-x-[-500px] hidden md:block">
+        </div>
+
+        
+        <div
+            class="absolute top-0 left-0 w-full md:w-1/2 h-full flex flex-col justify-center px-6 sm:px-10 py-5 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] z-20 overflow-y-auto scrollbar-hide group-[.toggled]:-left-1/2 group-[.toggled]:opacity-0 group-[.toggled]:pointer-events-none">
+            <h2 class="text-2xl sm:text-3xl font-extrabold mb-6 text-gray-900 dark:text-white">Sign In</h2>
+            <p
+                class="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-6 uppercase tracking-widest font-black">
+                Login with your credentials</p>
+            <form action="login.php" method="POST">
+                <div class="relative mb-2">
+                    <input type="text" name="identifier" id="loginId"
+                        class="peer w-full py-2 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none placeholder-transparent text-gray-900 dark:text-gray-100 font-medium transition-colors"
+                        placeholder="Username" required>
+                    <label for="loginId"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2 peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] pointer-events-none">Username
+                        or Email</label>
+                </div>
+                <div class="relative mb-6">
+                    <input type="password" name="password" id="loginPass"
+                        class="peer w-full py-2 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none placeholder-transparent text-gray-900 dark:text-gray-100 font-medium transition-colors"
+                        placeholder="Password" required>
+                    <label for="loginPass"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2 peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] pointer-events-none">Password</label>
+                </div>
+
+                <div class="flex justify-end mb-6">
+                    <a href="forgot_password.php"
+                        class="text-xs font-bold text-gray-500 hover:text-[#667eea] transition-colors">Forgot
+                        Password?</a>
+                </div>
+
+                <button type="submit" name="login"
+                    class="w-full py-3.5 bg-gradient-to-br from-[#667eea] to-[#764ba2] text-white rounded-xl font-semibold shadow-[0_4px_15px_rgba(102,126,234,0.3)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(102,126,234,0.5)] transition-all mb-6">Sign
+                    In</button>
+                <p class="text-center text-sm text-gray-500">
+                    New here? <a href="#" onclick="toggleAuth(true)" class="text-[#667eea] font-bold">Create Account</a>
+                </p>
+            </form>
+        </div>
+
+        
+        <div
+            class="absolute top-0 right-0 w-1/2 h-full flex flex-col justify-center p-16 z-30 text-white text-right transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-[.toggled]:right-[-50%] group-[.toggled]:opacity-0 hidden md:flex">
+            <img src="assets/img/favicon.png" class="w-16 h-16 mb-6 rounded-2xl bg-white shadow-xl p-2 ml-auto">
+            <h1 class="text-4xl font-bold mb-4">Routine Flow</h1>
+            <p class="text-gray-200">The next generation of academic scheduling and task management.</p>
+        </div>
+
+        
+        <div
+            class="absolute top-0 right-[-50%] w-full md:w-1/2 h-full flex flex-col justify-center px-10 py-5 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] opacity-0 pointer-events-none z-20 overflow-y-auto scrollbar-hide group-[.toggled]:right-0 group-[.toggled]:opacity-100 group-[.toggled]:pointer-events-auto">
+            <h2 class="text-xl font-extrabold mb-3 text-gray-900 dark:text-white">Join Us</h2>
+            <form action="register.php" method="POST" id="signupForm">
+                <div class="relative mb-2">
+                    <input type="text" name="name" id="regName"
+                        class="peer w-full py-1.5 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none placeholder-transparent text-gray-900 dark:text-gray-100 text-sm font-medium transition-colors"
+                        placeholder="Full Name" required>
+                    <label for="regName"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-1.5 peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] pointer-events-none">Full
+                        Name</label>
+                </div>
+                <div class="relative mb-2">
+                    <input type="text" name="username" id="regUser"
+                        class="peer w-full py-1.5 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none placeholder-transparent text-gray-900 dark:text-gray-100 text-sm font-medium transition-colors"
+                        placeholder="Username" required pattern="[a-zA-Z0-9_]{3,20}"
+                        title="3-20 characters, letters, numbers, and underscores only">
+                    <label for="regUser"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-1.5 peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] pointer-events-none">Username</label>
+                </div>
+                <div class="relative mb-2">
+                    <input type="email" name="email" id="regEmail"
+                        class="peer w-full py-1.5 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none placeholder-transparent text-gray-900 dark:text-gray-100 text-sm font-medium transition-colors"
+                        placeholder="Email" required>
+                    <label for="regEmail"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-1.5 peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] pointer-events-none">Email
+                        Address</label>
+                </div>
+                <div class="relative mb-2">
+                    <input type="password" name="password" id="regPass"
+                        class="peer w-full py-1.5 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none placeholder-transparent text-gray-900 dark:text-gray-100 text-sm font-medium transition-colors"
+                        placeholder="Password" required>
+                    <label for="regPass"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-1.5 peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] pointer-events-none">Password</label>
+                </div>
+
+                <div class="relative mb-2">
+                    <select name="gender" id="regGender"
+                        class="peer w-full py-1.5 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none text-gray-900 dark:text-gray-100 text-sm font-medium transition-colors appearance-none [&:invalid]:text-transparent"
+                        required>
+                        <option value="" disabled selected></option>
+                        <option value="Male" class="text-gray-900">Male</option>
+                        <option value="Female" class="text-gray-900">Female</option>
+                        <option value="Other" class="text-gray-900">Other</option>
+                    </select>
+                    <label for="regGender"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-valid:-top-2.5 peer-valid:text-[11px] peer-valid:text-[#667eea] peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] top-1.5 text-sm text-gray-500 pointer-events-none">Gender</label>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2 mb-4">
+                    <label class="cursor-pointer">
+                        <input type="radio" name="role" value="Student" class="sr-only peer" checked>
+                        <div
+                            class="text-center py-1.5 rounded-xl bg-gray-100 dark:bg-white/5 text-[10px] font-bold text-gray-900 dark:text-gray-400 peer-checked:bg-[#667eea] peer-checked:text-white transition-all uppercase tracking-widest">
+                            Student</div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input type="radio" name="role" value="Teacher" class="sr-only peer">
+                        <div
+                            class="text-center py-1.5 rounded-xl bg-gray-100 dark:bg-white/5 text-[10px] font-bold text-gray-900 dark:text-gray-400 peer-checked:bg-[#667eea] peer-checked:text-white transition-all uppercase tracking-widest">
+                            Teacher</div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input type="radio" name="role" value="Admin" class="sr-only peer">
+                        <div
+                            class="text-center py-1.5 rounded-xl bg-gray-100 dark:bg-white/5 text-[10px] font-bold text-gray-900 dark:text-gray-400 peer-checked:bg-[#667eea] peer-checked:text-white transition-all uppercase tracking-widest">
+                            Admin</div>
+                    </label>
+                </div>
+
+                <div class="relative mb-4" id="deptField">
+                    <select name="department_id" id="regDept"
+                        class="peer w-full py-1.5 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none text-gray-900 dark:text-gray-100 text-sm font-medium transition-colors appearance-none [&:invalid]:text-transparent"
+                        required>
+                        <option value="" disabled selected></option>
+                    </select>
+                    <label for="regDept"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-valid:-top-2.5 peer-valid:text-[11px] peer-valid:text-[#667eea] peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] top-1.5 text-sm text-gray-500 pointer-events-none">Select
+                        Department</label>
+                </div>
+
+                <button type="button" onclick="openCaptchaModal()"
+                    class="w-full py-3 bg-gradient-to-br from-[#667eea] to-[#764ba2] text-white rounded-xl font-bold uppercase tracking-widest text-sm shadow-[0_4px_15px_rgba(102,126,234,0.3)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(102,126,234,0.5)] transition-all mb-3">Create
+                    Account</button>
+                <p class="text-center text-sm text-gray-500">
+                    Already have an account? <a href="#" onclick="toggleAuth(false)"
+                        class="text-[#667eea] font-bold">Login</a>
+                </p>
+            </form>
+        </div>
+
+        
+        <div
+            class="absolute top-0 left-[-50%] w-1/2 h-full flex flex-col justify-center p-16 z-30 text-white transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] opacity-0 group-[.toggled]:left-0 group-[.toggled]:opacity-100 hidden md:flex">
+            <img src="assets/img/favicon.png" class="w-16 h-16 mb-6 rounded-2xl bg-white shadow-xl p-2">
+            <h1 class="text-4xl font-bold mb-4">Empowering Education</h1>
+            <p class="text-gray-200">Join for streamlining daily schedules.</p>
+        </div>
+    </div>
+
+    
+    <div id="captchaModal"
+        class="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 [&.active]:opacity-100 [&.active]:pointer-events-auto">
+        <div
+            class="bg-white dark:bg-[#16213e] p-8 rounded-3xl w-[90%] max-w-[400px] shadow-[0_10px_30px_rgba(0,0,0,0.2)] border border-gray-400 dark:border-white/20 transform scale-90 transition-transform duration-300 ease-[cubic-bezier(0.68,-0.55,0.265,1.55)] [.active_&]:scale-100">
+            <h3 class="text-xl font-bold mb-4 text-gray-900 dark:text-white text-center">Security Check</h3>
+            <p class="text-sm text-gray-500 mb-6 text-center">Please solve this simple math problem to continue.</p>
+
+            <div class="mb-6">
+                <div class="flex items-center gap-4 justify-center bg-gray-50 dark:bg-white/5 p-4 rounded-xl">
+                    <span class="text-lg font-bold text-gray-700 dark:text-gray-200 select-none">
+                        <span id="captcha-question"></span> = ?
+                    </span>
+                    <div class="relative w-24">
+                        <input type="number" id="captcha-input"
+                            class="w-full text-center text-gray-900 dark:text-gray-100 bg-white dark:bg-black/20 rounded-lg px-2 py-2 text-lg border border-gray-200 dark:border-white/10 focus:border-[#667eea] outline-none transition-all"
+                            placeholder="?" required>
+                    </div>
+                </div>
+            </div>
+
+            
+            <input type="hidden" id="captcha-n1">
+            <input type="hidden" id="captcha-n2">
+
+            <button onclick="verifyAndRegister()"
+                class="w-full py-3 bg-gradient-to-br from-[#667eea] to-[#764ba2] text-white rounded-xl font-semibold shadow-[0_4px_15px_rgba(102,126,234,0.3)] hover:-translate-y-0.5 transition-all mb-3">Verify
+                & Register</button>
+            <button onclick="closeCaptchaModal()"
+                class="w-full py-3 text-sm font-semibold text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">Cancel</button>
+        </div>
+    </div>
+
+    <script></script>
+    <script>
+        
+        function generateCaptcha() {
+            const n1 = Math.floor(Math.random() * 9) + 1;
+            const n2 = Math.floor(Math.random() * 9) + 1;
+            const qEl = document.getElementById('captcha-question');
+            if (qEl) qEl.textContent = `${n1} + ${n2}`;
+            const n1El = document.getElementById('captcha-n1');
+            if (n1El) n1El.value = n1;
+            const n2El = document.getElementById('captcha-n2');
+            if (n2El) n2El.value = n2;
+        }
+
+        
+        const departments = [
+            { id: 1, name: 'Computer Science & Engineering' },
+            { id: 2, name: 'Electrical & Electronic Engineering' },
+            { id: 3, name: 'Mechanical Engineering' },
+            { id: 4, name: 'Civil Engineering' },
+            { id: 5, name: 'Electronics & Communication Engineering' },
+            { id: 6, name: 'Chemical Engineering' },
+            { id: 7, name: 'Industrial & Production Engineering' },
+            { id: 8, name: 'Textile Engineering' },
+            { id: 9, name: 'Software Engineering' },
+            { id: 10, name: 'Biomedical Engineering' },
+            { id: 11, name: 'Aerospace Engineering' },
+            { id: 12, name: 'Environmental Engineering' }
+        ];
+
+        function toggleAuth(isSignup) {
+            const wrapper = document.getElementById('authWrapper');
+            if (isSignup) {
+                wrapper.classList.add('toggled');
+                generateCaptcha();
+            } else {
+                wrapper.classList.remove('toggled');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            generateCaptcha();
+
+            const deptSelect = document.querySelector('select[name="department_id"]');
+            if (deptSelect) {
+                while (deptSelect.options.length > 1) {
+                    deptSelect.remove(1);
+                }
+                departments.forEach(dept => {
+                    const option = document.createElement('option');
+                    option.value = dept.id;
+                    option.textContent = dept.name;
+                    option.classList.add('text-gray-900');
+                    deptSelect.appendChild(option);
+                });
+            }
+
+            const roleRadios = document.querySelectorAll('input[name="role"]');
+            const deptField = document.getElementById('deptField');
+            const deptSelectElement = deptField ? deptField.querySelector('select') : null;
+
+            if (roleRadios.length > 0 && deptField && deptSelectElement) {
+                roleRadios.forEach(radio => {
+                    radio.addEventListener('change', () => {
+                        if (radio.value === 'Admin') {
+                            deptField.classList.add('hidden');
+                            deptSelectElement.removeAttribute('required');
+                        } else {
+                            deptField.classList.remove('hidden');
+                            deptSelectElement.setAttribute('required', '');
+                        }
+                    });
+                    if (radio.checked) {
+                        radio.dispatchEvent(new Event('change'));
+                    }
+                });
+            }
+
+            window.verifyAndRegister = function () {
+                const n1 = parseInt(document.getElementById('captcha-n1').value);
+                const n2 = parseInt(document.getElementById('captcha-n2').value);
+                const answer = parseInt(document.getElementById('captcha-input').value);
+                const signupForm = document.getElementById('signupForm');
+
+                if (!signupForm.checkValidity()) {
+                    closeCaptchaModal();
+                    signupForm.reportValidity();
+                    return;
+                }
+
+                if (answer === (n1 + n2)) {
+                    const existingN1 = signupForm.querySelector('input[name="captcha_n1"]');
+                    if (!existingN1) {
+                        const i1 = document.createElement('input'); i1.type = 'hidden'; i1.name = 'captcha_n1'; i1.value = n1; signupForm.appendChild(i1);
+                        const i2 = document.createElement('input'); i2.type = 'hidden'; i2.name = 'captcha_n2'; i2.value = n2; signupForm.appendChild(i2);
+                        const i3 = document.createElement('input'); i3.type = 'hidden'; i3.name = 'captcha_input'; i3.value = answer; signupForm.appendChild(i3);
+                    }
+                    const submitBtn = document.createElement('input');
+                    submitBtn.type = 'hidden';
+                    submitBtn.name = 'register';
+                    submitBtn.value = 'true';
+                    signupForm.appendChild(submitBtn);
+                    signupForm.submit();
+                } else {
+                    alert('Incorrect Math Answer. Please try again.');
+                    generateCaptcha();
+                    document.getElementById('captcha-input').value = '';
+                }
+            };
+
+            window.openCaptchaModal = function () {
+                const signupForm = document.getElementById('signupForm');
+                if (signupForm.checkValidity()) {
+                    document.getElementById('captchaModal').classList.add('active');
+                    generateCaptcha();
+                    document.getElementById('captcha-input').focus();
+                } else {
+                    signupForm.reportValidity();
+                }
+            };
+
+            window.closeCaptchaModal = function () {
+                document.getElementById('captchaModal').classList.remove('active');
+            };
+        });
+    </script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+    <link rel="stylesheet" href="assets/css/zoom-fix.css">
+    <link href="https:
+    <link href="https:
+</head>
+
+<body
+    class="bg-[#f3f4f6] dark:bg-[#0b1121] min-h-screen flex items-center justify-center p-4 sm:p-5 overflow-y-auto sm:overflow-hidden font-['Inter']">
+
+    
+    <div class="absolute top-0 left-0 w-full p-8 flex justify-between items-center z-50">
+        <a href="index.php"
+            class="flex items-center gap-2 text-gray-500 hover:text-[#667eea] transition-all font-bold group">
+            <i class="ri-arrow-left-line group-hover:-translate-x-1 transition-transform"></i> Back home
+        </a>
+        <button onclick="toggleTheme()"
+            class="w-12 h-12 rounded-2xl bg-white dark:bg-white/5 shadow-xl flex items-center justify-center text-gray-500 dark:text-yellow-400 hover:scale-110 transition-all">
+            <i class="ri-sun-line hidden dark:block text-2xl"></i>
+            <i class="ri-moon-line dark:hidden text-2xl"></i>
+        </button>
+    </div>
+
+    
+    <div class="relative w-full max-w-[900px] min-h-[500px] h-auto md:h-[90vh] md:max-h-[700px] overflow-hidden border border-gray-400 dark:border-white/20 shadow-[0_0_25px_rgba(102,126,234,0.1)] rounded-3xl bg-white dark:bg-[#16213e] group transition-all duration-300 my-20 md:my-0"
+        id="authWrapper">
+
+        
+        <div
+            class="absolute right-0 top-0 h-full w-[52%] bg-gradient-to-br from-[#764ba2] to-[#667eea] -skew-x-[10deg] translate-x-[50px] transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] z-10 group-[.toggled]:translate-x-[-500px] hidden md:block">
+        </div>
+
+        
+        <div
+            class="absolute top-0 left-0 w-full md:w-1/2 h-full flex flex-col justify-center px-6 sm:px-10 py-5 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] z-20 overflow-y-auto scrollbar-hide group-[.toggled]:-left-1/2 group-[.toggled]:opacity-0 group-[.toggled]:pointer-events-none">
+            <h2 class="text-2xl sm:text-3xl font-extrabold mb-6 text-gray-900 dark:text-white">Sign In</h2>
+            <p
+                class="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-6 uppercase tracking-widest font-black">
+                Login with your credentials</p>
+            <form action="login.php" method="POST">
+                <div class="relative mb-2">
+                    <input type="text" name="identifier" id="loginId"
+                        class="peer w-full py-2 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none placeholder-transparent text-gray-900 dark:text-gray-100 font-medium transition-colors"
+                        placeholder="Username" required>
+                    <label for="loginId"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2 peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] pointer-events-none">Username
+                        or Email</label>
+                </div>
+                <div class="relative mb-6">
+                    <input type="password" name="password" id="loginPass"
+                        class="peer w-full py-2 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none placeholder-transparent text-gray-900 dark:text-gray-100 font-medium transition-colors"
+                        placeholder="Password" required>
+                    <label for="loginPass"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2 peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] pointer-events-none">Password</label>
+                </div>
+
+                <div class="flex justify-end mb-6">
+                    <a href="forgot_password.php"
+                        class="text-xs font-bold text-gray-500 hover:text-[#667eea] transition-colors">Forgot
+                        Password?</a>
+                </div>
+
+                <button type="submit" name="login"
+                    class="w-full py-3.5 bg-gradient-to-br from-[#667eea] to-[#764ba2] text-white rounded-xl font-semibold shadow-[0_4px_15px_rgba(102,126,234,0.3)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(102,126,234,0.5)] transition-all mb-6">Sign
+                    In</button>
+                <p class="text-center text-sm text-gray-500">
+                    New here? <a href="#" onclick="toggleAuth(true)" class="text-[#667eea] font-bold">Create Account</a>
+                </p>
+            </form>
+        </div>
+
+        
+        <div
+            class="absolute top-0 right-0 w-1/2 h-full flex flex-col justify-center p-16 z-30 text-white text-right transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-[.toggled]:right-[-50%] group-[.toggled]:opacity-0 hidden md:flex">
+            <img src="assets/img/favicon.png" class="w-16 h-16 mb-6 rounded-2xl bg-white shadow-xl p-2 ml-auto">
+            <h1 class="text-4xl font-bold mb-4">Routine Flow</h1>
+            <p class="text-gray-200">The next generation of academic scheduling and task management.</p>
+        </div>
+
+        
+        <div
+            class="absolute top-0 right-[-50%] w-full md:w-1/2 h-full flex flex-col justify-center px-10 py-5 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] opacity-0 pointer-events-none z-20 overflow-y-auto scrollbar-hide group-[.toggled]:right-0 group-[.toggled]:opacity-100 group-[.toggled]:pointer-events-auto">
+            <h2 class="text-xl font-extrabold mb-3 text-gray-900 dark:text-white">Join Us</h2>
+            <form action="register.php" method="POST" id="signupForm">
+                <div class="relative mb-2">
+                    <input type="text" name="name" id="regName"
+                        class="peer w-full py-1.5 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none placeholder-transparent text-gray-900 dark:text-gray-100 text-sm font-medium transition-colors"
+                        placeholder="Full Name" required>
+                    <label for="regName"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-1.5 peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] pointer-events-none">Full
+                        Name</label>
+                </div>
+                <div class="relative mb-2">
+                    <input type="text" name="username" id="regUser"
+                        class="peer w-full py-1.5 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none placeholder-transparent text-gray-900 dark:text-gray-100 text-sm font-medium transition-colors"
+                        placeholder="Username" required pattern="[a-zA-Z0-9_]{3,20}"
+                        title="3-20 characters, letters, numbers, and underscores only">
+                    <label for="regUser"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-1.5 peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] pointer-events-none">Username</label>
+                </div>
+                <div class="relative mb-2">
+                    <input type="email" name="email" id="regEmail"
+                        class="peer w-full py-1.5 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none placeholder-transparent text-gray-900 dark:text-gray-100 text-sm font-medium transition-colors"
+                        placeholder="Email" required>
+                    <label for="regEmail"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-1.5 peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] pointer-events-none">Email
+                        Address</label>
+                </div>
+                <div class="relative mb-2">
+                    <input type="password" name="password" id="regPass"
+                        class="peer w-full py-1.5 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none placeholder-transparent text-gray-900 dark:text-gray-100 text-sm font-medium transition-colors"
+                        placeholder="Password" required>
+                    <label for="regPass"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-1.5 peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] pointer-events-none">Password</label>
+                </div>
+
+                <div class="relative mb-2">
+                    <select name="gender" id="regGender"
+                        class="peer w-full py-1.5 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none text-gray-900 dark:text-gray-100 text-sm font-medium transition-colors appearance-none [&:invalid]:text-transparent"
+                        required>
+                        <option value="" disabled selected></option>
+                        <option value="Male" class="text-gray-900">Male</option>
+                        <option value="Female" class="text-gray-900">Female</option>
+                        <option value="Other" class="text-gray-900">Other</option>
+                    </select>
+                    <label for="regGender"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-valid:-top-2.5 peer-valid:text-[11px] peer-valid:text-[#667eea] peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] top-1.5 text-sm text-gray-500 pointer-events-none">Gender</label>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2 mb-4">
+                    <label class="cursor-pointer">
+                        <input type="radio" name="role" value="Student" class="sr-only peer" checked>
+                        <div
+                            class="text-center py-1.5 rounded-xl bg-gray-100 dark:bg-white/5 text-[10px] font-bold text-gray-900 dark:text-gray-400 peer-checked:bg-[#667eea] peer-checked:text-white transition-all uppercase tracking-widest">
+                            Student</div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input type="radio" name="role" value="Teacher" class="sr-only peer">
+                        <div
+                            class="text-center py-1.5 rounded-xl bg-gray-100 dark:bg-white/5 text-[10px] font-bold text-gray-900 dark:text-gray-400 peer-checked:bg-[#667eea] peer-checked:text-white transition-all uppercase tracking-widest">
+                            Teacher</div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input type="radio" name="role" value="Admin" class="sr-only peer">
+                        <div
+                            class="text-center py-1.5 rounded-xl bg-gray-100 dark:bg-white/5 text-[10px] font-bold text-gray-900 dark:text-gray-400 peer-checked:bg-[#667eea] peer-checked:text-white transition-all uppercase tracking-widest">
+                            Admin</div>
+                    </label>
+                </div>
+
+                <div class="relative mb-4" id="deptField">
+                    <select name="department_id" id="regDept"
+                        class="peer w-full py-1.5 bg-transparent border-b-2 border-gray-400 dark:border-white/20 focus:border-[#667eea] outline-none text-gray-900 dark:text-gray-100 text-sm font-medium transition-colors appearance-none [&:invalid]:text-transparent"
+                        required>
+                        <option value="" disabled selected></option>
+                    </select>
+                    <label for="regDept"
+                        class="absolute left-0 -top-2.5 text-[11px] text-[#667eea] transition-all peer-valid:-top-2.5 peer-valid:text-[11px] peer-valid:text-[#667eea] peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:text-[#667eea] top-1.5 text-sm text-gray-500 pointer-events-none">Select
+                        Department</label>
+                </div>
+
+                <button type="button" onclick="openCaptchaModal()"
+                    class="w-full py-3 bg-gradient-to-br from-[#667eea] to-[#764ba2] text-white rounded-xl font-bold uppercase tracking-widest text-sm shadow-[0_4px_15px_rgba(102,126,234,0.3)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(102,126,234,0.5)] transition-all mb-3">Create
+                    Account</button>
+                <p class="text-center text-sm text-gray-500">
+                    Already have an account? <a href="#" onclick="toggleAuth(false)"
+                        class="text-[#667eea] font-bold">Login</a>
+                </p>
+            </form>
+        </div>
+
+        
+        <div
+            class="absolute top-0 left-[-50%] w-1/2 h-full flex flex-col justify-center p-16 z-30 text-white transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] opacity-0 group-[.toggled]:left-0 group-[.toggled]:opacity-100 hidden md:flex">
+            <img src="assets/img/favicon.png" class="w-16 h-16 mb-6 rounded-2xl bg-white shadow-xl p-2">
+            <h1 class="text-4xl font-bold mb-4">Empowering Education</h1>
+            <p class="text-gray-200">Join for streamlining daily schedules.</p>
+        </div>
+    </div>
+
+    
+    <div id="captchaModal"
+        class="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 [&.active]:opacity-100 [&.active]:pointer-events-auto">
+        <div
+            class="bg-white dark:bg-[#16213e] p-8 rounded-3xl w-[90%] max-w-[400px] shadow-[0_10px_30px_rgba(0,0,0,0.2)] border border-gray-400 dark:border-white/20 transform scale-90 transition-transform duration-300 ease-[cubic-bezier(0.68,-0.55,0.265,1.55)] [.active_&]:scale-100">
+            <h3 class="text-xl font-bold mb-4 text-gray-900 dark:text-white text-center">Security Check</h3>
+            <p class="text-sm text-gray-500 mb-6 text-center">Please solve this simple math problem to continue.</p>
+
+            <div class="mb-6">
+                <div class="flex items-center gap-4 justify-center bg-gray-50 dark:bg-white/5 p-4 rounded-xl">
+                    <span class="text-lg font-bold text-gray-700 dark:text-gray-200 select-none">
+                        <span id="captcha-question"></span> = ?
+                    </span>
+                    <div class="relative w-24">
+                        <input type="number" id="captcha-input"
+                            class="w-full text-center text-gray-900 dark:text-gray-100 bg-white dark:bg-black/20 rounded-lg px-2 py-2 text-lg border border-gray-200 dark:border-white/10 focus:border-[#667eea] outline-none transition-all"
+                            placeholder="?" required>
+                    </div>
+                </div>
+            </div>
+
+            
+            <input type="hidden" id="captcha-n1">
+            <input type="hidden" id="captcha-n2">
+
+            <button onclick="verifyAndRegister()"
+                class="w-full py-3 bg-gradient-to-br from-[#667eea] to-[#764ba2] text-white rounded-xl font-semibold shadow-[0_4px_15px_rgba(102,126,234,0.3)] hover:-translate-y-0.5 transition-all mb-3">Verify
+                & Register</button>
+            <button onclick="closeCaptchaModal()"
+                class="w-full py-3 text-sm font-semibold text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">Cancel</button>
+        </div>
+    </div>
+
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <script>
+        
+        function generateCaptcha() {
+            const n1 = Math.floor(Math.random() * 9) + 1;
+            const n2 = Math.floor(Math.random() * 9) + 1;
+            const qEl = document.getElementById('captcha-question');
+            if (qEl) qEl.textContent = `${n1} + ${n2}`;
+            const n1El = document.getElementById('captcha-n1');
+            if (n1El) n1El.value = n1;
+            const n2El = document.getElementById('captcha-n2');
+            if (n2El) n2El.value = n2;
+        }
+
+        
+        const departments = [
+            { id: 1, name: 'Computer Science & Engineering' },
+            { id: 2, name: 'Electrical & Electronic Engineering' },
+            { id: 3, name: 'Mechanical Engineering' },
+            { id: 4, name: 'Civil Engineering' },
+            { id: 5, name: 'Electronics & Communication Engineering' },
+            { id: 6, name: 'Chemical Engineering' },
+            { id: 7, name: 'Industrial & Production Engineering' },
+            { id: 8, name: 'Textile Engineering' },
+            { id: 9, name: 'Software Engineering' },
+            { id: 10, name: 'Biomedical Engineering' },
+            { id: 11, name: 'Aerospace Engineering' },
+            { id: 12, name: 'Environmental Engineering' }
+        ];
+
+        function toggleAuth(isSignup) {
+            const wrapper = document.getElementById('authWrapper');
+            if (isSignup) {
+                wrapper.classList.add('toggled');
+                generateCaptcha();
+            } else {
+                wrapper.classList.remove('toggled');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            generateCaptcha();
+
+            const deptSelect = document.querySelector('select[name="department_id"]');
+            if (deptSelect) {
+                while (deptSelect.options.length > 1) {
+                    deptSelect.remove(1);
+                }
+                departments.forEach(dept => {
+                    const option = document.createElement('option');
+                    option.value = dept.id;
+                    option.textContent = dept.name;
+                    option.classList.add('text-gray-900');
+                    deptSelect.appendChild(option);
+                });
+            }
+
+            const roleRadios = document.querySelectorAll('input[name="role"]');
+            const deptField = document.getElementById('deptField');
+            const deptSelectElement = deptField ? deptField.querySelector('select') : null;
+
+            if (roleRadios.length > 0 && deptField && deptSelectElement) {
+                roleRadios.forEach(radio => {
+                    radio.addEventListener('change', () => {
+                        if (radio.value === 'Admin') {
+                            deptField.classList.add('hidden');
+                            deptSelectElement.removeAttribute('required');
+                        } else {
+                            deptField.classList.remove('hidden');
+                            deptSelectElement.setAttribute('required', '');
+                        }
+                    });
+                    if (radio.checked) {
+                        radio.dispatchEvent(new Event('change'));
+                    }
+                });
+            }
+
+            window.verifyAndRegister = function () {
+                const n1 = parseInt(document.getElementById('captcha-n1').value);
+                const n2 = parseInt(document.getElementById('captcha-n2').value);
+                const answer = parseInt(document.getElementById('captcha-input').value);
+                const signupForm = document.getElementById('signupForm');
+
+                if (!signupForm.checkValidity()) {
+                    closeCaptchaModal();
+                    signupForm.reportValidity();
+                    return;
+                }
+
+                if (answer === (n1 + n2)) {
+                    const existingN1 = signupForm.querySelector('input[name="captcha_n1"]');
+                    if (!existingN1) {
+                        const i1 = document.createElement('input'); i1.type = 'hidden'; i1.name = 'captcha_n1'; i1.value = n1; signupForm.appendChild(i1);
+                        const i2 = document.createElement('input'); i2.type = 'hidden'; i2.name = 'captcha_n2'; i2.value = n2; signupForm.appendChild(i2);
+                        const i3 = document.createElement('input'); i3.type = 'hidden'; i3.name = 'captcha_input'; i3.value = answer; signupForm.appendChild(i3);
+                    }
+                    const submitBtn = document.createElement('input');
+                    submitBtn.type = 'hidden';
+                    submitBtn.name = 'register';
+                    submitBtn.value = 'true';
+                    signupForm.appendChild(submitBtn);
+                    signupForm.submit();
+                } else {
+                    alert('Incorrect Math Answer. Please try again.');
+                    generateCaptcha();
+                    document.getElementById('captcha-input').value = '';
+                }
+            };
+
+            window.openCaptchaModal = function () {
+                const signupForm = document.getElementById('signupForm');
+                if (signupForm.checkValidity()) {
+                    document.getElementById('captchaModal').classList.add('active');
+                    generateCaptcha();
+                    document.getElementById('captcha-input').focus();
+                } else {
+                    signupForm.reportValidity();
+                }
+            };
+
+            window.closeCaptchaModal = function () {
+                document.getElementById('captchaModal').classList.remove('active');
+            };
+        });
+    </script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+</body>
+
+</html>
+
+
+

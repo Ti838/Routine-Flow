@@ -1,7 +1,4 @@
-/**
- * Component Loader
- * Dynamically renders shared components like Navbar and Sidebar
- */
+
 
 const Component = {
     render(componentName, targetId, props = {}) {
@@ -14,8 +11,8 @@ const Component = {
             target.innerHTML = this.getSidebarHTML(props);
         }
 
-        // Re-initialize Lucide/Remix icons if needed
-        // (Assuming using a font library, so HTML injection is enough)
+        
+        
     },
 
     getNavbarHTML({ role, name }) {
@@ -48,7 +45,7 @@ const Component = {
                             <p class="text-xs font-bold text-gray-400 uppercase tracking-widest leading-none mb-1">${role}</p>
                             <p class="text-sm font-black text-gray-900 dark:text-white leading-none">${name}</p>
                         </div>
-                        <img src="https://ui-avatars.com/api/?background=random&color=fff&size=128&name=${encodeURIComponent(name)}" class="w-10 h-10 rounded-full border-2 border-white dark:border-white/10 shadow-sm">
+                        <img src="https:
                     </div>
                 </div>
             </div>
@@ -110,3 +107,5 @@ const Component = {
 };
 
 window.Component = Component;
+
+

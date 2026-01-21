@@ -19,3 +19,4 @@ $query = "SELECT r.*, d.code as dept_code
 $routines = $conn->query($query)->fetchAll(PDO::FETCH_ASSOC);
 
 include __DIR__ . '/manage-routines.html';
+

@@ -10,7 +10,6 @@ $name = $_SESSION['user_name'];
 $role = $_SESSION['user_role'];
 $dept_id = $_SESSION['department_id'];
 
-// Logic: Fetch department name
 try {
     $stmt = $conn->prepare("SELECT name FROM departments WHERE id = ?");
     $stmt->execute([$dept_id]);
@@ -19,7 +18,6 @@ try {
     $dept_name = 'Error';
 }
 
-// Logic: Handle Upload
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_routine'])) {
     if (isset($_FILES['routine_file'])) {
         $result = uploadRoutineFile($_FILES['routine_file'], $_SESSION['user_id'], 'teacher', [
@@ -35,6 +33,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_routine'])) {
     }
 }
 
-// Presentation: Include the view
 include __DIR__ . '/create-routine.html';
 ?>

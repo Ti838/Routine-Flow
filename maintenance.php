@@ -49,7 +49,7 @@
 <body
     class="bg-gray-50 dark:bg-[#0B1121] min-h-screen flex items-center justify-center p-6 text-gray-900 dark:text-white transition-colors duration-500 overflow-hidden">
 
-    <!-- Background Decor -->
+    
     <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-500/10 blur-[120px] rounded-full"></div>
         <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/10 blur-[120px] rounded-full">
@@ -58,7 +58,7 @@
 
     <main class="relative z-10 w-full max-w-2xl">
         <div class="glass-card rounded-[60px] p-12 lg:p-20 text-center space-y-10 shadow-2xl">
-            <!-- Icon -->
+            
             <div class="relative inline-block">
                 <div
                     class="w-32 h-32 rounded-[40px] bg-gradient-to-br from-indigo-600 to-purple-700 flex items-center justify-center text-white text-6xl shadow-2xl shadow-indigo-500/30 animate-float">

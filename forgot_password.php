@@ -29,7 +29,7 @@ require_once __DIR__ . '/includes/core.php';
     <script src="assets/js/tailwind-config.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- reCAPTCHA API -->
+    
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
@@ -76,7 +76,7 @@ require_once __DIR__ . '/includes/core.php';
                     Password</label>
             </div>
 
-            <!-- reCAPTCHA Widget -->
+            
             <div class="mb-6 flex justify-center">
                 <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" data-theme="light">
                 </div>
@@ -105,7 +105,6 @@ require_once __DIR__ . '/includes/core.php';
             const statusIcon = document.getElementById('statusIcon');
             const statusText = document.getElementById('statusText');
 
-            // Basic UI State
             btn.disabled = true;
             btn.textContent = 'Processing...';
             statusDiv.classList.add('hidden');
@@ -175,7 +174,6 @@ require_once __DIR__ . '/includes/core.php';
             statusText.textContent = message;
         }
 
-        // Adjust reCAPTCHA theme based on page theme
         window.addEventListener('load', () => {
             const isDark = document.documentElement.classList.contains('dark');
             const widget = document.querySelector('.g-recaptcha');

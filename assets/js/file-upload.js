@@ -1,7 +1,4 @@
-/**
- * File Upload Module
- * Handles drag-drop file upload, preview, and progress tracking
- */
+
 
 class FileUploader {
     constructor(options = {}) {
@@ -9,7 +6,7 @@ class FileUploader {
         this.fileInput = options.fileInput || document.getElementById('fileInput');
         this.previewContainer = options.previewContainer || document.getElementById('filePreview');
         this.uploadUrl = options.uploadUrl || '../api/upload_routine.php';
-        this.maxFileSize = options.maxFileSize || 10485760; // 10MB
+        this.maxFileSize = options.maxFileSize || 10485760; 
         this.allowedTypes = options.allowedTypes || ['application/pdf', 'image/png', 'image/jpeg'];
         this.files = [];
 
@@ -19,15 +16,15 @@ class FileUploader {
     init() {
         if (!this.dropZone || !this.fileInput) return;
 
-        // Drag and drop events
+        
         this.dropZone.addEventListener('dragover', (e) => this.handleDragOver(e));
         this.dropZone.addEventListener('dragleave', (e) => this.handleDragLeave(e));
         this.dropZone.addEventListener('drop', (e) => this.handleDrop(e));
 
-        // File input change
+        
         this.fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
 
-        // Click to browse
+        
         this.dropZone.addEventListener('click', () => this.fileInput.click());
     }
 
@@ -67,13 +64,13 @@ class FileUploader {
     }
 
     validateFile(file) {
-        // Check file size
+        
         if (file.size > this.maxFileSize) {
             this.showError(`File "${file.name}" exceeds 10MB limit`);
             return false;
         }
 
-        // Check file type
+        
         if (!this.allowedTypes.includes(file.type)) {
             this.showError(`File "${file.name}" has invalid type. Allowed: PDF, PNG, JPG`);
             return false;
@@ -119,15 +116,15 @@ class FileUploader {
 
         this.previewContainer.appendChild(fileCard);
 
-        // Store file reference
+        
         file._previewId = fileId;
     }
 
     removeFile(fileId) {
-        // Remove from files array
+        
         this.files = this.files.filter(f => f._previewId != fileId);
 
-        // Remove preview card
+        
         const card = this.previewContainer.querySelector(`[data-file-id="${fileId}"]`);
         if (card) card.remove();
     }
@@ -154,7 +151,7 @@ class FileUploader {
         const formData = new FormData();
         formData.append('file', file);
 
-        // Add additional data
+        
         Object.keys(additionalData).forEach(key => {
             formData.append(key, additionalData[key]);
         });
@@ -194,7 +191,7 @@ class FileUploader {
     }
 
     showError(message) {
-        // Create toast notification
+        
         const toast = document.createElement('div');
         toast.className = 'toast toast-error';
         toast.innerHTML = `
@@ -233,7 +230,9 @@ class FileUploader {
     }
 }
 
-// Export for use in other scripts
+
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = FileUploader;
 }
+
+

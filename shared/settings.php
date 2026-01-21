@@ -8,6 +8,5 @@ checkAuth();
 $name = $_SESSION['user_name'];
 $role = $_SESSION['user_role'];
 
-// Presentation: Include the view
 include __DIR__ . '/settings.html';
 ?>

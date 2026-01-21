@@ -17,8 +17,8 @@ function updateGreeting() {
 
 async function fetchRoutines() {
     try {
-        // In a real app, we might get these from a user profile endpoint or session
-        // For now, we'll fetch all or mock the dept/semester
+        
+        
         const response = await fetch('../api/get_routine.php?department=Science&semester=Fall 2025');
         const data = await response.json();
 
@@ -35,14 +35,14 @@ async function fetchRoutines() {
 }
 
 function renderTodaySchedule(routines) {
-    const tableBody = document.querySelector('tbody'); // Assuming only one table for now
+    const tableBody = document.querySelector('tbody'); 
     if (!tableBody) return;
 
     tableBody.innerHTML = '';
 
-    // Filter for today's routines
+    
     const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-    const todaysRoutines = routines.filter(r => r.day === 'Monday'); // Hardcoded for demo/testing, usually matches 'today'
+    const todaysRoutines = routines.filter(r => r.day === 'Monday'); 
 
     if (todaysRoutines.length === 0) {
         tableBody.innerHTML = '<tr><td colspan="5" class="px-6 py-4 text-center text-gray-500">No classes scheduled for today.</td></tr>';
@@ -76,9 +76,9 @@ function renderTodaySchedule(routines) {
 }
 
 function renderNextClass(routines) {
-    // Logic to find the next class based on current time
-    // For simplicity, just pick the first standard one or placeholder
-    // This is optional for the MVP
+    
+    
+    
 }
 
 function updateStats(routines) {
@@ -93,3 +93,5 @@ function formatTime(timeString) {
     const date = new Date(`2000-01-01T${timeString}`);
     return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 }
+
+

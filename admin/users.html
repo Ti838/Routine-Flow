@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Management - Routine Flow</title>
     <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="../assets/js/tailwind-config.js"></script>
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <script></script>
     <link rel="stylesheet" href="../assets/css/zoom-fix.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="https:
     <script>
         (function () {
             const saved = localStorage.getItem('theme');
@@ -43,7 +43,7 @@
                 </button>
             </header>
 
-            <!-- Students Section -->
+            
             <section class="space-y-6">
                 <div class="flex items-center gap-3">
                     <div class="w-2 h-8 rounded-full bg-indigo-500"></div>
@@ -60,7 +60,7 @@
                     <div
                         class="p-6 sm:p-8 rounded-[32px] sm:rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-2xl transition-all group">
                         <div class="flex items-center gap-4 sm:gap-6 mb-8">
-                            <img src="https://ui-avatars.com/api/?background=random&color=fff&name=<?php echo urlencode($student['full_name']); ?>"
+                            <img src="https:
                                 class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl ring-4 ring-indigo-500/10 transition-transform group-hover:scale-110 object-cover">
                             <div>
                                 <h4 class="font-black text-lg line-clamp-1">
@@ -101,7 +101,7 @@
                 </div>
             </section>
 
-            <!-- Teachers Section -->
+            
             <section class="space-y-6">
                 <div class="flex items-center gap-3">
                     <div class="w-2 h-8 rounded-full bg-emerald-500"></div>
@@ -118,7 +118,7 @@
                     <div
                         class="p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-2xl transition-all group">
                         <div class="flex items-center gap-6 mb-8">
-                            <img src="https://ui-avatars.com/api/?background=random&color=fff&name=<?php echo urlencode($teacher['full_name']); ?>"
+                            <img src="https:
                                 class="w-16 h-16 rounded-2xl ring-4 ring-emerald-500/10 transition-transform group-hover:scale-110 object-cover">
                             <div>
                                 <h4 class="font-black text-lg line-clamp-1">
@@ -156,7 +156,7 @@
         </main>
     </div>
 
-    <!-- Add User Modal -->
+    
     <div id="addUserModal" class="fixed inset-0 z-[100] hidden">
         <div class="absolute inset-0 bg-[#0B1121]/80 backdrop-blur-sm"
             onclick="this.parentElement.classList.add('hidden')"></div>
@@ -245,7 +245,7 @@
         </div>
     </div>
 
-    <script src="../assets/js/theme.js"></script>
+    <script></script>
     <script>
         function toggleRoleFields(role) {
             document.getElementById('studentFields').classList.toggle('hidden', role !== 'student');
@@ -280,3 +280,814 @@
 </body>
 
 </html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <link rel="stylesheet" href="../assets/css/zoom-fix.css">
+    <link href="https:
+    <script>
+        (function () {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark' || saved === 'light') {
+                if (saved === 'dark') document.documentElement.classList.add('dark');
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+
+    <?php renderNavbar($role, $name); ?>
+
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'users.php'); ?>
+
+        <main class="flex-1 p-4 sm:p-6 lg:p-10 space-y-10">
+            <header class="flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div class="text-center sm:text-left">
+                    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Active Members</h1>
+                    <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm sm:text-base">Oversee all student and
+                        teacher accounts within the
+                        institution.</p>
+                </div>
+                <button onclick="document.getElementById('addUserModal').classList.remove('hidden')"
+                    class="px-6 py-3 sm:px-8 sm:py-4 bg-indigo-600 text-white rounded-2xl font-black shadow-xl shadow-indigo-600/20 hover:scale-105 transition-all flex items-center gap-3 text-sm sm:text-base">
+                    <i class="ri-user-add-line text-lg sm:text-xl"></i> Add Member
+                </button>
+            </header>
+
+            
+            <section class="space-y-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-8 rounded-full bg-indigo-500"></div>
+                    <h2 class="text-2xl font-black tracking-tight">Student Body</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                    <?php if (empty($students)): ?>
+                    <div
+                        class="col-span-full p-10 text-center rounded-[40px] bg-white dark:bg-white/5 opacity-50 italic">
+                        No students registered yet.</div>
+                    <?php else: ?>
+                    <?php foreach ($students as $student): ?>
+                    <div
+                        class="p-6 sm:p-8 rounded-[32px] sm:rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-2xl transition-all group">
+                        <div class="flex items-center gap-4 sm:gap-6 mb-8">
+                            <img src="https:
+                                class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl ring-4 ring-indigo-500/10 transition-transform group-hover:scale-110 object-cover">
+                            <div>
+                                <h4 class="font-black text-lg line-clamp-1">
+                                    <?php echo htmlspecialchars($student['full_name']); ?>
+                                </h4>
+                                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                                    <?php echo htmlspecialchars($student['dept_name']); ?>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="space-y-3 mb-8">
+                            <div class="flex items-center justify-between text-xs font-bold">
+                                <span class="text-gray-400 uppercase tracking-widest">Student ID</span>
+                                <span>
+                                    <?php echo htmlspecialchars($student['student_id']); ?>
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-between text-xs font-bold">
+                                <span class="text-gray-400 uppercase tracking-widest">Semester</span>
+                                <span class="text-indigo-500">
+                                    <?php echo htmlspecialchars($student['semester']); ?>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <a href="edit-user.php?id=<?php echo $student['id']; ?>&role=student"
+                                class="flex-1 py-3 bg-gray-50 dark:bg-white/5 rounded-xl font-bold text-xs text-center hover:bg-indigo-600 hover:text-white transition-all tracking-widest uppercase">Edit
+                                Profile</a>
+                            <button data-id="<?php echo $student['id']; ?>" data-role="student"
+                                onclick="deleteUser(this)"
+                                class="w-12 py-3 bg-red-50 dark:bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all">
+                                <i class="ri-delete-bin-line"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+            </section>
+
+            
+            <section class="space-y-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-8 rounded-full bg-emerald-500"></div>
+                    <h2 class="text-2xl font-black tracking-tight">Faculty Members</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                    <?php if (empty($teachers)): ?>
+                    <div
+                        class="col-span-full p-10 text-center rounded-[40px] bg-white dark:bg-white/5 opacity-50 italic">
+                        No teachers registered yet.</div>
+                    <?php else: ?>
+                    <?php foreach ($teachers as $teacher): ?>
+                    <div
+                        class="p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-2xl transition-all group">
+                        <div class="flex items-center gap-6 mb-8">
+                            <img src="https:
+                                class="w-16 h-16 rounded-2xl ring-4 ring-emerald-500/10 transition-transform group-hover:scale-110 object-cover">
+                            <div>
+                                <h4 class="font-black text-lg line-clamp-1">
+                                    <?php echo htmlspecialchars($teacher['full_name']); ?>
+                                </h4>
+                                <p
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-emerald-500">
+                                    <?php echo htmlspecialchars($teacher['dept_name']); ?>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="space-y-3 mb-8">
+                            <div class="flex items-center justify-between text-xs font-bold text-gray-400">
+                                <span class="uppercase tracking-widest">Email Address</span>
+                                <span class="text-gray-900 dark:text-white">
+                                    <?php echo htmlspecialchars($teacher['email']); ?>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <a href="edit-user.php?id=<?php echo $teacher['id']; ?>&role=teacher"
+                                class="flex-1 py-3 bg-gray-50 dark:bg-white/5 rounded-xl font-bold text-xs text-center hover:bg-emerald-500 hover:text-white transition-all tracking-widest uppercase">Edit
+                                Faculty</a>
+                            <button data-id="<?php echo $teacher['id']; ?>" data-role="teacher"
+                                onclick="deleteUser(this)"
+                                class="w-12 py-3 bg-red-50 dark:bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all">
+                                <i class="ri-delete-bin-line"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    
+    <div id="addUserModal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-[#0B1121]/80 backdrop-blur-sm"
+            onclick="this.parentElement.classList.add('hidden')"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-xl p-8">
+            <div
+                class="bg-white dark:bg-[#16213e] rounded-[40px] shadow-2xl border border-gray-100 dark:border-white/5 overflow-hidden">
+                <div class="p-8 border-b border-gray-100 dark:border-white/5 flex items-center justify-between">
+                    <h3 class="text-2xl font-black">Add New Member</h3>
+                    <button onclick="document.getElementById('addUserModal').classList.add('hidden')"
+                        class="text-gray-400 hover:text-white transition-colors">
+                        <i class="ri-close-line text-2xl"></i>
+                    </button>
+                </div>
+                <form id="addUserForm" class="p-8 space-y-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Full
+                                Name</label>
+                            <input type="text" name="full_name" required
+                                class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Role</label>
+                            <select name="role" required onchange="toggleRoleFields(this.value)"
+                                class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                                <option value="student">Student</option>
+                                <option value="teacher">Teacher</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Email
+                            Address</label>
+                        <input type="email" name="email" required
+                            class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Temporary
+                            Password</label>
+                        <input type="password" name="password" required
+                            class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+
+                    <div id="studentFields" class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Student
+                                ID</label>
+                            <input type="text" name="student_id"
+                                class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Semester</label>
+                            <input type="text" name="semester" placeholder="e.g. 1st, 1st"
+                                class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                    </div>
+
+                    <div id="teacherFields" class="hidden">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Teacher ID /
+                                initials</label>
+                            <input type="text" name="teacher_id"
+                                class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Assigned
+                            Department</label>
+                        <select name="dept_id" required
+                            class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                            <?php foreach($departments as $d): ?>
+                            <option value="<?php echo $d['id']; ?>">
+                                <?php echo htmlspecialchars($d['name']); ?>
+                            </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full py-5 bg-indigo-600 text-white rounded-2xl font-black text-lg shadow-xl shadow-indigo-600/20 hover:scale-[1.02] transition-all">Create
+                        Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script></script>
+    <script>
+        function toggleRoleFields(role) {
+            document.getElementById('studentFields').classList.toggle('hidden', role !== 'student');
+            document.getElementById('teacherFields').classList.toggle('hidden', role !== 'teacher');
+        }
+
+        document.getElementById('addUserForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            try {
+                const res = await fetch('../api/add_user.php', { method: 'POST', body: formData });
+                const data = await res.json();
+                if (data.success) location.reload(); else alert(data.message);
+            } catch (err) { alert('Error adding user'); }
+        });
+
+        async function deleteUser(btn) {
+            const id = btn.getAttribute('data-id');
+            const role = btn.getAttribute('data-role');
+            if (!confirm('Are you sure you want to delete this user? All their data will be removed.')) return;
+            try {
+                const res = await fetch('../api/delete_user.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id, role })
+                });
+                const data = await res.json();
+                if (data.success) btn.closest('.group').remove(); else alert(data.message);
+            } catch (err) { alert('Error deleting user'); }
+        }
+    </script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+    <link rel="stylesheet" href="../assets/css/zoom-fix.css">
+    <link href="https:
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+
+    <?php renderNavbar($role, $name); ?>
+
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'users.php'); ?>
+
+        <main class="flex-1 p-4 sm:p-6 lg:p-10 space-y-10">
+            <header class="flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div class="text-center sm:text-left">
+                    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Active Members</h1>
+                    <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm sm:text-base">Oversee all student and
+                        teacher accounts within the
+                        institution.</p>
+                </div>
+                <button onclick="document.getElementById('addUserModal').classList.remove('hidden')"
+                    class="px-6 py-3 sm:px-8 sm:py-4 bg-indigo-600 text-white rounded-2xl font-black shadow-xl shadow-indigo-600/20 hover:scale-105 transition-all flex items-center gap-3 text-sm sm:text-base">
+                    <i class="ri-user-add-line text-lg sm:text-xl"></i> Add Member
+                </button>
+            </header>
+
+            
+            <section class="space-y-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-8 rounded-full bg-indigo-500"></div>
+                    <h2 class="text-2xl font-black tracking-tight">Student Body</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                    <?php if (empty($students)): ?>
+                    <div
+                        class="col-span-full p-10 text-center rounded-[40px] bg-white dark:bg-white/5 opacity-50 italic">
+                        No students registered yet.</div>
+                    <?php else: ?>
+                    <?php foreach ($students as $student): ?>
+                    <div
+                        class="p-6 sm:p-8 rounded-[32px] sm:rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-2xl transition-all group">
+                        <div class="flex items-center gap-4 sm:gap-6 mb-8">
+                            <img src="https:
+                                class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl ring-4 ring-indigo-500/10 transition-transform group-hover:scale-110 object-cover">
+                            <div>
+                                <h4 class="font-black text-lg line-clamp-1">
+                                    <?php echo htmlspecialchars($student['full_name']); ?>
+                                </h4>
+                                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                                    <?php echo htmlspecialchars($student['dept_name']); ?>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="space-y-3 mb-8">
+                            <div class="flex items-center justify-between text-xs font-bold">
+                                <span class="text-gray-400 uppercase tracking-widest">Student ID</span>
+                                <span>
+                                    <?php echo htmlspecialchars($student['student_id']); ?>
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-between text-xs font-bold">
+                                <span class="text-gray-400 uppercase tracking-widest">Semester</span>
+                                <span class="text-indigo-500">
+                                    <?php echo htmlspecialchars($student['semester']); ?>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <a href="edit-user.php?id=<?php echo $student['id']; ?>&role=student"
+                                class="flex-1 py-3 bg-gray-50 dark:bg-white/5 rounded-xl font-bold text-xs text-center hover:bg-indigo-600 hover:text-white transition-all tracking-widest uppercase">Edit
+                                Profile</a>
+                            <button data-id="<?php echo $student['id']; ?>" data-role="student"
+                                onclick="deleteUser(this)"
+                                class="w-12 py-3 bg-red-50 dark:bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all">
+                                <i class="ri-delete-bin-line"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+            </section>
+
+            
+            <section class="space-y-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-8 rounded-full bg-emerald-500"></div>
+                    <h2 class="text-2xl font-black tracking-tight">Faculty Members</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                    <?php if (empty($teachers)): ?>
+                    <div
+                        class="col-span-full p-10 text-center rounded-[40px] bg-white dark:bg-white/5 opacity-50 italic">
+                        No teachers registered yet.</div>
+                    <?php else: ?>
+                    <?php foreach ($teachers as $teacher): ?>
+                    <div
+                        class="p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-2xl transition-all group">
+                        <div class="flex items-center gap-6 mb-8">
+                            <img src="https:
+                                class="w-16 h-16 rounded-2xl ring-4 ring-emerald-500/10 transition-transform group-hover:scale-110 object-cover">
+                            <div>
+                                <h4 class="font-black text-lg line-clamp-1">
+                                    <?php echo htmlspecialchars($teacher['full_name']); ?>
+                                </h4>
+                                <p
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-emerald-500">
+                                    <?php echo htmlspecialchars($teacher['dept_name']); ?>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="space-y-3 mb-8">
+                            <div class="flex items-center justify-between text-xs font-bold text-gray-400">
+                                <span class="uppercase tracking-widest">Email Address</span>
+                                <span class="text-gray-900 dark:text-white">
+                                    <?php echo htmlspecialchars($teacher['email']); ?>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <a href="edit-user.php?id=<?php echo $teacher['id']; ?>&role=teacher"
+                                class="flex-1 py-3 bg-gray-50 dark:bg-white/5 rounded-xl font-bold text-xs text-center hover:bg-emerald-500 hover:text-white transition-all tracking-widest uppercase">Edit
+                                Faculty</a>
+                            <button data-id="<?php echo $teacher['id']; ?>" data-role="teacher"
+                                onclick="deleteUser(this)"
+                                class="w-12 py-3 bg-red-50 dark:bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all">
+                                <i class="ri-delete-bin-line"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    
+    <div id="addUserModal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-[#0B1121]/80 backdrop-blur-sm"
+            onclick="this.parentElement.classList.add('hidden')"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-xl p-8">
+            <div
+                class="bg-white dark:bg-[#16213e] rounded-[40px] shadow-2xl border border-gray-100 dark:border-white/5 overflow-hidden">
+                <div class="p-8 border-b border-gray-100 dark:border-white/5 flex items-center justify-between">
+                    <h3 class="text-2xl font-black">Add New Member</h3>
+                    <button onclick="document.getElementById('addUserModal').classList.add('hidden')"
+                        class="text-gray-400 hover:text-white transition-colors">
+                        <i class="ri-close-line text-2xl"></i>
+                    </button>
+                </div>
+                <form id="addUserForm" class="p-8 space-y-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Full
+                                Name</label>
+                            <input type="text" name="full_name" required
+                                class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Role</label>
+                            <select name="role" required onchange="toggleRoleFields(this.value)"
+                                class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                                <option value="student">Student</option>
+                                <option value="teacher">Teacher</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Email
+                            Address</label>
+                        <input type="email" name="email" required
+                            class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Temporary
+                            Password</label>
+                        <input type="password" name="password" required
+                            class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+
+                    <div id="studentFields" class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Student
+                                ID</label>
+                            <input type="text" name="student_id"
+                                class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Semester</label>
+                            <input type="text" name="semester" placeholder="e.g. 1st, 1st"
+                                class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                    </div>
+
+                    <div id="teacherFields" class="hidden">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Teacher ID /
+                                initials</label>
+                            <input type="text" name="teacher_id"
+                                class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Assigned
+                            Department</label>
+                        <select name="dept_id" required
+                            class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                            <?php foreach($departments as $d): ?>
+                            <option value="<?php echo $d['id']; ?>">
+                                <?php echo htmlspecialchars($d['name']); ?>
+                            </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full py-5 bg-indigo-600 text-white rounded-2xl font-black text-lg shadow-xl shadow-indigo-600/20 hover:scale-[1.02] transition-all">Create
+                        Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script></script>
+    <script>
+        function toggleRoleFields(role) {
+            document.getElementById('studentFields').classList.toggle('hidden', role !== 'student');
+            document.getElementById('teacherFields').classList.toggle('hidden', role !== 'teacher');
+        }
+
+        document.getElementById('addUserForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            try {
+                const res = await fetch('../api/add_user.php', { method: 'POST', body: formData });
+                const data = await res.json();
+                if (data.success) location.reload(); else alert(data.message);
+            } catch (err) { alert('Error adding user'); }
+        });
+
+        async function deleteUser(btn) {
+            const id = btn.getAttribute('data-id');
+            const role = btn.getAttribute('data-role');
+            if (!confirm('Are you sure you want to delete this user? All their data will be removed.')) return;
+            try {
+                const res = await fetch('../api/delete_user.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id, role })
+                });
+                const data = await res.json();
+                if (data.success) btn.closest('.group').remove(); else alert(data.message);
+            } catch (err) { alert('Error deleting user'); }
+        }
+    </script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+</head>
+
+<body class="bg-gray-50 dark:bg-[#0B1121] text-gray-900 dark:text-white antialiased transition-colors duration-300">
+
+    <?php renderNavbar($role, $name); ?>
+
+    <div class="max-w-[1600px] mx-auto flex">
+        <?php renderSidebar($role, 'users.php'); ?>
+
+        <main class="flex-1 p-4 sm:p-6 lg:p-10 space-y-10">
+            <header class="flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div class="text-center sm:text-left">
+                    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Active Members</h1>
+                    <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm sm:text-base">Oversee all student and
+                        teacher accounts within the
+                        institution.</p>
+                </div>
+                <button onclick="document.getElementById('addUserModal').classList.remove('hidden')"
+                    class="px-6 py-3 sm:px-8 sm:py-4 bg-indigo-600 text-white rounded-2xl font-black shadow-xl shadow-indigo-600/20 hover:scale-105 transition-all flex items-center gap-3 text-sm sm:text-base">
+                    <i class="ri-user-add-line text-lg sm:text-xl"></i> Add Member
+                </button>
+            </header>
+
+            
+            <section class="space-y-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-8 rounded-full bg-indigo-500"></div>
+                    <h2 class="text-2xl font-black tracking-tight">Student Body</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                    <?php if (empty($students)): ?>
+                    <div
+                        class="col-span-full p-10 text-center rounded-[40px] bg-white dark:bg-white/5 opacity-50 italic">
+                        No students registered yet.</div>
+                    <?php else: ?>
+                    <?php foreach ($students as $student): ?>
+                    <div
+                        class="p-6 sm:p-8 rounded-[32px] sm:rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-2xl transition-all group">
+                        <div class="flex items-center gap-4 sm:gap-6 mb-8">
+                            <img src="https:
+                                class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl ring-4 ring-indigo-500/10 transition-transform group-hover:scale-110 object-cover">
+                            <div>
+                                <h4 class="font-black text-lg line-clamp-1">
+                                    <?php echo htmlspecialchars($student['full_name']); ?>
+                                </h4>
+                                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                                    <?php echo htmlspecialchars($student['dept_name']); ?>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="space-y-3 mb-8">
+                            <div class="flex items-center justify-between text-xs font-bold">
+                                <span class="text-gray-400 uppercase tracking-widest">Student ID</span>
+                                <span>
+                                    <?php echo htmlspecialchars($student['student_id']); ?>
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-between text-xs font-bold">
+                                <span class="text-gray-400 uppercase tracking-widest">Semester</span>
+                                <span class="text-indigo-500">
+                                    <?php echo htmlspecialchars($student['semester']); ?>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <a href="edit-user.php?id=<?php echo $student['id']; ?>&role=student"
+                                class="flex-1 py-3 bg-gray-50 dark:bg-white/5 rounded-xl font-bold text-xs text-center hover:bg-indigo-600 hover:text-white transition-all tracking-widest uppercase">Edit
+                                Profile</a>
+                            <button data-id="<?php echo $student['id']; ?>" data-role="student"
+                                onclick="deleteUser(this)"
+                                class="w-12 py-3 bg-red-50 dark:bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all">
+                                <i class="ri-delete-bin-line"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+            </section>
+
+            
+            <section class="space-y-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-8 rounded-full bg-emerald-500"></div>
+                    <h2 class="text-2xl font-black tracking-tight">Faculty Members</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                    <?php if (empty($teachers)): ?>
+                    <div
+                        class="col-span-full p-10 text-center rounded-[40px] bg-white dark:bg-white/5 opacity-50 italic">
+                        No teachers registered yet.</div>
+                    <?php else: ?>
+                    <?php foreach ($teachers as $teacher): ?>
+                    <div
+                        class="p-8 rounded-[40px] bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-2xl transition-all group">
+                        <div class="flex items-center gap-6 mb-8">
+                            <img src="https:
+                                class="w-16 h-16 rounded-2xl ring-4 ring-emerald-500/10 transition-transform group-hover:scale-110 object-cover">
+                            <div>
+                                <h4 class="font-black text-lg line-clamp-1">
+                                    <?php echo htmlspecialchars($teacher['full_name']); ?>
+                                </h4>
+                                <p
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-emerald-500">
+                                    <?php echo htmlspecialchars($teacher['dept_name']); ?>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="space-y-3 mb-8">
+                            <div class="flex items-center justify-between text-xs font-bold text-gray-400">
+                                <span class="uppercase tracking-widest">Email Address</span>
+                                <span class="text-gray-900 dark:text-white">
+                                    <?php echo htmlspecialchars($teacher['email']); ?>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <a href="edit-user.php?id=<?php echo $teacher['id']; ?>&role=teacher"
+                                class="flex-1 py-3 bg-gray-50 dark:bg-white/5 rounded-xl font-bold text-xs text-center hover:bg-emerald-500 hover:text-white transition-all tracking-widest uppercase">Edit
+                                Faculty</a>
+                            <button data-id="<?php echo $teacher['id']; ?>" data-role="teacher"
+                                onclick="deleteUser(this)"
+                                class="w-12 py-3 bg-red-50 dark:bg-red-500/10 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all">
+                                <i class="ri-delete-bin-line"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    
+    <div id="addUserModal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-[#0B1121]/80 backdrop-blur-sm"
+            onclick="this.parentElement.classList.add('hidden')"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-xl p-8">
+            <div
+                class="bg-white dark:bg-[#16213e] rounded-[40px] shadow-2xl border border-gray-100 dark:border-white/5 overflow-hidden">
+                <div class="p-8 border-b border-gray-100 dark:border-white/5 flex items-center justify-between">
+                    <h3 class="text-2xl font-black">Add New Member</h3>
+                    <button onclick="document.getElementById('addUserModal').classList.add('hidden')"
+                        class="text-gray-400 hover:text-white transition-colors">
+                        <i class="ri-close-line text-2xl"></i>
+                    </button>
+                </div>
+                <form id="addUserForm" class="p-8 space-y-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Full
+                                Name</label>
+                            <input type="text" name="full_name" required
+                                class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Role</label>
+                            <select name="role" required onchange="toggleRoleFields(this.value)"
+                                class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                                <option value="student">Student</option>
+                                <option value="teacher">Teacher</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Email
+                            Address</label>
+                        <input type="email" name="email" required
+                            class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Temporary
+                            Password</label>
+                        <input type="password" name="password" required
+                            class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+
+                    <div id="studentFields" class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Student
+                                ID</label>
+                            <input type="text" name="student_id"
+                                class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Semester</label>
+                            <input type="text" name="semester" placeholder="e.g. 1st, 1st"
+                                class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                    </div>
+
+                    <div id="teacherFields" class="hidden">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Teacher ID /
+                                initials</label>
+                            <input type="text" name="teacher_id"
+                                class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Assigned
+                            Department</label>
+                        <select name="dept_id" required
+                            class="w-full bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl p-4 font-bold outline-none focus:ring-2 focus:ring-indigo-500">
+                            <?php foreach($departments as $d): ?>
+                            <option value="<?php echo $d['id']; ?>">
+                                <?php echo htmlspecialchars($d['name']); ?>
+                            </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full py-5 bg-indigo-600 text-white rounded-2xl font-black text-lg shadow-xl shadow-indigo-600/20 hover:scale-[1.02] transition-all">Create
+                        Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+    <script>
+        function toggleRoleFields(role) {
+            document.getElementById('studentFields').classList.toggle('hidden', role !== 'student');
+            document.getElementById('teacherFields').classList.toggle('hidden', role !== 'teacher');
+        }
+
+        document.getElementById('addUserForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            try {
+                const res = await fetch('../api/add_user.php', { method: 'POST', body: formData });
+                const data = await res.json();
+                if (data.success) location.reload(); else alert(data.message);
+            } catch (err) { alert('Error adding user'); }
+        });
+
+        async function deleteUser(btn) {
+            const id = btn.getAttribute('data-id');
+            const role = btn.getAttribute('data-role');
+            if (!confirm('Are you sure you want to delete this user? All their data will be removed.')) return;
+            try {
+                const res = await fetch('../api/delete_user.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id, role })
+                });
+                const data = await res.json();
+                if (data.success) btn.closest('.group').remove(); else alert(data.message);
+            } catch (err) { alert('Error deleting user'); }
+        }
+    </script>
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+     param($m); $js = $m.Groups[1].Value; $js = $js -replace '
+</body>
+
+</html>
+, '' -replace '/\*(.|\n)*?\*/', ''; "<script>" + $js + "</script>" 
+</body>
+
+</html>
+
+
+

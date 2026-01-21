@@ -5,7 +5,6 @@ require_once __DIR__ . '/includes/core.php';
 handleMaintenance();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // 1. Verify Captcha (Synchronized with JS logic)
     $c_n1 = isset($_POST['captcha_n1']) ? intval($_POST['captcha_n1']) : 0;
     $c_n2 = isset($_POST['captcha_n2']) ? intval($_POST['captcha_n2']) : 0;
     $c_input = isset($_POST['captcha_input']) ? intval($_POST['captcha_input']) : -1;
@@ -18,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST['username']);
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $role = $_POST['role']; // Student, Teacher, or Admin
+    $role = $_POST['role'];
     $gender = isset($_POST['gender']) ? $_POST['gender'] : null;
     $department_id = isset($_POST['department_id']) ? $_POST['department_id'] : null;
 
@@ -31,7 +30,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $semester = isset($_POST['semester']) ? $_POST['semester'] : null;
 
     try {
-        // Fetch department name for consistency
         $dept_name = null;
         if ($department_id) {
             $d_stmt = $conn->prepare("SELECT name FROM departments WHERE id = ?");
@@ -58,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             window.location.href = 'login.php';
         </script>";
     } catch (PDOException $e) {
-        if ($e->getCode() == 23000) { // Duplicate entry
+        if ($e->getCode() == 23000) {
             echo "<script>alert('Error: This email or username is already registered.'); window.history.back();</script>";
         } else {
             echo "Error: " . $e->getMessage();

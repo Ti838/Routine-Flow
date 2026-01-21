@@ -14,7 +14,6 @@ try {
     $dept_stmt->execute([$dept_id]);
     $dept_name = $dept_stmt->fetchColumn();
 
-    // Semester Filter Logic
     $selected_semester = $_GET['semester'] ?? 'All Semesters';
     $params = [$dept_id];
     $sql = "SELECT * FROM routines WHERE department_id = ? AND status = 'active'";
@@ -35,3 +34,4 @@ try {
 }
 
 include __DIR__ . '/department.html';
+

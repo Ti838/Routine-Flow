@@ -1,12 +1,12 @@
-// Tailwind CSS Configuration for Routine Flow
-// This configures Tailwind with your custom design system
+
+
 
 tailwind.config = {
   darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        // Primary Colors
+        
         primary: {
           DEFAULT: '#667eea',
           light: '#818cf8',
@@ -27,12 +27,12 @@ tailwind.config = {
           light: '#9b6fc9',
           dark: '#5a3a7a',
         },
-        // Status Colors
+        
         success: '#10b981',
         warning: '#f59e0b',
         error: '#ef4444',
         info: '#3b82f6',
-        // Dark Mode Colors
+        
         dark: {
           bg: '#111827',
           card: '#1f2937',
@@ -80,7 +80,7 @@ tailwind.config = {
   plugins: [],
 }
 
-// Inject Global Styles using Tailwind's @apply directives
+
 const style = document.createElement('style');
 style.type = 'text/tailwindcss';
 style.innerHTML = `
@@ -172,3 +172,5 @@ style.innerHTML = `
     }
 `;
 document.head.appendChild(style);
+
+
