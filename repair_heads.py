@@ -10,6 +10,7 @@ HEAD_TEMPLATE = """<head>
     <link rel="icon" type="image/png" href="{prefix}assets/img/favicon.png">
     <link rel="stylesheet" href="{prefix}assets/css/zoom-fix.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="{prefix}assets/js/theme.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {{
